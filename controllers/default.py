@@ -17,8 +17,26 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    logger.info('The session is: %r' % session)
+    checklists = None
+    if auth.user is not None:
+        checklists = db(db.checklist.user_email == auth.user.email).select()
+    return dict(checklists=checklists)
+
+
+def no_swearing(form):
+    if 'shit' in form.vars.memo:
+        form.errors.memo = T('No swearing please')
+
+def add():
+    """Adds a checklist."""
+    form = SQLFORM(db.checklist)
+    if form.process(onvalidation=no_swearing).accepted:
+        session.flash = T("Checklist added.")
+        redirect(URL('default','index'))
+    elif form.errors:
+        session.flash = T('Please correct the info')
+    return dict(form=form)
 
 
 def user():

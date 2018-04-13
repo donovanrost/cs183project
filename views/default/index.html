@@ -6,6 +6,33 @@
 <div class="main_content">
 
   <!-- Here goes your main HTML code. -->
+  {{if auth.user is not None:}}
+
+  <p><a class="btn red" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Add</a>
+  </p>
+
+  {{for cl in checklists:}}
+      <div class="checklist_title">{{=cl.title}}</div>
+  {{pass}}
+
+  {{if not checklists:}}
+
+    <p>You don't have any checklist.  Press on the Add button above to create one.</p>
+
+  {{pass}}
+
+  {{else:}}
+
+   <h1 class="main_title">Welcome!</h1>
+
+    <p class="explanation">This site will help you organize your life by storing your checklists.
+        Please log in to use it.</p>
+
+    <div class="login_button">
+        <a href="{{=URL('default', 'user')}}" class="btn">Login</a>
+    </div>
+
+  {{pass}}
 
 </div>
 
