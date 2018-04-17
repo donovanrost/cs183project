@@ -12,14 +12,16 @@
   </p>
 
   {{for cl in checklists:}}
-      <div class="memo">
+      <div class="memo container">
+        <div class="memo_text threequarters">
           <div class="memo_title">{{=cl.title}}</div>
           <div class="memo_content">{{=cl.memo}}</div>
-          <div class="container button_list">
-            <div class="right">
+        </div>
+        <!-- <div class="container"> -->
+          <div class="button_list right">
               <button class="btn"><i class="fa fa-trash"></i></button>
-            </div>
           </div>
+        <!-- </div> -->
       </div>
   {{pass}}
 
@@ -43,4 +45,3 @@
   {{pass}}
 
 </div>
-
