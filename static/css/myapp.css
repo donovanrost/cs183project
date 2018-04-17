@@ -7,9 +7,14 @@
 div.memo {
   margin: 5px;
   border: 2px solid gray;
+  padding-bottom: 20px;
 }
-/* line 9, ../sass/_main.scss */
+/* line 10, ../sass/_main.scss */
 div.memo div.memo_title {
   font-weight: bold;
   font-size: 150%;
+}
+/* line 15, ../sass/_main.scss */
+div.memo div.button_list {
+  margin: 5px;
 }

@@ -23,6 +23,8 @@ db.define_table('checklist',
 db.checklist.user_email.writable = False
 db.checklist.user_email.readable = False
 db.checklist.updated_on.writable = db.checklist.updated_on.readable = False
+db.checklist.id.writable = db.checklist.id.readable = False
+
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
