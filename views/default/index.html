@@ -12,7 +12,15 @@
   </p>
 
   {{for cl in checklists:}}
-      <div class="checklist_title">{{=cl.title}}</div>
+      <div class="memo">
+          <div class="memo_title">{{=cl.title}}</div>
+          <div class="memo_content">{{=cl.memo}}</div>
+          <div class="container button_list">
+            <div class="right">
+              <button class="btn"><i class="fa fa-trash"></i></button>
+            </div>
+          </div>
+      </div>
   {{pass}}
 
   {{if not checklists:}}

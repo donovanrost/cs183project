@@ -2,3 +2,14 @@
 .colorful {
   color: #bb8833;
 }
+
+/* line 5, ../sass/_main.scss */
+div.memo {
+  margin: 5px;
+  border: 2px solid gray;
+}
+/* line 9, ../sass/_main.scss */
+div.memo div.memo_title {
+  font-weight: bold;
+  font-size: 150%;
+}

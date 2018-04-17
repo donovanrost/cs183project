@@ -1,3 +1,14 @@
 .colorful {
   color: $clrHilight;
 }
+
+div.memo {
+  margin: 5px;
+  border: 2px solid gray;
+
+  div.memo_title {
+    font-weight: bold;
+    font-size: 150%;
+  }
+
+}
