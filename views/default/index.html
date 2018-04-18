@@ -8,8 +8,9 @@
   <!-- Here goes your main HTML code. -->
   {{if auth.user is not None:}}
 
-  <p><a class="btn red" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Add</a>
-  </p>
+  <div class="add_btn">
+    <a class="btn red rounded" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Add</a>
+  </div>
 
   {{for cl in checklists:}}
       <div class="memo">

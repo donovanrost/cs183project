@@ -2,6 +2,17 @@
   color: $clrHilight;
 }
 
+div.main_content {
+  padding: 10px;
+}
+
+div.add_btn {
+  margin: 5px;
+  a {
+    padding: 10px;
+  }
+}
+
 div.memo {
   margin: 5px;
   border: 2px solid gray;
