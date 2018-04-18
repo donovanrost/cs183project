@@ -5,14 +5,20 @@
 div.memo {
   margin: 5px;
   border: 2px solid gray;
-  padding-bottom: 20px;
+  padding: 5px;
 
   div.memo_title {
     font-weight: bold;
     font-size: 150%;
   }
-
   div.button_list {
-    margin: 5px;
+    text-align: right;
+    div.buttons {
+      display: inline-block;
+    }
+    margin-top: 10px;
+    a.btn {
+      padding: 10px;
+    }
   }
 }

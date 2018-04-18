@@ -7,14 +7,23 @@
 div.memo {
   margin: 5px;
   border: 2px solid gray;
-  padding-bottom: 20px;
+  padding: 5px;
 }
 /* line 10, ../sass/_main.scss */
 div.memo div.memo_title {
   font-weight: bold;
   font-size: 150%;
 }
-/* line 15, ../sass/_main.scss */
+/* line 14, ../sass/_main.scss */
 div.memo div.button_list {
-  margin: 5px;
+  text-align: right;
+  margin-top: 10px;
+}
+/* line 16, ../sass/_main.scss */
+div.memo div.button_list div.buttons {
+  display: inline-block;
+}
+/* line 20, ../sass/_main.scss */
+div.memo div.button_list a.btn {
+  padding: 10px;
 }
