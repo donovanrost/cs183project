@@ -64,3 +64,64 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
+timestamp: 2018-04-20T17:50:46.248669
+CREATE TABLE "web2py_session_cs183project"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-04-20T18:12:26.661240
+ALTER TABLE "auth_user" ADD "city" CHAR(128);
+timestamp: 2018-04-20T18:12:26.673312
+ALTER TABLE "auth_user" ADD "postcode" CHAR(128);
+timestamp: 2018-04-20T18:12:26.674172
+ALTER TABLE "auth_user" ADD "address" CHAR(256);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2018-04-21T16:13:12.218924
+ALTER TABLE "auth_user" ADD "zip" CHAR(512);
+timestamp: 2018-04-21T16:13:12.227671
+ALTER TABLE "auth_user" ADD "phone" CHAR(512);
+success!
+timestamp: 2018-04-21T16:14:09.845708
+ALTER TABLE "auth_user" ADD "status" CHAR(512);
+timestamp: 2018-04-21T16:14:09.853971
+ALTER TABLE "auth_user" ADD "pic" CHAR(512);
+timestamp: 2018-04-21T16:14:09.865570
+ALTER TABLE "auth_user" ADD "listed_property" CHAR(512);
+timestamp: 2018-04-21T16:14:09.866784
+ALTER TABLE "auth_user" ADD "intrest_property" CHAR(512);
+success!
+timestamp: 2018-04-21T16:14:23.133153
+ALTER TABLE "auth_user" ADD "intrest_properties" CHAR(512);
+timestamp: 2018-04-21T16:14:23.143888
+ALTER TABLE "auth_user" ADD "listed_properties" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
