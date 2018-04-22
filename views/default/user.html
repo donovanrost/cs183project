@@ -15,8 +15,13 @@
             if not 'request_reset_password' in auth.settings.actions_disabled:
                 form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn btn-default')
             pass
-        pass
         =form
+        pass
+        elif request.args(0)=='profile':
+            # This allows us to customize the profile page
+            # I think we need to create its own controller and html (and eventaully css)
+            # because we want something much more complicated than just a SQLform  
+        pass
         }}
         </div>
     </div>

@@ -68,7 +68,6 @@ plugins = PluginManager()
 ## after auth = Auth(db)
 auth.settings.extra_fields['auth_user']= [
   Field('pic'),
-  Field('status'),
   Field('listed_properties'),
   Field('intrest_properties')]
 ## before auth.define_tables(username=True)
