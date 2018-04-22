@@ -58,4 +58,10 @@ def call():
     """
     return service()
 
+def profile():
+
+    return dict(form=auth.profile())
+
+
+
 

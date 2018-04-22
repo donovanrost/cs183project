@@ -20,7 +20,9 @@
         elif request.args(0)=='profile':
             # This allows us to customize the profile page
             # I think we need to create its own controller and html (and eventaully css)
-            # because we want something much more complicated than just a SQLform  
+            # because we want something much more complicated than just a SQLform
+            redirect(URL('profile'))
+
         pass
         }}
         </div>

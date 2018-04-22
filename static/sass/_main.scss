@@ -1,3 +1,28 @@
 .colorful {
   color: $clrHilight;
 }
+
+div.main_content{
+  div.left_side{
+    background-color: gray;
+
+    div.user_info {
+      background-color:wheat;
+      margin: 10px;
+      border: 2px solid red;
+      border-radius: 15px;
+    }
+
+  }
+  div.right_side {
+    div.property_info {
+      background-color: wheat;
+      margin: 10px;
+      border: 2px solid red;
+      border-radius: 15px;
+    }
+  }
+
+
+
+}

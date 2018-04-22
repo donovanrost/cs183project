@@ -2,3 +2,22 @@
 .colorful {
   color: #bb8833;
 }
+
+/* line 6, ../sass/_main.scss */
+div.main_content div.left_side {
+  background-color: gray;
+}
+/* line 9, ../sass/_main.scss */
+div.main_content div.left_side div.user_info {
+  background-color: wheat;
+  margin: 10px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
+/* line 18, ../sass/_main.scss */
+div.main_content div.right_side div.property_info {
+  background-color: wheat;
+  margin: 10px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
