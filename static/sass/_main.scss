@@ -11,7 +11,28 @@ div.main_content{
       margin: 10px;
       border: 2px solid red;
       border-radius: 15px;
+
+      img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        max-height: 200px;
+        border-radius: 50%;
+      }
+      div.user_text{
+        margin:15px;
+      }
     }
+    div.add_listing{
+      margin: 10px;
+
+      .btn{
+        background-color:orange; /* CHANGE THIS COLOR, ONLY HERE TO OVERIDE DEFAULT COLOR */
+      }
+
+    }
+
 
   }
   div.right_side {

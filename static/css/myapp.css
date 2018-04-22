@@ -14,7 +14,29 @@ div.main_content div.left_side div.user_info {
   border: 2px solid red;
   border-radius: 15px;
 }
-/* line 18, ../sass/_main.scss */
+/* line 15, ../sass/_main.scss */
+div.main_content div.left_side div.user_info img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  max-height: 200px;
+  border-radius: 50%;
+}
+/* line 23, ../sass/_main.scss */
+div.main_content div.left_side div.user_info div.user_text {
+  margin: 15px;
+}
+/* line 27, ../sass/_main.scss */
+div.main_content div.left_side div.add_listing {
+  margin: 10px;
+}
+/* line 30, ../sass/_main.scss */
+div.main_content div.left_side div.add_listing .btn {
+  background-color: orange;
+  /* CHANGE THIS COLOR, ONLY HERE TO OVERIDE DEFAULT COLOR */
+}
+/* line 39, ../sass/_main.scss */
 div.main_content div.right_side div.property_info {
   background-color: wheat;
   margin: 10px;
