@@ -57,7 +57,7 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
+@auth.requires_login()
 def profile():
 
     return dict(form=auth.profile())
