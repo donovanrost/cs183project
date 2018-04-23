@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 <!-- Edit the HTML for profile page here -->
 
-<div id="reset_password">
+<div id="profile">
     <div class="main_content container compressible">
         <div class="left_side container quarter max900">
             <div class="user_info ">
@@ -29,9 +29,34 @@
 
         <div class="right_side container threequarters max900 compressible">
             <div class="property_info">
-                <h1>Image</h1>
-                <h4>123 Fake Street</h4>
-                <h5>Santa Cruz, CA 12345</h5>
+                <h5 class="title">My Properties</h5>
+
+
+            <div class="property_key_image center spaced padded">
+                {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
+            </div>
+            <div class="modal" id="popup1">
+              <div class="twothirds rounded white padded">
+                <h2>Hello from modal</h2>
+                <a class="close" href="#">×</a>
+                <!--
+                HTML for a image carousel should go here
+                -->
+
+                <div class="right">
+                  <a class="close btn" href="#">close</a>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
 
             </div>
 
