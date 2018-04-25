@@ -3,9 +3,10 @@
   color: #bb8833;
 }
 
-/* line 6, ../sass/_main.scss */
-div.main_content div.left_side {
-  background-color: gray;
+/* line 5, ../sass/_main.scss */
+div.main_content {
+  padding: 10px;
+  padding-bottom: 30px;
 }
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {
@@ -37,7 +38,7 @@ div.main_content div.left_side div.add_listing .btn {
   background-color: orange;
   /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
 }
-/* line 40, ../sass/_main.scss */
+/* line 39, ../sass/_main.scss */
 div.main_content div.right_side div.property_info {
   background-color: wheat;
   margin: 10px;
@@ -53,40 +54,40 @@ div.main_content div.right_side div.property_info {
   /* Fading animation */
   /* On smaller screens, decrease text size */
 }
-/* line 46, ../sass/_main.scss */
+/* line 45, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .title {
   margin-left: 15px;
 }
-/* line 51, ../sass/_main.scss */
+/* line 50, ../sass/_main.scss */
 div.main_content div.right_side div.property_info div.property_key_image img {
   height: 300px;
   width: 100%;
 }
-/* line 57, ../sass/_main.scss */
+/* line 56, ../sass/_main.scss */
 div.main_content div.right_side div.property_info * {
   box-sizing: border-box;
 }
-/* line 58, ../sass/_main.scss */
+/* line 57, ../sass/_main.scss */
 div.main_content div.right_side div.property_info body {
   font-family: Verdana, sans-serif;
   margin: 0;
 }
-/* line 59, ../sass/_main.scss */
+/* line 58, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .mySlides {
   display: none;
 }
-/* line 60, ../sass/_main.scss */
+/* line 59, ../sass/_main.scss */
 div.main_content div.right_side div.property_info img {
   margin-left: auto;
   margin-right: auto;
 }
-/* line 67, ../sass/_main.scss */
+/* line 66, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .slideshow-container {
   max-width: 700px;
   position: relative;
   margin: auto;
 }
-/* line 75, ../sass/_main.scss */
+/* line 74, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next {
   cursor: pointer;
   position: absolute;
@@ -100,16 +101,16 @@ div.main_content div.right_side div.property_info .prev, div.main_content div.ri
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
 }
-/* line 90, ../sass/_main.scss */
+/* line 89, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-/* line 96, ../sass/_main.scss */
+/* line 95, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .prev:hover, div.main_content div.right_side div.property_info .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 101, ../sass/_main.scss */
+/* line 100, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .text {
   color: #f2f2f2;
   font-size: 15px;
@@ -119,7 +120,7 @@ div.main_content div.right_side div.property_info .text {
   width: 100%;
   text-align: center;
 }
-/* line 112, ../sass/_main.scss */
+/* line 111, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .numbertext {
   color: #f2f2f2;
   font-size: 12px;
@@ -127,7 +128,7 @@ div.main_content div.right_side div.property_info .numbertext {
   position: absolute;
   top: 0;
 }
-/* line 121, ../sass/_main.scss */
+/* line 120, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .dot {
   cursor: pointer;
   height: 15px;
@@ -138,11 +139,11 @@ div.main_content div.right_side div.property_info .dot {
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-/* line 132, ../sass/_main.scss */
+/* line 131, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .active, div.main_content div.right_side div.property_info .dot:hover {
   background-color: #717171;
 }
-/* line 137, ../sass/_main.scss */
+/* line 136, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
@@ -166,7 +167,7 @@ div.main_content div.right_side div.property_info .fade {
   }
 }
 @media only screen and (max-width: 300px) {
-  /* line 156, ../sass/_main.scss */
+  /* line 155, ../sass/_main.scss */
   div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next, div.main_content div.right_side div.property_info .text {
     font-size: 11px;
   }

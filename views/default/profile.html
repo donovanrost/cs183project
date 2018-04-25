@@ -1,75 +1,25 @@
-{{extend 'layout.html'}}
+
+{{extend 'usr_layout.html'}}
 <!-- Edit the HTML for profile page here -->
 
 <div id="profile">
-    <div class="main_content container compressible">
-        <div class="left_side container quarter max900">
-            <div class="user_info ">
-                {{if auth.user.picture is None:}}
-                    <!--This the statically served default profile picture -->
-                    {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}
-                {{else:}}
-                    <!--This should be the users uploaded profile picture.... if it ever works -->
-                    {{=A(IMG(_src=URL('default', 'download', args=auth.user.picture), _alt="default user image"))}}
-                {{pass}}
-                <div class="user_text">
-                    <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
-                    <h6>My Rentals</h6>
-                    <h6>My Listings</h6>
-                    <h6>Interesting Properties</h6>
-                </div>
-
-            </div>
-
-            <div class="add_listing">
-                <div class="add_btn">
-                    <a class="btn red rounded" href="{{=URL('default', 'add')}}">
-                        <i class="fa fa-plus"></i>
-                        Add Listing
-                    </a>
-                </div>
-
-            </div>
-
-
+        <div class="property_info">
+            <h5 class="title">My Properties</h5>
+        <div class="property_key_image center spaced padded">
+            {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
         </div>
+        <div class="modal" id="popup1">
+          <div class="twothirds rounded white padded">
+            <h2>Hello from modal</h2>
+            <a class="close" href="#">×</a>
+            <!--
+            HTML for a image carousel should go here
+            -->
 
-        <div class="right_side container threequarters max900 compressible">
-            <div class="property_info">
-                <h5 class="title">My Properties</h5>
-
-
-            <div class="property_key_image center spaced padded">
-                {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
+            <div class="right">
+              <a class="close btn" href="#">close</a>
             </div>
-            <div class="modal" id="popup1">
-              <div class="twothirds rounded white padded">
-                <h2>Hello from modal</h2>
-                <a class="close" href="#">×</a>
-                <!--
-                HTML for a image carousel should go here
-                -->
-
-                <div class="right">
-                  <a class="close btn" href="#">close</a>
-                </div>
-              </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-            </div>
-
+          </div>
         </div>
-
-    </div>
-
-
+        </div>
 </div>
