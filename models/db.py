@@ -67,9 +67,10 @@ plugins = PluginManager()
 
 ## after auth = Auth(db)
 auth.settings.extra_fields['auth_user']= [
-  Field('pic'),
-  Field('listed_properties'),
-  Field('intrest_properties')]
+    Field('picture', 'upload', uploadfield='picture_file', writable=True),
+    Field('picture_file', 'blob', writable=True),
+    Field('listed_properties'),
+    Field('interest_properties')]
 ## before auth.define_tables(username=True)
 
 # create all tables needed by auth if not custom tables
