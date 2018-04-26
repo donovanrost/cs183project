@@ -65,6 +65,62 @@ auth = Auth(db, host_names=myconf.get('host.names'))
 service = Service()
 plugins = PluginManager()
 
+auth.settings.extra_fields['auth_user']= [
+    Field('picture', 'upload', uploadfield='picture_file', writable=True),
+    Field('picture_file', 'blob', writable=True)
+]
+db.define_table('address',
+                Field('street', type='string'),
+                Field('zip_code', type='integer'),
+                Field('city', type='string'),
+                Field('state', type='string')
+                )
+db.define_table('property',
+                Field('who_rents', db.rental_group.group_id),   # This feels wrong, not sure it will work
+                Field('owner', db.auth_user),
+                Field('address', db.address),
+                Field('max_occupants', type='integer'),
+                Field('number_of_bedrooms', type='integer'),
+                Field('number_of_bathrooms', type='integer'),
+                Field('property_type', db.property_type),
+                Field('proof_ownership'),
+                Field('price_per_month'),
+                Field('history', db.rental_history)
+                )
+# in real life there are different types of properties
+# e.g., apartments, houses, flats, maybe just a room
+# as of now, i think these should be rows in the database, not columns
+# I might be wrong about that
+db.define_table('property_type',
+                Field('type', type='string')
+                )
+db.define_table('group')
+
+# something about this feels off to me and I can't quite place it
+db.define_table('rental_group',
+                Field('group_id'),
+                Field('member', db.auth_user),
+                Field('percent_of_rent'),
+                Field('active', type='boolean'),    # is a user active in the group or not
+                Field('joined_date'),               # when a user joined the group
+                Field('left_date')                  # when a user left the group
+                )
+# users can 'like' a property
+db.define_table('liked_properties',
+                Field('property', db.property),
+                Field('user_who_liked', db.auth_user)
+                )
+# why not have the option to record the history of a property
+# over time.
+# this will probably go unused for the project, but I was just
+# thinking about it
+db.define_table('rental_history',
+                Field('property', db.property),
+                Field('group', db.rental_group)
+                )
+
+
+
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
