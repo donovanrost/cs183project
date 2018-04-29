@@ -12,6 +12,7 @@
     <a class="btn red rounded" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Add</a>
   </div>
 
+	<h3>Memos</h3>
   {{for cl in checklists:}}
       <div class="memo">
         <div class="memo_text">
@@ -21,17 +22,40 @@
         <div>
           <div class="button_list">
             <div class="buttons">
-              <a class="btn rounded" href="{{=URL('default', 'edit', args=[cl.id])}}">
-                <i class="fa fa-edit fa-lg"></i>
-              </a>
-              <a class="btn rounded red" href="{{=URL('default', 'delete', args=[cl.id], user_signature=True)}}">
-                <i class="fa fa-trash fa-lg"></i>
-              </a>
+                {{if cl.user_email == auth.user.email:}}
+                <a class="btn rounded" href="{{=URL('default', 'toggle_public', args=[cl.id], user_signature=True)}}">
+                    {{if cl.is_public == True:}}
+                        <i class="fa fa-users fa-lg"></i>
+                    {{else:}}
+                        <i class=" fa fa-user fa-lg"></i>
+                    {{pass}}</a>
+                    <a class="btn rounded" href="{{=URL('default', 'edit', args=[cl.id])}}">
+                        <i class="fa fa-edit fa-lg"></i>
+                    </a>
+                    <a class="btn rounded red" href="{{=URL('default', 'delete', args=[cl.id], user_signature=True)}}">
+                        <i class="fa fa-trash fa-lg"></i>
+                    </a>
+                {{else:}}
+                    <a class="btn rounded">
+                        {{if cl.is_public == True:}}
+                        <i class="fa fa-users fa-lg"></i>
+                        {{else:}}
+                            <i class="fa fa-user fa-lg"></i>
+                        {{pass}}</a>
+                    <a class="btn rounded">
+                            <i class="fa fa-edit fa-lg"></i>
+                    </a>
+                    <a class="btn rounded red">
+                        <i class="fa fa-trash fa-lg"></i>
+                    </a>
+                {{pass}}
+
             </div>
           </div>
         </div>
       </div>
   {{pass}}
+
 
   {{if not checklists:}}
 
@@ -39,17 +63,36 @@
 
   {{pass}}
 
-  {{else:}}
+  {{else:}}  <!--WHEN USER IS NONE or LOGGED OFF -->
 
-   <h1 class="main_title">Welcome!</h1>
+	<h1 class="main_title">Welcome!</h1>
+	<p class="explanation">This site will help you organize your life by storing your checklists.
+		Please log in to use it.</p>
+	<div class="login_button">
+			<a href="{{=URL('default', 'user')}}" class="btn">Login</a>
+	</div>
 
-    <p class="explanation">This site will help you organize your life by storing your checklists.
-        Please log in to use it.</p>
+	<h3 class="public_memos">Public Memos</h3>
+		{{for cl in checklists:}}
+				<div class="memo">
+        			<div class="memo_text">
+          				<div class="memo_title">{{=cl.title}}</div>
+          				<div class="memo_content">{{=cl.memo}}</div>
+        			</div>
+					<div>
+          				<div class="button_list">
+            				<div class="buttons">
+								<a class="btn rounded">
+									<i class="fa fa-users"></i>
+								</a>
+							</div>
+          				</div>
+        			</div>
+      			</div>
+		{{pass}}
 
-    <div class="login_button">
-        <a href="{{=URL('default', 'user')}}" class="btn">Login</a>
-    </div>
 
   {{pass}}
+
 
 </div>

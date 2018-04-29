@@ -20,7 +20,10 @@ def index():
     logger.info('The session is: %r' % session)
     checklists = None
     if auth.user is not None:
-        checklists = db(db.checklist.user_email == auth.user.email).select()
+        checklists = db(db.checklist.user_email == auth.user.email).select() and \
+                     db(db.checklist.is_public is True).select(db.checklist.ALL)
+    else:
+        checklists = db(db.checklist.is_public is True).select(db.checklist.ALL)
     return dict(checklists=checklists)
 
 
@@ -39,14 +42,28 @@ def add():
     return dict(form=form)
 
 @auth.requires_login()
+def toggle_public():
+    if request.args(0) is not None:
+        q = ((db.checklist.user_email == auth.user.email) &
+             (db.checklist.id == request.args(0)))
+        row = db(q).select().first()
+        if row.is_public == True:
+            row.update_record(is_public = False)
+            session.flash = T("The Memo is now private!")
+        else:
+            row.update_record(is_public = True)
+            session.flash = T("The memo is now public!")
+    redirect(URL('default', 'index'))
+
+@auth.requires_login()
 @auth.requires_signature()
 def delete():
     if request.args(0) is not None:
         q = ((db.checklist.user_email == auth.user.email) &
              (db.checklist.id == request.args(0)))
+
         db(q).delete()
     redirect(URL('default', 'index'))
-
 
 @auth.requires_login()
 def edit():
@@ -75,7 +92,7 @@ def edit():
             session.flash = T('Checklist edited.')
             redirect(URL('default', 'index'))
         elif form.errors:
-            session.flash = T('Please enter correct values.')
+                session.flash = T('Please enter correct values.')
     return dict(form=form)
 
 def user():
@@ -94,6 +111,7 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+
     return dict(form=auth())
 
 
