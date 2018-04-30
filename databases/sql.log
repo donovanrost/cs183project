@@ -64,7 +64,11 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
+<<<<<<< HEAD
 timestamp: 2018-04-20T17:50:46.248669
+=======
+timestamp: 2018-04-21T17:31:29.986440
+>>>>>>> master
 CREATE TABLE "web2py_session_cs183project"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "locked" CHAR(1),
@@ -75,6 +79,7 @@ CREATE TABLE "web2py_session_cs183project"(
     "session_data" BLOB
 );
 success!
+<<<<<<< HEAD
 timestamp: 2018-04-20T18:12:26.661240
 ALTER TABLE "auth_user" ADD "city" CHAR(128);
 timestamp: 2018-04-20T18:12:26.673312
@@ -195,3 +200,5 @@ success!
 success!
 success!
 >>>>>>> 69f3cfebe240a6701c367e7f1fbfca3b32a1407e
+=======
+>>>>>>> master
