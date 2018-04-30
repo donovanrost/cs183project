@@ -65,7 +65,7 @@ auth = Auth(db, host_names=myconf.get('host.names'))
 service = Service()
 plugins = PluginManager()
 
-<<<<<<< HEAD
+
 ## after auth = Auth(db)
 auth.settings.extra_fields['auth_user']= [
     Field('picture', 'upload', uploadfield='picture_file', writable=True),
@@ -77,8 +77,6 @@ auth.settings.extra_fields['auth_user']= [
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
-auth.define_tables()
-=======
 
 auth.settings.extra_fields['auth_user'] = [
     Field('picture', 'upload', uploadfield='picture_file', writable=True),
@@ -146,11 +144,6 @@ auth.settings.extra_fields['auth_user'] = [
     ]
 
 
-
-
-
-
->>>>>>> master
 
 # configure email
 mail = auth.settings.mailer
