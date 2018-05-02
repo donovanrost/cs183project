@@ -29,11 +29,11 @@ div.main_content div.left_side div.user_info div.user_text {
   margin: 15px;
 }
 /* line 27, ../sass/_main.scss */
-div.main_content div.left_side div.add_listing {
+div.main_content div.left_side div.button_list {
   margin: 10px;
 }
 /* line 30, ../sass/_main.scss */
-div.main_content div.left_side div.add_listing .btn {
+div.main_content div.left_side div.button_list .btn {
   float: left;
   background-color: orange;
   /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
