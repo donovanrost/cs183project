@@ -60,9 +60,34 @@ def call():
     return service()
 @auth.requires_login()
 def profile():
+    q = db.auth_user.picture
+    pic = db(q).select().first()
 
-    return dict(form=auth.profile())
 
+    return locals()
+
+def register():
+    return dict(form=auth.register())
+
+@auth.requires_login()
+def add_new_property():
+
+    form = SQLFORM.factory(db.address, db.property)
+
+    if form.accepts(request.vars):
+        _id = db.address.insert(**db.address._filter_fields(form.vars))
+        form.vars.address=_id
+        _id = db.property.insert(**db.property._filter_fields(form.vars))
+        response.flash = 'ehh'
+
+
+    return dict(form=form)
+
+@auth.requires_login()
+def change_user_image():
+
+    form = SQLFORM(db.auth_user.picture)
+    return dict(form=form)
 
 
 

@@ -1,7 +1,5 @@
-{{extend 'layout.html'}}
 
-<div class="main_content ">
-    <div class="left_side left container quarter max900">
+
         <div class="user_info ">
             {{if auth.user.picture is None:}}
                 <!--This the statically served default profile picture -->
@@ -10,7 +8,7 @@
                 <!--This should be the users uploaded profile picture.... if it ever works -->
 
 
-                {{=A(IMG(_src=URL('default', 'download', args=auth.user.picture), _alt="default user image"))}}
+                {{=A(IMG(_src=URL('default', 'download', args=db.auth.user.picture), _alt="default user image"))}}
             {{pass}}
             <div class="user_text">
                 <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
@@ -29,10 +27,5 @@
             </div>
 
         </div>
-    </div>
 
-    <div class="right_side container threequarters max900 compressible">
-        {{include}}
-    </div>
 
-</div>
