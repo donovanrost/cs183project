@@ -41,3 +41,12 @@ div.memo div.button_list div.buttons {
 div.memo div.button_list a.btn {
   padding: 10px;
 }
+
+.home_text{
+  text-align: center;
+}
+
+div.home_text p.explanation{
+  text-align: center;
+}
+
