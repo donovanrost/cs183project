@@ -1,0 +1,84 @@
+{{extend 'usr_layout.html'}}
+
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var users_url = "{{=URL('groups', 'get_users', user_signature=True)}}";
+    var groups_url = "{{=URL('groups', 'get_groups', user_signature=True)}}";
+    var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
+    var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
+    var add_member_url = "{{=URL('groups', 'add_member', user_signature=True)}}";
+    var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
+</script>
+{{end}}
+
+
+<div class="main_content">
+
+
+
+    <div id="vue-div" class="display:none">
+
+        <div class="group_info">
+            <h5 class="title">Groups</h5>
+            <button v-if="!is_adding_group" class="btn padded rounded" v-on:click="add_group_button()">
+                <i class="fa fa-plus"></i> Create New Group
+            </button>
+            <button v-if="is_adding_group" class="btn padded rounded" >
+                <i class="fa fa-plus"></i> Submit
+            </button>
+            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="cancel_add_group()">
+                <i class="fa fa-times"></i> Cancel
+            </button>
+            <div v-if="is_adding_group" class="members">
+                <table class="member_table">
+                    <thead>
+                        <th>Members</th>
+                        <th></th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="mem in members">
+                            <td>${mem.picture}</td>
+                            <td>${mem.email}</td>
+                            <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem.email)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div v-if="is_adding_group" class="group_search">
+            <h5 class="title">Add Groupmates</h5>
+            <table class="user_table">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>User</th>
+                        <th>add ?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="usr in users">
+                        <td>${usr.picture}</td>
+                        <td>${usr.email}</td>
+                        <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr.email)"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-if="has_more" class="show_more">
+                <button class="btn btn-default rounded" v-on:click="get_more()">
+                    <i class="fa fa-ellipsis-h"></i> Load more
+                </button>
+            </div>
+        </div>
+
+
+
+    </div>
+    
+</div>
+
+
+
+<script src="{{=URL('static', 'js/groups.js')}}"></script>

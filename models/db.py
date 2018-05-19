@@ -71,7 +71,8 @@ auth.settings.extra_fields['auth_user']= [
     Field('picture', 'upload', uploadfield='picture_file', writable=True),
     Field('picture_file', 'blob', writable=True),
     Field('listed_properties'),
-    Field('interest_properties')]
+    Field('interest_properties')
+]
 ## before auth.define_tables(username=True)
 
 # create all tables needed by auth if not custom tables
@@ -94,11 +95,15 @@ db.define_table('address',
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
                 Field('group_id'),
-                Field('group_member', db.auth_user),  #should be an auth_user
-                Field('percent_of_rent'),
-                Field('is_active', type='boolean'),    # is a user active in the group or not
-                Field('joined_date'),               # when a user joined the group
-                Field('left_date')                  # when a user left the group
+                Field('is_active', type='boolean'),     # is a user active in the group or not
+                Field('date_created')                  # when a user joined the group
+                )
+
+db.define_table('group_member',
+                Field('user_email'),
+                Field('group_id', 'reference rental_group'),
+                Field('is_pending', type='boolean'),
+                Field('is_active', type='boolean')
                 )
 
 # in real life there are different types of properties

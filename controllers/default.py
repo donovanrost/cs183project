@@ -64,3 +64,9 @@ def profile():
 
     return dict(form=auth.profile())
 
+@auth.requires_login()
+def new_group():
+    users = db().select(db.auth_user.ALL)
+    return dict(users=users)
+
+
