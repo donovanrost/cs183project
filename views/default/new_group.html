@@ -9,6 +9,7 @@
     var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
     var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
     var add_member_url = "{{=URL('groups', 'add_member', user_signature=True)}}";
+    var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
 </script>
 {{end}}
@@ -42,7 +43,7 @@
                         <tr v-for="mem in members">
                             <td>${mem.picture}</td>
                             <td>${mem.user_email}</td>
-                            <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem.email)"></i></td>
+                            <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem.user_email, mem.group_id)"></i></td>
                         </tr>
                     </tbody>
                 </table>

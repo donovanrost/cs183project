@@ -59,6 +59,11 @@ def get_members():
         members=members
     ))
 
+def del_member():
+    "Deletes a track from the table"
+    db(db.group_member.user_email == request.vars.user_email).delete()
+    return "ok"
+
 
 @auth.requires_signature()
 def add_member():

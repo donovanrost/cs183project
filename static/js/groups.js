@@ -97,8 +97,13 @@ var app = function() {
             );
     };
 
-    self.remove_from_group = function(user_email){
-
+    self.remove_from_group = function(user_email, group_id){
+        $.post(del_member_url,
+            { user_email: user_email},
+            function () {
+                self.get_members(group_id)
+            }
+        )
     };
 
     self.cancel_add_group = function(){
