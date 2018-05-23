@@ -102,8 +102,8 @@ db.define_table('rental_group',
 db.define_table('group_member',
                 Field('user_email'),
                 Field('group_id', 'reference rental_group'),
-                Field('is_pending', type='boolean'),
-                Field('is_active', type='boolean')
+                Field('is_pending', type='boolean', default=False),
+                Field('is_active', type='boolean', defautl=False)
                 )
 
 # in real life there are different types of properties

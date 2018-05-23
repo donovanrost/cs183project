@@ -67,7 +67,7 @@ var app = function() {
             },
             function (data){
             self.vue.members = data.members;
-            enumerate(self.vue.groups);
+            enumerate(self.vue.members);
         });
     };
 
@@ -91,7 +91,9 @@ var app = function() {
                 user_email: user_email,
                 group_id: self.insertion_id
             },
-            function () {}
+            function () {
+                self.get_members();
+            }
             );
     };
 
@@ -127,7 +129,6 @@ var app = function() {
 
     });
 
-    self.get_members();
     self.get_users();
     $("#vue-div").show();
 

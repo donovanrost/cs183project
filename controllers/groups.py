@@ -34,24 +34,25 @@ def get_users():
 def get_groups():
     groups =[]
     rows = db().select(db.rental_group.ALL)
-    for r in enumerate(rows):
+    for i, r in enumerate(rows):
         grp = dict(
-            id = r.id
+            group_id = r.group_id
         )
         groups.append(grp)
     return response.json(dict(
         groups=groups
     ))
 
-@auth.requires_signature()
+
 def get_members():
     members=[]
+    group_id = request.vars.group_id
     rows = db().select(db.group_member.ALL)
-    for r in enumerate(rows):
+    for i, r in enumerate(rows):
         mem = dict(
-            id = r.id,
-            picture=r.picture,
-            email=r.email
+            group_id=r.group_id,
+            user_email = r.user_email,
+            is_active = r.is_active,
         )
         members.append(mem)
     return response.json(dict(
