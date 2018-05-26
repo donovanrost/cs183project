@@ -26,7 +26,7 @@
             <button v-if="!is_adding_group" class="btn padded rounded" v-on:click="add_group_button()">
                 <i class="fa fa-plus"></i> Create New Group
             </button>
-            <button v-if="is_adding_group" class="btn padded rounded" >
+            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="submit_group_button()" >
                 <i class="fa fa-plus"></i> Submit
             </button>
             <button v-if="is_adding_group" class="btn padded rounded" v-on:click="cancel_add_group()">

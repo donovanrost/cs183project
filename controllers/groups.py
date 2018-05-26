@@ -44,9 +44,21 @@ def get_groups():
     ))
 
 
+def add_group():
+    g_id = db.rental_group.insert(
+        group_id=request.vars.insertion_id,
+        is_active = True
+    )
+
+    return response.json(dict(member=dict(
+        id=g_id,
+        group_id=request.vars.insertion_id,
+        is_active=True
+    )))
+
 def get_members():
     members=[]
-    group_id = request.vars.group_id
+    #q = (db.group_member.group_id == request.vars.group_id)
     rows = db().select(db.group_member.ALL)
     for i, r in enumerate(rows):
         mem = dict(

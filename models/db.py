@@ -95,7 +95,7 @@ db.define_table('address',
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
                 Field('group_id'),
-                Field('is_active', type='boolean'),     # is a user active in the group or not
+                Field('is_active', type='boolean', default=False),     # is a user active in the group or not
                 Field('date_created')                  # when a user joined the group
                 )
 

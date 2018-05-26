@@ -76,9 +76,16 @@ var app = function() {
         self.vue.is_adding_group = true;
     };
 
+    self.submit_group_button = function() {
+        self.vue.is_adding_group = false;
+        self.vue.add_group();
+    };
+
     self.add_group = function() {
         $.post(add_group_url,
-
+            {
+              group_id: self.insertion_id
+            },
             function (data) {
                self.is_adding_group = false;
             });
@@ -126,6 +133,7 @@ var app = function() {
         methods: {
             get_more: self.get_more,
             add_group_button: self.add_group_button,
+            submit_group_button: self.submit_group_button,
             add_group: self.add_group,
             cancel_add_group: self.cancel_add_group,
             add_to_group: self.add_to_group,
