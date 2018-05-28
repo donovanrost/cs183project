@@ -113,7 +113,17 @@ var app = function() {
         )
     };
 
+    self.clean_up_memebers = function(group_id){
+        $.post(clean_members_url,
+            { group_id: group_id},
+            function () {
+                self.vue.members = [];
+            }
+        )
+    };
+
     self.cancel_add_group = function(){
+        self.clean_up_memebers(self.vue.insertion_id);
         self.vue.is_adding_group = false;
         self.insertion_id = null;
     };

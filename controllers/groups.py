@@ -77,6 +77,10 @@ def del_member():
     return "ok"
 
 
+def clean_members():
+    db(db.rental_group.group_id == request.vars.group_id).delete()
+    return "ok"
+
 @auth.requires_signature()
 def add_member():
     m_id = db.group_member.insert(
