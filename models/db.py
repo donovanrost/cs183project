@@ -76,16 +76,11 @@ def get_user_id():
     return auth.user.id if auth.user is not None else None
 
 db.define_table('address',
-                Field('LON', type='double'),
-                Field('LAT', type='double'),
-                Field('number_', type='integer'),
                 Field('street', type='string'),
-                Field('unit', type='string'),
                 Field('city', type='string'),
-                Field('district', type='string'),
-                Field('region', type='string'),
-                Field('postcode', type='string'),
+                Field('zip', type='string'),
                 Field('state_', type='string'),
+                Field('hash_', type='string'),
                 )
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
@@ -112,15 +107,16 @@ db.define_table('property_type',
 #defined up here, extened later to deal with cyclic dependencies
 db.define_table('rental_history')
 
-
-
 db.define_table('property',
                 Field('who_rents', 'reference rental_group', readable=False, writable=False),   # This feels wrong, not sure it will work
                 Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),    #should be an auth_user
                 Field('address', db.address, unique=True),
                 Field('max_occupants', type='integer'),
-                Field('number_of_bedrooms', type='integer'),
-                Field('number_of_bathrooms', type='integer'),
+              #  Field('number_of_bedrooms', type='integer'),
+               # Field('number_of_bathrooms', type='integer'),
+                Field('num_bedrooms', type='integer'),
+                Field('num_fullbaths', type='integer'),
+                Field('num_halfbaths', type='integer'),
                 Field('property_type', db.property_type),     #db.property_type
                 Field('proof_ownership'),
                 Field('price_per_month'),

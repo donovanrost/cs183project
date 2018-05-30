@@ -71,15 +71,13 @@ def register():
 
 @auth.requires_login()
 def add_new_property():
+    form = SQLFORM.factory(db.address)
 
-    form = SQLFORM.factory(db.address, db.property)
+    return dict(form=form)
 
-    if form.accepts(request.vars):
-        _id = db.address.insert(**db.address._filter_fields(form.vars))
-        form.vars.address=_id
-        _id = db.property.insert(**db.property._filter_fields(form.vars))
-        response.flash = 'ehh'
-
+@auth.requires_login()
+def testpage():
+    form = SQLFORM(db.address)
 
     return dict(form=form)
 
@@ -88,6 +86,9 @@ def change_user_image():
 
     form = SQLFORM(db.auth_user.picture)
     return dict(form=form)
+
+
+
 
 
 
