@@ -29,8 +29,20 @@
 
             <div class="my_groups">
                 <div v-for="group in groups">
-                    <p>${group.group_id}</p>
-                    <button class="btn padded rounded" v-on:click="edit_group_button(group.group_id)">
+                    <h6 class="padded">${group.group_name}</h6>
+                    <div class="padded" id="member_list">
+                        <table class="members">
+                            <thead>
+                                <th>Members</th>
+                            </thead>
+                            <tbody >
+                                <tr v-for="mem in group.group_members">
+                                    <td>${mem.user_email}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn rounded right" v-on:click="edit_group_button(group.group_id)">
                         <i class="fa fa-edit"></i>
                     </button>
                     <div v-if="group.is_editing" class="button_list">
@@ -50,13 +62,11 @@
             <button v-if="!is_adding_group" class="btn padded rounded" v-on:click="add_group_button()">
                 <i class="fa fa-plus"></i> Create New Group
             </button>
-            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="submit_group_button()" >
-                <i class="fa fa-plus"></i> Submit
-            </button>
-            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="cancel_add_group()">
-                <i class="fa fa-times"></i> Cancel
-            </button>
+
             <div v-if="is_adding_group" class="members">
+                <form>
+                    <input class="string" v-model="form_name" placeholder="Enter your Group Name" type="text">
+                </form>
                 <table class="member_table">
                     <thead>
                         <th>Members</th>
@@ -72,6 +82,12 @@
                     </tbody>
                 </table>
             </div>
+            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="submit_group_button()" >
+                <i class="fa fa-plus"></i> Submit
+            </button>
+            <button v-if="is_adding_group" class="btn padded rounded" v-on:click="cancel_add_group()">
+                <i class="fa fa-times"></i> Cancel
+            </button>
         </div>
         <div v-if="is_adding_group" class="group_search">
             <h5 class="title">Add Groupmates</h5>
@@ -98,12 +114,9 @@
             </div>
         </div>
 
-
-
     </div>
     
 </div>
-
-
+        
 
 <script src="{{=URL('static', 'js/groups.js')}}"></script>

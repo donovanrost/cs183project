@@ -60,10 +60,10 @@ var app = function() {
         });
     };
 
-    self.get_members= function() {
+    self.get_members= function(group_id) {
         $.getJSON(members_url,
             {
-                group_id: self.insertion_id
+                group_id: group_id
             },
             function (data){
             self.vue.members = data.members;
@@ -82,23 +82,26 @@ var app = function() {
 
     self.add_group = function() {
         $.post(add_group_url,
+            {
+                group_name: self.vue.form_name
+            },
             function (data) {
                 self.add_group_members(data.group.id);
                 self.is_adding_group = false;
                 self.vue.members = [];
+                self.vue.form = "";
                 self.get_groups();
             });
     };
 
     self.delete_group = function(group_id) {
-       $.post(delete_group_url,
+        $.post(delete_group_url,
            {
                group_id: group_id
            },
            function (data) {
                self.get_groups();
                enumerate(self.vue.groups);
-               self.cancel_edit_group();
        });
     };
 
@@ -125,7 +128,7 @@ var app = function() {
         }
     };
 
-    self.clean_up_memebers = function(group_id){
+    self.clean_up_members = function(group_id){
         $.post(clean_members_url,
             { group_id: group_id},
             function () {
@@ -135,7 +138,7 @@ var app = function() {
     };
 
     self.cancel_add_group = function(){
-        self.clean_up_memebers(self.insertion_id);
+        self.clean_up_members(self.insertion_id);
         self.delete_group(self.insertion_id);
         self.vue.is_adding_group = false;
         self.insertion_id = null;
@@ -172,6 +175,7 @@ var app = function() {
             groups: [],
             users: [],
             members: [],
+            form_name: null,
             logged_in: false,
             has_more: false
         },

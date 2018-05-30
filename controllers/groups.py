@@ -42,8 +42,11 @@ def get_groups():
     q = (db.group_member.user_email == auth.user.email)
     rows= db(q).select(db.group_member.ALL)
     for i, r in enumerate(rows):
+        gr = db(db.rental_group.id == r.group_id).select().first()
         grp = dict(
-            group_id = r.group_id
+            group_id = r.group_id,
+            group_name = gr.group_name,
+            group_members = get_group_members(r.group_id)
         )
         groups.append(grp)
 
@@ -55,7 +58,8 @@ def get_groups():
 def add_group():
     members = request.vars.members
     g_id = db.rental_group.insert(
-        is_active = True
+        is_active = True,
+        group_name = request.vars.group_name
     )
 
     return response.json(dict(group=dict(
@@ -68,6 +72,19 @@ def delete_group():
     db(db.group_member.group_id == request.vars.group_id).delete()
     db(db.rental_group.group_id == request.vars.group_id).delete()
     return "ok"
+
+def get_group_members(group_id):
+    members = []
+    q = (db.group_member.group_id == group_id)
+    rows = db(q).select(db.group_member.ALL)
+    for i, r in enumerate(rows):
+        mem = dict(
+            group_id=r.group_id,
+            user_email=r.user_email,
+            is_active=r.is_active
+        )
+        members.append(mem)
+    return members
 
 def get_members():
     members=[]
