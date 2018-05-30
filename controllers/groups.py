@@ -7,6 +7,13 @@ def get_insertion_id():
         insertion_id=insertion_id
     ))
 
+def is_editing():
+    q = (db.rental_group.id == request.vars.group_id)
+    group = db(q).select().first()
+    group.is_editing = not group.is_editing
+    group.update_record()
+    return "ok"
+
 def get_users():
     start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
     end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
@@ -30,43 +37,50 @@ def get_users():
         has_more=has_more,
     ))
 
-@auth.requires_signature()
 def get_groups():
     groups =[]
-    rows = db().select(db.rental_group.ALL)
+    q = (db.group_member.user_email == auth.user.email)
+    rows= db(q).select(db.group_member.ALL)
     for i, r in enumerate(rows):
         grp = dict(
             group_id = r.group_id
         )
         groups.append(grp)
+
     return response.json(dict(
         groups=groups
     ))
 
-
+@auth.requires_signature()
 def add_group():
+    members = request.vars.members
     g_id = db.rental_group.insert(
-        group_id=request.vars.insertion_id,
         is_active = True
     )
 
-    return response.json(dict(member=dict(
+    return response.json(dict(group=dict(
         id=g_id,
-        group_id=request.vars.insertion_id,
-        is_active=True
+        is_active=True,
+        members=members
     )))
+
+def delete_group():
+    db(db.group_member.group_id == request.vars.group_id).delete()
+    db(db.rental_group.group_id == request.vars.group_id).delete()
+    return "ok"
 
 def get_members():
     members=[]
-    #q = (db.group_member.group_id == request.vars.group_id)
-    rows = db().select(db.group_member.ALL)
+    q = (db.group_member.group_id == request.vars.group_id)
+    rows = db(q).select(db.group_member.ALL)
     for i, r in enumerate(rows):
         mem = dict(
             group_id=r.group_id,
             user_email = r.user_email,
-            is_active = r.is_active,
+            is_active = r.is_active
         )
         members.append(mem)
+
     return response.json(dict(
         members=members
     ))
@@ -76,20 +90,20 @@ def del_member():
     db(db.group_member.user_email == request.vars.user_email).delete()
     return "ok"
 
-
 def clean_members():
+    "deletes members of a group not successfully added "
     db(db.rental_group.group_id == request.vars.group_id).delete()
     return "ok"
 
 @auth.requires_signature()
 def add_member():
     m_id = db.group_member.insert(
-        group_id  = request.vars.insertion_id,
+        group_id  = request.vars.group_id,
         user_email = request.vars.user_email
     )
 
     return response.json(dict(member=dict(
         id = m_id,
-        group_id=request.vars.insertion_id,
+        group_id=request.vars.group_id,
         user_email=request.vars.user_email
     )))

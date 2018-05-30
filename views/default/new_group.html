@@ -8,8 +8,10 @@
     var groups_url = "{{=URL('groups', 'get_groups', user_signature=True)}}";
     var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
     var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
+    var toggle_is_editing = "{{=URL('groups', 'is_editing', user_signature=True)}}";
     var add_member_url = "{{=URL('groups', 'add_member', user_signature=True)}}";
     var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
+    var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
     var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
 </script>
@@ -24,6 +26,27 @@
 
         <div class="group_info">
             <h5 class="title">Groups</h5>
+
+            <div class="my_groups">
+                <div v-for="group in groups">
+                    <p>${group.group_id}</p>
+                    <button class="btn padded rounded" v-on:click="edit_group_button(group.group_id)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <div v-if="group.is_editing" class="button_list">
+                        <button class="btn padded rounded">
+                            <i class="fa fa-plus"></i> Add Members
+                        </button>
+                        <button class="btn rounded padded" v-on:click="cancel_edit_group(group.group_id)">
+                            <i class="fa fa-times"></i> Cancel
+                        </button>
+                        <button class="btn rounded padded" v-on:click="delete_group(group.group_id)">
+                            <i class="fa fa-trash"></i> Delete Group
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <button v-if="!is_adding_group" class="btn padded rounded" v-on:click="add_group_button()">
                 <i class="fa fa-plus"></i> Create New Group
             </button>
@@ -43,8 +66,8 @@
                     <tbody>
                         <tr v-for="mem in members">
                             <td>${mem.picture}</td>
-                            <td>${mem.user_email}</td>
-                            <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem.user_email, mem.group_id)"></i></td>
+                            <td>${mem.email}</td>
+                            <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem._idx)"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -64,7 +87,7 @@
                     <tr v-for="usr in users">
                         <td>${usr.picture}</td>
                         <td>${usr.email}</td>
-                        <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr.email)"></i></td>
+                        <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr)"></i></td>
                     </tr>
                 </tbody>
             </table>

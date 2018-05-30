@@ -95,8 +95,10 @@ db.define_table('address',
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
                 Field('group_id'),
+                Field('group_name', type='string'),
                 Field('is_active', type='boolean', default=False),     # is a user active in the group or not
-                Field('date_created')                  # when a user joined the group
+                Field('date_created'),                                 # when a user joined the group
+                Field('is_editing', type='boolean', default=False)     # Like the memo thing from hw3
                 )
 
 db.define_table('group_member',

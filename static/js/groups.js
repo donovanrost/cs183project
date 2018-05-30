@@ -60,7 +60,7 @@ var app = function() {
         });
     };
 
-    self.get_members= function(group_id) {
+    self.get_members= function() {
         $.getJSON(members_url,
             {
                 group_id: self.insertion_id
@@ -72,7 +72,6 @@ var app = function() {
     };
 
     self.add_group_button = function() {
-        self.get_insertion_id();
         self.vue.is_adding_group = true;
     };
 
@@ -83,34 +82,47 @@ var app = function() {
 
     self.add_group = function() {
         $.post(add_group_url,
-            {
-              group_id: self.insertion_id
-            },
             function (data) {
-               self.is_adding_group = false;
+                self.add_group_members(data.group.id);
+                self.is_adding_group = false;
+                self.vue.members = [];
+                self.get_groups();
             });
     };
 
-    self.add_to_group = function(user_email) {
-
-        $.post(add_member_url,
-            {
-                user_email: user_email,
-                group_id: self.insertion_id
-            },
-            function () {
-                self.get_members();
-            }
-            );
+    self.delete_group = function(group_id) {
+       $.post(delete_group_url,
+           {
+               group_id: group_id
+           },
+           function (data) {
+               self.get_groups();
+               enumerate(self.vue.groups);
+               self.cancel_edit_group();
+       });
     };
 
-    self.remove_from_group = function(user_email, group_id){
-        $.post(del_member_url,
-            { user_email: user_email},
-            function () {
-                self.get_members(group_id)
-            }
-        )
+    self.add_to_group = function(user) {
+        (self.vue.members).push(user);
+    };
+
+    self.remove_from_group = function(id){
+        (self.vue.members).splice(id, 1);
+        enumerate(self.vue.members);
+    };
+
+    self.add_group_members= function(group_id){
+        for(i =0; i <(self.vue.members).length; i++){
+            $.post(add_member_url,
+               {
+                   group_id: group_id,
+                   user_email: (self.vue.members)[i].email
+               },
+               function (data) {
+                   self.get_groups();
+                   enumerate(self.vue.groups);
+             });
+        }
     };
 
     self.clean_up_memebers = function(group_id){
@@ -123,9 +135,32 @@ var app = function() {
     };
 
     self.cancel_add_group = function(){
-        self.clean_up_memebers(self.vue.insertion_id);
+        self.clean_up_memebers(self.insertion_id);
+        self.delete_group(self.insertion_id);
         self.vue.is_adding_group = false;
         self.insertion_id = null;
+    };
+
+    self.edit_group_button = function(group_id) {
+        $.post(toggle_is_editing,
+            {
+                group_id: group_id
+            },
+            function () {
+                self.get_groups();
+            }
+        )
+    };
+
+    self.cancel_edit_group = function(group_id) {
+        $.post(toggle_is_editing,
+            {
+                group_id: group_id
+            },
+            function () {
+                self.get_groups();
+            }
+        )
     };
 
     self.vue = new Vue({
@@ -145,13 +180,17 @@ var app = function() {
             add_group_button: self.add_group_button,
             submit_group_button: self.submit_group_button,
             add_group: self.add_group,
+            edit_group_button: self.edit_group_button,
+            cancel_edit_group: self.cancel_edit_group,
             cancel_add_group: self.cancel_add_group,
             add_to_group: self.add_to_group,
-            remove_from_group: self.remove_from_group
+            remove_from_group: self.remove_from_group,
+            delete_group: self.delete_group
         }
 
     });
 
+    self.get_groups();
     self.get_users();
     $("#vue-div").show();
 
