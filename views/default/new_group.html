@@ -29,9 +29,6 @@
             <div class="my_groups">
                 <div class="one_group" v-for="group in groups">
                     <h6 class="padded">${group.group_name}</h6>
-                    <button class="btn rounded right" v-on:click="edit_group_button(group.group_id)">
-                        <i class="fa fa-edit"></i>
-                    </button>
                     <div class="padded" id="member_list">
                         <table class="members">
                             <thead>
@@ -44,12 +41,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <span v-if="group.is_editing" class="button_list right">
-                        <button class="btn padded rounded">
-                            <i class="fa fa-plus"></i> Add Members
+                    <span v-if="!group.is_editing" class="padded right">
+                        <button class="btn rounded" v-on:click="edit_group_button(group.group_id)">
+                            <i class="fa fa-edit"></i>
                         </button>
+                    </span>
+                    <span v-if="group.is_editing" class="button_list right">
                         <button class="btn rounded padded" v-on:click="cancel_edit_group(group.group_id)">
                             <i class="fa fa-times"></i> Cancel
+                        </button>
+                        <button class="btn padded rounded">
+                            <i class="fa fa-plus"></i> Add Members
                         </button>
                         <button class="btn rounded padded" v-on:click="delete_group(group.group_id)">
                             <i class="fa fa-trash"></i> Delete Group

@@ -9,8 +9,12 @@ def get_insertion_id():
 
 def is_editing():
     q = (db.rental_group.id == request.vars.group_id)
-    group = db(q).select().first()
-    group.is_editing = not group.is_editing
+    group_id = int(request.vars.group_id)
+    group = db(db.rental_group.id == group_id).select().first()
+    if group.is_editing:
+        group.is_editing = False
+    else:
+        group.is_editing = True
     group.update_record()
     return "ok"
 
@@ -46,6 +50,7 @@ def get_groups():
         grp = dict(
             group_id = r.group_id,
             group_name = gr.group_name,
+            is_editing = gr.is_editing,
             group_members = get_group_members(r.group_id)
         )
         groups.append(grp)
