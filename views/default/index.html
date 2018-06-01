@@ -8,11 +8,17 @@
 {{end}}
 
 <div class="main_content">
+	<div class="content">
+    	<div id="vue-div" class="display:none">
+			<transition name="fade">
+        	<!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+				<div class="home_title">
+					<h1 id="slug_title">Slug House</h1>
+				</div>
+			</transition>
+    	</div>
 
-    <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-    </div>
-
+	</div>
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
