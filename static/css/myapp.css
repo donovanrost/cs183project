@@ -11,7 +11,10 @@
   flex: 1;
   justify-content: center;
   align-items: flex-start;
-  background-color: #1f6377;
+  background-color:#003bb3;
+}
+.background-pic{
+
 }
 
 #slug_title{
@@ -20,7 +23,7 @@
 
 .home_title{
   font-family: "Gill Sans MT";
-  color: #7fdbff;
+  color: #FFF700;
 }
 .content{
   width: 50%;

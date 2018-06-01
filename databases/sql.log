@@ -248,3 +248,54 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2018-06-01T14:45:48.319790
+CREATE TABLE "listings"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "address" CHAR(512),
+    "bedrooms" CHAR(512),
+    "bathrooms" CHAR(512),
+    "listed_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "image" CHAR(512),
+    "listed_on" TIMESTAMP,
+    "property_type" CHAR(512)
+);
+success!
+success!
+success!

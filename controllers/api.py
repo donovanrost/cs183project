@@ -35,6 +35,8 @@ def get_property_types():
 
     ))
 
+
+
 def add_property():
     property_type = request.post_vars.property_type
     num_bedrooms = request.post_vars.num_bedrooms
@@ -50,4 +52,14 @@ def add_property():
 
 
 
-    return
+    return "ok"
+
+
+#Helper function to get user info and check if logged in or not
+def get_my_info():
+    my_user_id = auth.user.id
+    this_user = auth.user
+    logged_in = True if auth.user is not None else False
+    return response.json(dict(this_user=this_user, logged_in=logged_in,my_user_id=my_user_id))
+
+
