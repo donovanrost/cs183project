@@ -5,6 +5,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     var users_url = "{{=URL('groups', 'get_users', user_signature=True)}}";
+    var search_users_url = "{{=URL('groups', 'search_users', user_signature=True)}}";
     var groups_url = "{{=URL('groups', 'get_groups', user_signature=True)}}";
     var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
     var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
@@ -97,6 +98,17 @@
                 </div>
                 <h5 class="title">Add Groupmates</h5>
                 <div class="padded">
+                    <form class="padded">
+                        <input class="string" v-model="form_user_search" placeholder="Search" type="text">
+                    </form>
+                    <span class="padded">
+                        <button class="btn padded rounded" v-on:click="search_user()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <button class="btn padded rounded" v-on:click="clear_user_button()">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </span>
                     <table class="user_table">
                         <thead>
                             <tr>

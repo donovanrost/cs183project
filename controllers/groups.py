@@ -43,6 +43,24 @@ def get_users():
         has_more=has_more,
     ))
 
+def search_users():
+    users = []
+    query = request.vars.query
+    q = ((db.auth_user.first_name == query) | (db.auth_user.last_name == query) | (db.auth_user.email == query))
+    rows = db(q).select(db.auth_user.ALL)
+    for i, r in enumerate(rows):
+        usr = dict(
+            id=r.id,
+            picture=r.picture,
+            email=r.email,
+            first_name=r.first_name,
+            last_name=r.last_name
+        )
+        users.append(usr)
+    return response.json(dict(
+        users=users,
+    ))
+
 def get_groups():
     groups =[]
     q = (db.group_member.user_email == auth.user.email)
@@ -88,7 +106,7 @@ def add_group():
 
 def delete_group():
     db(db.group_member.group_id == request.vars.group_id).delete()
-    db(db.rental_group.group_id == request.vars.group_id).delete()
+    db(db.rental_group.id == request.vars.group_id).delete()
     return "ok"
 
 def get_group_members(group_id):

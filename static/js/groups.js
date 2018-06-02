@@ -82,6 +82,7 @@ var app = function() {
                 self.is_adding_group = false;
                 self.vue.members = [];
                 self.vue.form_name = "";
+                self.get_users();
                 self.get_groups();
             });
     };
@@ -139,6 +140,7 @@ var app = function() {
         self.vue.form_name = "";
         self.vue.is_adding_group = false;
         self.vue.members = [];
+        self.get_users();
     };
 
     self.edit_group_button = function(group_id) {
@@ -163,6 +165,22 @@ var app = function() {
         )
     };
 
+    self.search_user = function(){
+        $.getJSON(search_users_url,
+            {
+                query: self.vue.form_user_search
+            },
+            function (data) {
+            self.vue.users = data.users;
+            enumerate(self.vue.users);
+        })
+    };
+
+    self.clear_user_button = function(){
+        self.vue.form_user_search = "";
+        self.get_users();
+    };
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -172,6 +190,7 @@ var app = function() {
             groups: [],
             users: [],
             members: [],
+            form_user_search: null,
             form_name: null,
             logged_in: false,
             has_more: false
@@ -186,7 +205,9 @@ var app = function() {
             cancel_add_group: self.cancel_add_group,
             add_to_group: self.add_to_group,
             remove_from_group: self.remove_from_group,
-            delete_group: self.delete_group
+            delete_group: self.delete_group,
+            search_user: self.search_user,
+            clear_user_button: self.clear_user_button
         }
     });
 
