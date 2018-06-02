@@ -30,6 +30,8 @@ def get_users():
                 id = r.id,
                 picture = r.picture,
                 email = r.email,
+                first_name = r.first_name,
+                last_name = r.last_name
             )
             users.append(usr)
         else:

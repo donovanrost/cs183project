@@ -88,8 +88,8 @@
                             <tbody>
                                 <tr v-for="mem in members">
                                     <td>${mem.picture}</td>
-                                    <td>${mem.email}</td>
-                                    <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem._idx)"></i></td>
+                                    <td>${mem.first_name} ${mem.last_name}</td>
+                                    <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem, mem._idx)"></i></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -108,8 +108,8 @@
                         <tbody>
                             <tr v-for="usr in users">
                                 <td>${usr.picture}</td>
-                                <td>${usr.email}</td>
-                                <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr)"></i></td>
+                                <td>${usr.first_name} ${usr.last_name}</td>
+                                <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr, usr._idx)"></i></td>
                             </tr>
                         </tbody>
                     </table>
