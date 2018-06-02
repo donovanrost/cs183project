@@ -89,7 +89,7 @@ var app = function() {
                 self.add_group_members(data.group.id);
                 self.is_adding_group = false;
                 self.vue.members = [];
-                self.vue.form = "";
+                self.vue.form_name = "";
                 self.get_groups();
             });
     };

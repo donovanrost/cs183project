@@ -8,7 +8,6 @@ def get_insertion_id():
     ))
 
 def is_editing():
-    q = (db.rental_group.id == request.vars.group_id)
     group_id = int(request.vars.group_id)
     group = db(db.rental_group.id == group_id).select().first()
     if group.is_editing:
@@ -23,7 +22,8 @@ def get_users():
     end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
     users = []
     has_more = False
-    rows = db().select(db.auth_user.ALL, limitby=(start_idx, end_idx + 1))
+    q = (db.auth_user.id != auth.user.id)
+    rows = db(q).select(db.auth_user.ALL, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
             usr = dict(
@@ -61,11 +61,22 @@ def get_groups():
 
 @auth.requires_signature()
 def add_group():
-    members = request.vars.members
+    members = []
     g_id = db.rental_group.insert(
         is_active = True,
         group_name = request.vars.group_name
     )
+
+    m_id = db.group_member.insert(
+        group_id=g_id,
+        user_email=auth.user.email
+    )
+
+    mem = dict(
+        group_id = g_id,
+        user_email = auth.user.email
+    )
+    members.append(mem)
 
     return response.json(dict(group=dict(
         id=g_id,
