@@ -4,15 +4,30 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'my_method')}}";
+    var get_properties_url = "{{=URL('api', 'get_property_types')}}";//No need for signature here
+	var get_my_info_url = "{{=URL('api', 'get_my_info')}}";
 </script>
 {{end}}
 
 <div class="main_content">
+	<body class="background-pic">
+	<div class="content">
+    	<div id="vue-div" class="display:none">
+			<transition name="fade">
+        	<!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+				<div class="home_title">
+					<h1 id="slug_title">Slug House</h1>
+					<h4>UCSC Housing Registry</h4>
+				</div>
+				<div>
 
-    <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-    </div>
+				</div>
 
+			</transition>
+    	</div>
+
+	</div>
+	</body>
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

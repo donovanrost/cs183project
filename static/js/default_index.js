@@ -13,6 +13,36 @@ var app = function() {
         }
     };
 
+    self.add_property = function(){
+
+    };
+
+
+
+
+//FOR LISTING PROPERTIES
+    self.get_properties = function(){
+        //List out properties on homepage
+        $.getJSON(
+            get_properties_url,
+            function(data){
+                self.vue.properties = data.property_types;
+            }
+        )
+    };
+
+//HELPER FUNCTION FOR GETTING USER INFO
+    self.get_my_info = function() {
+        $.getJSON(
+            get_my_info_url,
+            function(data){
+                self.vue.logged_in = data.logged_in;
+                self.vue.this_user = data.this_user;
+                self.vue.my_user_id = data.my_user_id;
+            }
+        )
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -20,15 +50,24 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-            has_more: false
+            //has_more: false
+            properties:[],
+            logged_in: false,
+            my_user_id: null,
+            this_user: null,
         },
         methods: {
-            get_more: self.get_more
+            //get_more: self.get_more
+            add_property: self.add_property,
         }
 
     });
 
 
+
+    //self.get_properties();
+
+    $("#vue-div").show();
     return self;
 };
 

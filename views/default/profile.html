@@ -1,25 +1,266 @@
+{{extend 'layout.html'}}
+{{block head}}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-{{extend 'usr_layout.html'}}
+<script>
+      var add_address_url = "{{=URL('api', 'insert_new_address', user_signature=False)}}";
+      var get_property_types_url = "{{=URL('api', 'get_property_types', user_signature=False)}}";
+      var add_property_url = "{{=URL('api', 'add_property', user_signature=True)}}";
+
+</script>
+
+<script>
+    var users_url = "{{=URL('groups', 'get_users', user_signature=True)}}";
+    var search_users_url = "{{=URL('groups', 'search_users', user_signature=True)}}";
+    var groups_url = "{{=URL('groups', 'get_groups', user_signature=True)}}";
+    var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
+    var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
+    var toggle_is_editing = "{{=URL('groups', 'is_editing', user_signature=True)}}";
+    var add_member_url = "{{=URL('groups', 'add_member', user_signature=True)}}";
+    var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
+    var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
+    var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
+    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
+</script>
+
+{{end}}
+
+
 <!-- Edit the HTML for profile page here -->
 
 <div id="profile">
-        <div class="property_info">
-            <h5 class="title">My Properties</h5>
-        <div class="property_key_image center spaced padded">
-            {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
-        </div>
-        <div class="modal" id="popup1">
-          <div class="twothirds rounded white padded">
-            <h2>Hello from modal</h2>
-            <a class="close" href="#">×</a>
-            <!--
-            HTML for a image carousel should go here
-            -->
 
-            <div class="right">
-              <a class="close btn" href="#">close</a>
+<div id="vue-div" class="main_content">
+    <div class="container compressible">
+
+        <div class="left_side container quarter max900">
+            <div class="user_info ">
+            {{if auth.user.picture is None:}}
+                <!--This the statically served default profile picture -->
+                {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}
+            {{else:}}
+                <!--This should be the users uploaded profile picture.... if it ever works -->
+                {{=A(IMG(_src=URL('default', 'download', args=pic), _alt=" user image"))}}
+            {{pass}}
+
+                <div class="user_text">
+                    <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
+                    <h6>My Rentals</h6>
+                    <h6>My Listings</h6>
+                    <h6>Interesting Properties</h6>
+                </div>
+
             </div>
-          </div>
+
+            <div class="add_property">
+                <div class="add_btn">
+                    <button v-on:click="add_property_button()" >
+                        <i class="fa fa-plus"></i>
+                        Add Property
+                    </button>
+                </div>
+
+            </div>
+
+
         </div>
+
+        <div class="right_side container threequarters max900 compressible">
+            <div class="add_property_div padded container" id="add_property_div" style="display:none">
+                <h4>Add a new property </h4>
+
+                <div class="address_div half">
+                    <form v-on:submit.prevent>
+                        <h5>What is the address?</h5>
+                        <label>Street: </label>
+                            <input v-model="form_street" type="text" id="street" name="street" class="form-control"><br>
+                        <label>City: </label>
+                            <input v-model="form_city" type="text" id="city" name="city" class="form-control"><br>
+                        <label>State:</label>
+                            <input v-model="form_state_" type="text" id="state_" name="state_" class="form-control"><br>
+                        <label>Zip Code: </label>
+                            <input v-model="form_zip" type="text" id="zip" name="zip" class="form-control"><br>
+                        <button v-on:click="add_address()">
+                            Validate address
+                        </button>
+                    </form>
+                </div>
+                <div class="details_div half">
+                    <h5>Tell us about this property</h5>
+                    <form v-on:submit.prevent>
+                        <label>Property Type </label><br>
+                            <select name="p_type" v-model="p_type">
+                                <!--For this one, I need to get the .id of the selected value
+                                    But I think I can just grab it before the post request
+                                 -->
+                                <option v-for="p in property_types">${p.p_type}</option>
+                            </select>
+                        <label>Number of Bedrooms </label><br>
+                            <select name="num_bedrooms" v-model="num_bedrooms" >
+                                <option v-for="n in 10" >${n}</option>
+                            </select>
+                        <div class="container">
+                            <div class="half">
+                                <label>Full Bathrooms </label><br>
+                                    <select name="num_fullbaths" v-model="num_fullbaths">
+                                        <option v-for="n in 10" >${n}</option>
+                                    </select>
+                            </div>
+                            <div class="half">
+                                <label>Half Bathrooms </label><br>
+                                    <select name="num_halfbaths" v-model="num_halfbaths">
+                                        <option v-for="n in 10">${n}</option>
+                                    </select>
+                            </div>
+
+
+                        </div>
+                        <button v-on:click="add_property()">
+                            Finish
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+
+            <div class="property_info">
+                <h5 class="title">My Properties</h5>
+                <div class="property_key_image center spaced padded">
+                    {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
+                </div>
+                <div class="modal" id="popup1">
+                  <div class="twothirds rounded white padded">
+                    <h2>Hello from modal</h2>
+                    <a class="close" href="#">×</a>
+                    <!--
+                    HTML for a image carousel should go here
+                    -->
+
+                    <div class="right">
+                      <a class="close btn" href="#">close</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="group_info">
+            <h5 class="title">Groups</h5>
+
+            <div class="my_groups">
+                <div class="one_group" v-for="group in groups">
+                        <h6 class="padded">${group.group_name}</h6>
+                        <div class="padded" id="member_list">
+                            <table class="members">
+                                <thead>
+                                    <th>Members</th>
+                                </thead>
+                                <tbody >
+                                    <tr v-for="mem in group.group_members">
+                                        <td>${mem.user_email}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span v-if="!group.is_editing" class="padded right">
+                            <button class="btn rounded" v-on:click="edit_group_button(group.group_id)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </span>
+                        <span v-if="group.is_editing" class="button_list right">
+                            <button class="btn rounded padded" v-on:click="cancel_edit_group(group.group_id)">
+                                <i class="fa fa-times"></i> Cancel
+                            </button>
+                            <button class="btn padded rounded">
+                                <i class="fa fa-plus"></i> Add Members
+                            </button>
+                            <button class="btn rounded padded" v-on:click="delete_group(group.group_id)">
+                                <i class="fa fa-trash"></i> Delete Group
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="padded">
+                    <button v-if="!is_adding_group" class="btn padded rounded" v-on:click="add_group_button()">
+                        <i class="fa fa-plus"></i> Create New Group
+                    </button>
+                </div>
+                <div v-if="is_adding_group" class="group_search padded">
+                    <span class="padded right">
+                        <button v-if="is_adding_group" class="btn padded rounded" v-on:click="submit_group_button()" >
+                            <i class="fa fa-plus"></i> Submit
+                        </button>
+                        <button v-if="is_adding_group" class="btn padded rounded" v-on:click="cancel_add_group()">
+                            <i class="fa fa-times"></i> Cancel
+                        </button>
+                    </span>
+                    <h5 class="title"> New Group </h5>
+                    <div v-if="is_adding_group" class="members">
+                        <form class="padded">
+                            <input class="string" v-model="form_name" placeholder="Enter your Group Name" type="text">
+                        </form>
+                        <div class="padded">
+                            <table class="member_table padded">
+                                <thead>
+                                    <th>Members</th>
+                                    <th></th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="mem in members">
+                                        <td>${mem.picture}</td>
+                                        <td>${mem.first_name} ${mem.last_name}</td>
+                                        <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem, mem._idx)"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <h5 class="title">Add Groupmates</h5>
+                    <div class="padded">
+                        <form class="padded">
+                            <input class="string" v-model="form_user_search" placeholder="Search" type="text">
+                        </form>
+                        <span class="padded">
+                            <button class="btn padded rounded" v-on:click="search_user()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <button class="btn padded rounded" v-on:click="clear_user_button()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </span>
+                        <table class="user_table">
+                            <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th>User</th>
+                                    <th>add ?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="usr in users">
+                                    <td>${usr.picture}</td>
+                                    <td>${usr.first_name} ${usr.last_name}</td>
+                                    <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr, usr._idx)"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div v-if="has_more" class="show_more">
+                            <button class="btn btn-default rounded" v-on:click="get_more()">
+                                <i class="fa fa-ellipsis-h"></i> Load more
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+    </div>
+    </div>
+    </div>
 </div>
+
+<script src="{{=URL('static', 'js/default_profile.js')}}"></script>

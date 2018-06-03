@@ -66,6 +66,7 @@ service = Service()
 plugins = PluginManager()
 
 
+
 ## after auth = Auth(db)
 auth.settings.extra_fields['auth_user']= [
     Field('picture', 'upload', uploadfield='picture_file', writable=True),
@@ -78,19 +79,15 @@ auth.settings.extra_fields['auth_user']= [
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
-
-auth.settings.extra_fields['auth_user'] = [
-    Field('picture', 'upload', uploadfield='picture_file', writable=True),
-    Field('picture_file', 'blob', writable=True)
-]
-# create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
+def get_user_id():
+    return auth.user.id if auth.user is not None else None
 
 db.define_table('address',
                 Field('street', type='string'),
-                Field('zip_code', type='integer'),
                 Field('city', type='string'),
+                Field('zip', type='string'),
                 Field('state_', type='string'),
+                Field('hash_', type='string'),
                 )
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
@@ -122,32 +119,30 @@ db.define_table('property_type',
 #defined up here, extened later to deal with cyclic dependencies
 db.define_table('rental_history')
 
-
-
 db.define_table('property',
-                Field('who_rents', 'reference rental_group'),   # This feels wrong, not sure it will work
-                Field('property_owner', db.auth_user),    #should be an auth_user
-                Field('address', db.address),
-                Field('max_occupants', type='integer'),
-                Field('number_of_bedrooms', type='integer'),
-                Field('number_of_bathrooms', type='integer'),
+                Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),    #should be an auth_user
+                Field('address', db.address, unique=True),
+                Field('num_bedrooms', type='integer'),
+                Field('num_fullbaths', type='integer'),
+                Field('num_halfbaths', type='integer'),
                 Field('property_type', db.property_type),     #db.property_type
                 Field('proof_ownership'),
-                Field('price_per_month'),
-                Field('history', db.rental_history)    #db.rental_history
                 )
-
 
 # users can 'like' a property
 db.define_table('liked_properties',
                 Field('property', db.property),          #db.property
-                Field('user_who_liked', db.auth_user)
+                Field('user_who_liked', db.auth_user),
                 )
 auth.settings.extra_fields['auth_user'] = [
     Field('property', db.property),  # db.property
     Field('rental_group', db.rental_group)  # db.rental_group
 
     ]
+
+
+
+
 
 
 

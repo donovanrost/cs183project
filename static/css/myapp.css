@@ -4,9 +4,45 @@
 }
 
 /* line 5, ../sass/_main.scss */
-div.main_content {
-  padding: 10px;
-  padding-bottom: 30px;
+.main_content {
+  width: 100%;
+  padding: 32pt 0;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: flex-start;
+  background-color:#003bb3;
+}
+.background-pic{
+
+}
+
+#slug_title{
+
+}
+
+.home_title{
+  font-family: "Gill Sans MT";
+  color: #FFF700;
+}
+.content{
+  width: 50%;
+}
+
+div.add_property_div{
+  background-color: wheat;
+  margin: 10px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
+div.first-page{
+  margin: 10px;
+}
+div.second-page{
+  margin: 10px;
+}
+div.third-page{
+  margin: 10px;
 }
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {

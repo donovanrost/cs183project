@@ -61,8 +61,34 @@ def call():
 
 @auth.requires_login()
 def profile():
+    q = db.auth_user.picture
+    pic = db(q).select().first()
 
-    return dict(form=auth.profile())
+
+    return locals()
+
+def register():
+    return dict(form=auth.register())
+
+@auth.requires_login()
+def add_new_property():
+    form = SQLFORM.factory(db.address)
+
+    return dict(form=form)
+
+@auth.requires_login()
+def testpage():
+    form = SQLFORM(db.address)
+
+    return dict(form=form)
+
+@auth.requires_login()
+def change_user_image():
+
+    form = SQLFORM(db.auth_user.picture)
+    return dict(form=form)
+
+
 
 @auth.requires_login()
 def new_group():
