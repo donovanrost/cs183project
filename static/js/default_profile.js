@@ -245,7 +245,7 @@ var app = function() {
         self.vue.form_user_search = "";
         self.get_users();
     };
-    //------------------- GROUP CODE ================================================
+    //------------------- End of GROUP CODE ================================================
 
     self.vue = new Vue({
         el: "#vue-div",
