@@ -121,7 +121,10 @@ db.define_table('rental_history')
 
 db.define_table('property',
                 Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),    #should be an auth_user
-                Field('address', db.address, unique=True),
+                Field('street', type='string',required=False),
+                Field('city', type='string',required=False),
+                Field('zip', type='string',required=False),
+                Field('state_', type='string',required=False),
                 Field('num_bedrooms', type='integer'),
                 Field('num_fullbaths', type='integer'),
                 Field('num_halfbaths', type='integer'),

@@ -6,11 +6,11 @@
 /* line 5, ../sass/_main.scss */
 .main_content {
   width: 100%;
-  padding: 32pt 0;
+  /*padding: 32pt 0;
   display: flex;
   flex: 1;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start; */
   background-color:#003bb3;
 }
 .background-pic{

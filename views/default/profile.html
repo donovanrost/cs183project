@@ -4,6 +4,8 @@
 <script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 
 <script>
       var add_address_url = "{{=URL('api', 'insert_new_address', user_signature=False)}}";
@@ -77,26 +79,19 @@
         <div class="right_side container threequarters max900 compressible">
             <div class="add_property_div padded container" id="add_property_div" style="display:none">
                 <h4>Add a new property </h4>
-
-                <div class="address_div half">
-                    <form v-on:submit.prevent>
-                        <h5>What is the address?</h5>
-                        <label>Street: </label>
-                            <input class="drop_down_field" v-model="form_street" type="text" id="street" name="street" class="form-control"><br>
-                        <label>City: </label>
-                            <input class="drop_down_field" v-model="form_city" type="text" id="city" name="city" class="form-control"><br>
-                        <label>State:</label>
-                            <input class="drop_down_field" v-model="form_state_" type="text" id="state_" name="state_" class="form-control"><br>
-                        <label>Zip Code: </label>
-                            <input class="drop_down_field" v-model="form_zip" type="text" id="zip" name="zip" class="form-control"><br>
-                        <button class="valid_address rounded"v-on:click="add_address()">
-                            Validate address
-                        </button>
+                <div v-if="add_property_page == 0">
+                    <h5>What is the address?</h5>
+                    <form>
+                        Street: <input type="text" name="street" v-model="form_street" placeholder="Street..."><br>
+                        City: <input type="text" name="city" v-model="form_city" placeholder="City..."><br>
+                        Zip Code: <input type="text" name="zip" v-model="form_zip" placeholder="Zip code..."><br>
+                        State: <input type="text" name="state" v-model="form_state_" placeholder="City..."><br>
                     </form>
+
                 </div>
-                <div class="details_div half">
-                    <h5>Tell us about this property</h5>
-                    <form v-on:submit.prevent>
+                <div v-if="add_property_page == 1">
+                    <h5>Tell us about the property</h5>
+                    <form>
                         <label>Property Type </label><br>
                             <select class="drop_down_field"  name="p_type" v-model="p_type">
                                 <!--For this one, I need to get the .id of the selected value
@@ -105,11 +100,12 @@
                                 <option v-for="p in property_types">${p.p_type}</option>
                             </select>
                         <label>Number of Bedrooms </label><br>
-                            <select class="drop_down_field" name="num_bedrooms" v-model="num_bedrooms" >
-                                <option v-for="n in 10" >${n}</option>
-                            </select>
+                        <select class="drop_down_field" name="num_bedrooms" v-model="num_bedrooms" >
+                            <option v-for="n in 10" >${n}</option>
+                        </select>
                         <div class="container">
-                            <div class="half">
+
+                           <div class="half">
                                 <label>Full Bathrooms </label><br>
                                     <select class="drop_down_field" name="num_fullbaths" v-model="num_fullbaths">
                                         <option v-for="n in 10" >${n}</option>
@@ -121,18 +117,34 @@
                                         <option v-for="n in 10">${n}</option>
                                     </select>
                             </div>
-
-
                         </div>
-                        <button v-on:click="add_property()">
-                            Finish
-                        </button>
+
                     </form>
                 </div>
+                <div class="button_bar padded">
+                    <span v-if="add_property_page == last_add_property_page">
+                        <button v-on:click="prev_page">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button v-on:click="add_property">
+                            <i class="far fa-share-square"></i>
+                            Submit
+                        </button>
+                    </span>
+                    <span v-if="add_property_page == 0">
+                        <button v-on:click="next_page">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </span>
+
+
+
+
+                </div>
+
 
             </div>
 
-            
             <div class="property_info">
                 <h5 class="title">My Properties</h5>
                 <div class="property_key_image center spaced padded">
