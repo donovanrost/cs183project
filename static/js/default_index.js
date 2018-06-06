@@ -64,6 +64,7 @@ var app = function() {
     self.get_my_info();
     self.get_listings();
     $("#vue-div").show();
+
     return self;
 };
 

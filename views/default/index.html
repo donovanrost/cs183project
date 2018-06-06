@@ -25,29 +25,30 @@
 
 			</transition>
 
+            <div class="padded">
+                <h4> Available Listings</h4>
+                <div id="listing_containter" class="padded">
+                    <div class="fa-border" v-for="listing in listings">
+                        <div class="third padded">
+                            <h6> Address</h6>
+                        </div>
+                        <div class="third padded">
+                            <h6> discription </h6>
+                            ${listing.num_baths}
+                            ${listing.num_bedroom}
+                        </div>
+                        <button v-if="logged_in">
+                            <i class="fa fa-thumbs-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
     </div>
 	</body>
-</div>
-<div class="padded">
-    <h4> Available Listings</h4>
-    <div id="listing_containter" class="padded">
-        <div v-for="listing in listings">
-            <span>
-                <div class="third padded">
-                    <h6> Address</h6>
-                </div>
-                <div class="third padded">
-                    <h6> discription </h6>
-                </div>
-                <button v-if="logged_in" class="padded right">
-                    <i class="fa fa-thumbs-up"></i>
-                </button>
-            </span>
-        </div>
-    </div>
 </div>
 
 
