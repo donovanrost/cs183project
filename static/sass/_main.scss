@@ -24,14 +24,13 @@ div.main_content{
         margin:15px;
       }
     }
-    div.add_listing{
+    div.button_list{
       margin: 10px;
 
       .btn{
         float: left;
         background-color:orange; /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
       }
-
     }
   }
 
@@ -154,6 +153,37 @@ div.main_content{
           @media only screen and (max-width: 300px) {
             .prev, .next,.text {font-size: 11px}
           }
+
+    }
+
+    div.group_info{
+      background-color: wheat;
+      margin: 10px;
+      border: 2px solid red;
+      border-radius: 15px;
+
+      .title{
+        margin-left: 15px;
+
+      }
+    }
+
+    div.group_search{
+      background-color: wheat;
+      margin: 10px;
+      border: 2px solid red;
+      border-radius: 15px;
+
+      .title{
+        margin-left: 15px;
+      }
+
+      .pic{
+        margin-left: 15px;
+      }
+      .p{
+         margin-left: 15px;
+      }
 
     }
   }

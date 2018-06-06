@@ -66,12 +66,19 @@ service = Service()
 plugins = PluginManager()
 
 
-auth.settings.extra_fields['auth_user'] = [
+
+## after auth = Auth(db)
+auth.settings.extra_fields['auth_user']= [
     Field('picture', 'upload', uploadfield='picture_file', writable=True),
-    Field('picture_file', 'blob', writable=True)
+    Field('picture_file', 'blob', writable=True),
+    Field('listed_properties'),
+    Field('interest_properties')
 ]
+## before auth.define_tables(username=True)
+
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
+
 def get_user_id():
     return auth.user.id if auth.user is not None else None
 
@@ -84,12 +91,17 @@ db.define_table('address',
                 )
 # something about this feels off to me and I can't quite place it
 db.define_table('rental_group',
-                Field('group_id'),
-                Field('group_member', db.auth_user),  #should be an auth_user
-                Field('percent_of_rent'),
-                Field('is_active', type='boolean'),    # is a user active in the group or not
-                Field('joined_date'),               # when a user joined the group
-                Field('left_date')                  # when a user left the group
+                Field('group_name'),
+                Field('is_active', type='boolean', default=False),     # is a user active in the group or not
+                Field('date_created'),                                 # when a user joined the group
+                Field('is_editing', type='boolean', default=False)     # Like the memo thing from hw3
+                )
+
+db.define_table('group_member',
+                Field('user_email'),
+                Field('group_id', 'reference rental_group'),
+                Field('is_pending', type='boolean', default=False),
+                Field('is_active', type='boolean', defautl=False)
                 )
 
 # in real life there are different types of properties
@@ -117,11 +129,6 @@ db.define_table('property',
                 Field('proof_ownership'),
                 )
 
-# users can 'like' a property
-db.define_table('liked_properties',
-                Field('property', db.property),          #db.property
-                Field('user_who_liked', db.auth_user),
-                )
 auth.settings.extra_fields['auth_user'] = [
     Field('property', db.property),  # db.property
     Field('rental_group', db.rental_group)  # db.rental_group

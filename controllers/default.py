@@ -18,8 +18,16 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    db.listings.id.readable = False
+
+
+    fields = (db.listings.image, db.listings.address, db.listings.property_type,
+              db.listings.bedrooms, db.listings.bathrooms)
+
+    grid = SQLFORM.grid(db.listings, user_signature=False, fields=fields, create=False, deletable=False,
+                             editable=False, paginate=25, csv=False,
+                        links = [lambda row: A('Like', _href=URL("default","like_listing",args=[row.id]))])
+    return dict(grid=grid)
 
 
 def user():
@@ -58,12 +66,11 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
 @auth.requires_login()
 def profile():
     q = db.auth_user.picture
     pic = db(q).select().first()
-
-
     return locals()
 
 def register():
@@ -78,17 +85,23 @@ def add_new_property():
 @auth.requires_login()
 def testpage():
     form = SQLFORM(db.address)
-
     return dict(form=form)
 
 @auth.requires_login()
 def change_user_image():
-
     form = SQLFORM(db.auth_user.picture)
     return dict(form=form)
 
+@auth.requires_login()
+def new_group():
+    users = db().select(db.auth_user.ALL)
+    return dict(users=users)
 
 
-
-
-
+def like_listing():
+    id = request.args[0]
+    db.liked_properties.insert(
+        property_id = id,
+        user_email = auth.user.email
+    )
+    return

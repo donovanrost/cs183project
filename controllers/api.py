@@ -1,4 +1,5 @@
 # Here go your api methods.
+
 def insert_new_address():
     street = request.post_vars.street
     city = request.post_vars.city

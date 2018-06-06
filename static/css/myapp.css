@@ -69,16 +69,16 @@ div.main_content div.left_side div.user_info div.user_text {
   margin: 15px;
 }
 /* line 27, ../sass/_main.scss */
-div.main_content div.left_side div.add_listing {
+div.main_content div.left_side div.button_list {
   margin: 10px;
 }
 /* line 30, ../sass/_main.scss */
-div.main_content div.left_side div.add_listing .btn {
+div.main_content div.left_side div.button_list .btn {
   float: left;
   background-color: orange;
   /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
 }
-/* line 39, ../sass/_main.scss */
+/* line 38, ../sass/_main.scss */
 div.main_content div.right_side div.property_info {
   background-color: wheat;
   margin: 10px;
@@ -94,40 +94,40 @@ div.main_content div.right_side div.property_info {
   /* Fading animation */
   /* On smaller screens, decrease text size */
 }
-/* line 45, ../sass/_main.scss */
+/* line 44, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .title {
   margin-left: 15px;
 }
-/* line 50, ../sass/_main.scss */
+/* line 49, ../sass/_main.scss */
 div.main_content div.right_side div.property_info div.property_key_image img {
   height: 300px;
   width: 100%;
 }
-/* line 56, ../sass/_main.scss */
+/* line 55, ../sass/_main.scss */
 div.main_content div.right_side div.property_info * {
   box-sizing: border-box;
 }
-/* line 57, ../sass/_main.scss */
+/* line 56, ../sass/_main.scss */
 div.main_content div.right_side div.property_info body {
   font-family: Verdana, sans-serif;
   margin: 0;
 }
-/* line 58, ../sass/_main.scss */
+/* line 57, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .mySlides {
   display: none;
 }
-/* line 59, ../sass/_main.scss */
+/* line 58, ../sass/_main.scss */
 div.main_content div.right_side div.property_info img {
   margin-left: auto;
   margin-right: auto;
 }
-/* line 66, ../sass/_main.scss */
+/* line 65, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .slideshow-container {
   max-width: 700px;
   position: relative;
   margin: auto;
 }
-/* line 74, ../sass/_main.scss */
+/* line 73, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next {
   cursor: pointer;
   position: absolute;
@@ -141,16 +141,16 @@ div.main_content div.right_side div.property_info .prev, div.main_content div.ri
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
 }
-/* line 89, ../sass/_main.scss */
+/* line 88, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-/* line 95, ../sass/_main.scss */
+/* line 94, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .prev:hover, div.main_content div.right_side div.property_info .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 100, ../sass/_main.scss */
+/* line 99, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .text {
   color: #f2f2f2;
   font-size: 15px;
@@ -160,7 +160,7 @@ div.main_content div.right_side div.property_info .text {
   width: 100%;
   text-align: center;
 }
-/* line 111, ../sass/_main.scss */
+/* line 110, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .numbertext {
   color: #f2f2f2;
   font-size: 12px;
@@ -168,7 +168,7 @@ div.main_content div.right_side div.property_info .numbertext {
   position: absolute;
   top: 0;
 }
-/* line 120, ../sass/_main.scss */
+/* line 119, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .dot {
   cursor: pointer;
   height: 15px;
@@ -179,11 +179,11 @@ div.main_content div.right_side div.property_info .dot {
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-/* line 131, ../sass/_main.scss */
+/* line 130, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .active, div.main_content div.right_side div.property_info .dot:hover {
   background-color: #717171;
 }
-/* line 136, ../sass/_main.scss */
+/* line 135, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
@@ -207,8 +207,38 @@ div.main_content div.right_side div.property_info .fade {
   }
 }
 @media only screen and (max-width: 300px) {
-  /* line 155, ../sass/_main.scss */
+  /* line 154, ../sass/_main.scss */
   div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next, div.main_content div.right_side div.property_info .text {
     font-size: 11px;
   }
+}
+/* line 159, ../sass/_main.scss */
+div.main_content div.right_side div.group_info {
+  background-color: wheat;
+  margin: 10px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
+/* line 165, ../sass/_main.scss */
+div.main_content div.right_side div.group_info .title {
+  margin-left: 15px;
+}
+/* line 171, ../sass/_main.scss */
+div.main_content div.right_side div.group_search {
+  background-color: wheat;
+  margin: 10px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
+/* line 177, ../sass/_main.scss */
+div.main_content div.right_side div.group_search .title {
+  margin-left: 15px;
+}
+/* line 181, ../sass/_main.scss */
+div.main_content div.right_side div.group_search .pic {
+  margin-left: 15px;
+}
+/* line 184, ../sass/_main.scss */
+div.main_content div.right_side div.group_search .p {
+  margin-left: 15px;
 }

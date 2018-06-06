@@ -14,18 +14,28 @@
                 <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
                 <h6>My Rentals</h6>
                 <h6>My Listings</h6>
+                <h6>My Group</h6>
                 <h6>Interesting Properties</h6>
             </div>
         </div>
 
-        <div class="add_listing">
-            <div class="add_btn">
-                <a class="btn red rounded padded" href="{{=URL('default', 'add')}}">
-                    <i class="fa fa-plus"></i>
-                    Add Listing
-                </a>
+        <div class="button_list">
+            <div class="add_listing">
+                <div class="add_btn">
+                    <a class="btn red rounded padded" href="{{=URL('default', 'add')}}">
+                        <i class="fa fa-plus"></i>
+                        Add Listing
+                    </a>
+                </div>
             </div>
-
+            <div class="add_group">
+                <div class="add_btn">
+                    <a class="btn red rounded padded" href="{{=URL('default','new_group')}}">
+                        <i class="fa fa-plus"></i>
+                        Create New Group
+                    </a>
+                </div>
+            </div>
         </div>
 
 
