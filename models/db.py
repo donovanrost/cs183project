@@ -129,11 +129,6 @@ db.define_table('property',
                 Field('proof_ownership'),
                 )
 
-# users can 'like' a property
-db.define_table('liked_properties',
-                Field('property', db.property),          #db.property
-                Field('user_who_liked', db.auth_user),
-                )
 auth.settings.extra_fields['auth_user'] = [
     Field('property', db.property),  # db.property
     Field('rental_group', db.rental_group)  # db.rental_group

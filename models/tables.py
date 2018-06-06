@@ -23,7 +23,11 @@ db.define_table('listings',
                 Field('property_type')
                 )
 
-
+# users can 'like' a property
+db.define_table('liked_properties',
+                Field('user_email', default=get_user_email()),
+                Field('property_id', 'reference listings')         #db.propert
+                )
 
 
 # after defining tables, uncomment below to enable auditing
