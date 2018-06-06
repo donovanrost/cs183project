@@ -94,7 +94,6 @@ var app = function() {
             })
     };
 
-<<<<<<< HEAD
 
 
     //------------------- GROUP CODE ================================================
@@ -262,7 +261,6 @@ var app = function() {
         self.get_users();
     };
     //------------------- End of GROUP CODE ================================================
-=======
     self.next_page = function(){
         self.vue.add_property_page++;
 
@@ -271,7 +269,6 @@ var app = function() {
         if(self.vue.add_property_page > 0)
             self.vue.add_property_page--;
     };
->>>>>>> addprops
 
     self.vue = new Vue({
         el: "#vue-div",

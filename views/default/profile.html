@@ -79,23 +79,6 @@
         <div class="right_side container threequarters max900 compressible">
             <div class="add_property_div padded container" id="add_property_div" style="display:none">
                 <h4>Add a new property </h4>
-<<<<<<< HEAD
-
-                <div class="address_div half">
-                    <form v-on:submit.prevent>
-                        <h5>What is the address?</h5>
-                        <label>Street: </label>
-                            <input class="drop_down_field" v-model="form_street" type="text" id="street" name="street" class="form-control"><br>
-                        <label>City: </label>
-                            <input class="drop_down_field" v-model="form_city" type="text" id="city" name="city" class="form-control"><br>
-                        <label>State:</label>
-                            <input class="drop_down_field" v-model="form_state_" type="text" id="state_" name="state_" class="form-control"><br>
-                        <label>Zip Code: </label>
-                            <input class="drop_down_field" v-model="form_zip" type="text" id="zip" name="zip" class="form-control"><br>
-                        <button class="valid_address rounded"v-on:click="add_address()">
-                            Validate address
-                        </button>
-=======
                 <div v-if="add_property_page == 0">
                     <h5>What is the address?</h5>
                     <form>
@@ -103,7 +86,6 @@
                         City: <input type="text" name="city" v-model="form_city" placeholder="City..."><br>
                         Zip Code: <input type="text" name="zip" v-model="form_zip" placeholder="Zip code..."><br>
                         State: <input type="text" name="state" v-model="form_state_" placeholder="City..."><br>
->>>>>>> addprops
                     </form>
 
                 </div>
@@ -111,7 +93,6 @@
                     <h5>Tell us about the property</h5>
                     <form>
                         <label>Property Type </label><br>
-<<<<<<< HEAD
                             <select class="drop_down_field"  name="p_type" v-model="p_type">
                                 <!--For this one, I need to get the .id of the selected value
                                     But I think I can just grab it before the post request
@@ -119,18 +100,9 @@
                                 <option v-for="p in property_types">${p.p_type}</option>
                             </select>
                         <label>Number of Bedrooms </label><br>
-                            <select class="drop_down_field" name="num_bedrooms" v-model="num_bedrooms" >
-                                <option v-for="n in 10" >${n}</option>
-                            </select>
-=======
-                        <select class="drop_down_field"  name="p_type" v-model="p_type">
-                            <option v-for="p in property_types">${p.p_type}</option>
-                        </select>
-                        <label>Number of Bedrooms </label><br>
                         <select class="drop_down_field" name="num_bedrooms" v-model="num_bedrooms" >
                             <option v-for="n in 10" >${n}</option>
                         </select>
->>>>>>> addprops
                         <div class="container">
 
                            <div class="half">
@@ -173,18 +145,6 @@
 
             </div>
 
-<<<<<<< HEAD
-            
-=======
-
-
-
-
-
-
-
-
->>>>>>> addprops
             <div class="property_info">
                 <h5 class="title">My Properties</h5>
                 <div class="property_key_image center spaced padded">
