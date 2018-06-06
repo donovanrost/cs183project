@@ -103,3 +103,35 @@ def like_listing():
         user_email = auth.user.email
     )
     return
+
+def get_listings():
+    start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
+    end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
+    listings = []
+    has_more = False
+    l_rows = db().select(db.listings.ALL, limitby=(start_idx, end_idx + 1))
+    for i, r in enumerate(l_rows):
+        if i < end_idx - start_idx:
+            p = db(db.property.id == r.property_id).select().first()
+            listing = dict(
+                id=p.id,
+                num_bedrooms = p.num_bedrooms,
+                num_fullbaths= p.num_fullbaths,
+                num_halfbaths = p.num_halfbaths,
+                property_type= p.property_type,
+                listed_on = r.listed_on,
+                get_user_email = r.user_email
+            )
+            listings.append(listing)
+        else:
+            has_more = True
+    return response.json(dict(
+        listings=listings,
+        has_more=has_more,
+    ))
+
+#Helper function to get user info and check if logged in or not
+def get_my_info():
+    this_user = auth.user
+    logged_in = True if auth.user is not None else False
+    return response.json(dict(this_user=this_user, logged_in=logged_in))

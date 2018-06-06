@@ -4,8 +4,8 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'my_method')}}";
-    var get_properties_url = "{{=URL('api', 'get_property_types')}}";//No need for signature here
-	var get_my_info_url = "{{=URL('api', 'get_my_info')}}";
+    var listings_url = "{{=URL('default', 'get_listings')}}";//No need for signature here
+	var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
 </script>
 {{end}}
 
@@ -33,8 +33,21 @@
 </div>
 <div class="padded">
     <h4> Available Listings</h4>
-
-    {{=grid}}
+    <div id="listing_containter" class="padded">
+        <div v-for="listing in listings">
+            <span>
+                <div class="third padded">
+                    <h6> Address</h6>
+                </div>
+                <div class="third padded">
+                    <h6> discription </h6>
+                </div>
+                <button v-if="logged_in" class="padded right">
+                    <i class="fa fa-thumbs-up"></i>
+                </button>
+            </span>
+        </div>
+    </div>
 </div>
 
 

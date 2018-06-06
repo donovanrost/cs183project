@@ -13,36 +13,34 @@ var app = function() {
         }
     };
 
-    self.add_property = function(){
+    function get_listings_url(start_idx, end_idx) {
+        var pp = {
+            start_idx: start_idx,
+            end_idx: end_idx
+        };
+        return listings_url + "&" + $.param(pp);
+    }
 
-    };
-
-
-
-
-//FOR LISTING PROPERTIES
-    self.get_properties = function(){
-        //List out properties on homepage
-        $.getJSON(
-            get_properties_url,
+    //List out properties on homepage
+    self.get_listings = function(){
+        $.getJSON(get_listings_url(0,10),
             function(data){
-                self.vue.properties = data.property_types;
+                self.vue.listings = data.listings;
+                self.has_more = data.has_more;
             }
         )
     };
 
-//HELPER FUNCTION FOR GETTING USER INFO
+    //HELPER FUNCTION FOR GETTING USER INFO
     self.get_my_info = function() {
         $.getJSON(
             get_my_info_url,
             function(data){
                 self.vue.logged_in = data.logged_in;
                 self.vue.this_user = data.this_user;
-                self.vue.my_user_id = data.my_user_id;
             }
         )
     };
-
 
     // Complete as needed.
     self.vue = new Vue({
@@ -51,9 +49,9 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
         data: {
             //has_more: false
-            properties:[],
+            listings:[],
+            has_more: false,
             logged_in: false,
-            my_user_id: null,
             this_user: null,
         },
         methods: {
@@ -63,10 +61,8 @@ var app = function() {
 
     });
 
-
-
-    //self.get_properties();
-
+    self.get_my_info();
+    self.get_listings();
     $("#vue-div").show();
     return self;
 };
