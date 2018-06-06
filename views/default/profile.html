@@ -11,6 +11,7 @@
       var add_address_url = "{{=URL('api', 'insert_new_address', user_signature=False)}}";
       var get_property_types_url = "{{=URL('api', 'get_property_types', user_signature=False)}}";
       var add_property_url = "{{=URL('api', 'add_property', user_signature=True)}}";
+      var get_owned_properties_url = "{{=URL('api', 'get_owned_properties', user_signature=True)}}";
 
 </script>
 
@@ -137,34 +138,32 @@
                         </button>
                     </span>
 
-
-
-
                 </div>
-
 
             </div>
 
             <div class="property_info">
-                <h5 class="title">My Properties</h5>
-                <div class="property_key_image center spaced padded">
-                    {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
+                <div class="right_side_banner">
+                    <h4>My Properties</h4>
                 </div>
-                <div class="modal" id="popup1">
-                  <div class="twothirds rounded white padded">
-                    <h2>Hello from modal</h2>
-
-                    <a class="close" href="#">×</a>
-					  {{=A(IMG(_src=URL('static/images', 'sample_house.jpg'), _alt="comment"),_href=URL('default/profile','#popup1'))}}
-                    <!--
-                    HTML for a image carousel should go here
-                    -->
-
-                    <div class="right">
-                      <a class="close btn" href="#">close</a>
+                <div>
+                    <div class="owned_properties container padded" v-for="p in owned_properties">
+                        <div class="padded half">
+                            <h6>Street:</h6><p>${p.street}</p>
+                           <h6>City:</h6> <p>${p.city}</p>
+                           <h6>Zip Code:</h6> <p>${p.zip}</p>
+                            <h6>Sate:</h6><p>${p.state_}</p>
+                        </div>
+                        <div class="padded half">
+                            <h6>Property Type</h6><p>${p.property_type}</p>
+                            <h6>Number of Bedrooms</h6> <p>${p.num_bedrooms}</p>
+                            <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
+                            <h6>Number of half bathrooms</h6> <p>${p.num_halfbaths}</p>
+                        </div>
                     </div>
-                  </div>
                 </div>
+
+
             </div>
 
             <div class="group_info">
