@@ -60,6 +60,16 @@ def add_property():
 
     return "ok"
 
+def get_owned_properties():
+    owned_properties = []
+
+    for row in db(db.property.property_owner == auth.user.id).select():
+        owned_properties.append(row)
+
+    return response.json(dict(
+        owned_properties=owned_properties,
+        ))
+
 
 #Helper function to get user info and check if logged in or not
 def get_my_info():

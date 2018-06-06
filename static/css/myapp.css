@@ -32,6 +32,9 @@
 .content{
   width: 50%;
 }
+.banner{
+    text-align: center;
+}
 
 div.add_property_div{
   background-color: wheat;
@@ -79,139 +82,24 @@ div.main_content div.left_side div.button_list .btn {
   /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
 }
 /* line 38, ../sass/_main.scss */
-div.main_content div.right_side div.property_info {
-  background-color: wheat;
-  margin: 10px;
-  border: 2px solid red;
-  border-radius: 15px;
-  /* Slideshow container */
-  /* Next & previous buttons */
-  /* Position the "next button" to the right */
-  /* On hover, add a black background color with a little bit see-through */
-  /* Caption text */
-  /* Number text (1/3 etc) */
-  /* The dots/bullets/indicators */
-  /* Fading animation */
-  /* On smaller screens, decrease text size */
+div.main_content div.right_side div.property_info .right_side_banner {
+        background-color: wheat;
+        margin: 10px;
+        border: 2px solid red;
+        border-radius: 15px;
+        text-align:center;
 }
-/* line 44, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .title {
-  margin-left: 15px;
+div.main_content div.right_side div.property_info .owned_properties {
+        background-color: wheat;
+        margin: 10px;
+        border: 2px solid red;
+        border-radius: 15px;
 }
-/* line 49, ../sass/_main.scss */
-div.main_content div.right_side div.property_info div.property_key_image img {
-  height: 300px;
-  width: 100%;
-}
-/* line 55, ../sass/_main.scss */
-div.main_content div.right_side div.property_info * {
-  box-sizing: border-box;
-}
-/* line 56, ../sass/_main.scss */
-div.main_content div.right_side div.property_info body {
-  font-family: Verdana, sans-serif;
-  margin: 0;
-}
-/* line 57, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .mySlides {
-  display: none;
-}
-/* line 58, ../sass/_main.scss */
-div.main_content div.right_side div.property_info img {
-  margin-left: auto;
-  margin-right: auto;
-}
-/* line 65, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .slideshow-container {
-  max-width: 700px;
-  position: relative;
-  margin: auto;
-}
-/* line 73, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-}
-/* line 88, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-/* line 94, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .prev:hover, div.main_content div.right_side div.property_info .next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-/* line 99, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-}
-/* line 110, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
-}
-/* line 119, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-/* line 130, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .active, div.main_content div.right_side div.property_info .dot:hover {
-  background-color: #717171;
-}
-/* line 135, ../sass/_main.scss */
-div.main_content div.right_side div.property_info .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-@-webkit-keyframes fade {
-  from {
-    opacity: .4;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade {
-  from {
-    opacity: .4;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@media only screen and (max-width: 300px) {
-  /* line 154, ../sass/_main.scss */
-  div.main_content div.right_side div.property_info .prev, div.main_content div.right_side div.property_info .next, div.main_content div.right_side div.property_info .text {
-    font-size: 11px;
-  }
-}
+
+
+
+
+
 /* line 159, ../sass/_main.scss */
 div.main_content div.right_side div.group_info {
   background-color: wheat;
