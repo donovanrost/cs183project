@@ -26,25 +26,25 @@ var app = function() {
             $("div#add_property_div").hide();
         self.vue.is_adding_property = !self.vue.is_adding_property
     };
-    self.add_address = function(){
-        axios.post(add_address_url,{
-            street: self.vue.form_street,
-            city: self.vue.form_city,
-            state_: self.vue.form_state_,
-            zip: self.vue.form_zip,
-        })
-            .then(function(response){
-                if(response.data.error == null){
-                    self.vue.addr_id = response.data.addr_id;
-                    this.addr_is_valid = true;
-                }
-                else{
-                    this.addr_is_valid = false;
-                }
-            })
-
-
-    };
+    // self.add_address = function(){
+    //     axios.post(add_address_url,{
+    //         street: self.vue.form_street,
+    //         city: self.vue.form_city,
+    //         state_: self.vue.form_state_,
+    //         zip: self.vue.form_zip,
+    //     })
+    //         .then(function(response){
+    //             if(response.data.error == null){
+    //                 self.vue.addr_id = response.data.addr_id;
+    //                 this.addr_is_valid = true;
+    //             }
+    //             else{
+    //                 this.addr_is_valid = false;
+    //             }
+    //         })
+    //
+    //
+    // };
     self.get_property_types = function(){
         axios.get(get_property_types_url)
 
@@ -66,18 +66,43 @@ var app = function() {
         }
 
         axios.post(add_property_url, {
-            address: self.vue.addr_id,
+
+            street: self.vue.form_street,
+            city: self.vue.form_city,
+            state_: self.vue.form_state_,
+            zip: self.vue.form_zip,
             num_bedrooms: self.vue.num_bedrooms,
             num_fullbaths: self.vue.num_fullbaths,
             num_halfbaths: self.vue.num_halfbaths,
-            //property_type: self.vue.p_type.id,
-            property_type,
+            property_type: self.vue.p_type.id,
 
         })
             .then(function(response){
                 console.log(response)
+                if(response.data="ok"){
+                    self.vue.form_street='';
+                    self.vue.form_city='';
+                    self.vue.form_state_='';
+                    self.vue.form_zip='';
+                    self.vue.num_bedrooms='';
+                    self.vue.num_fullbaths='';
+                    self.vue.num_halfbaths='';
+                    self.vue.p_type.id='';
+                    self.vue.add_property_page=0;
+                    self.add_property_button();
+                }
             })
     };
+
+    self.next_page = function(){
+        self.vue.add_property_page++;
+
+    };
+    self.prev_page = function(){
+        if(self.vue.add_property_page > 0)
+            self.vue.add_property_page--;
+    };
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -95,6 +120,9 @@ var app = function() {
             num_bedrooms:"",
             num_fullbaths:"",
             num_halfbaths:"",
+            add_property_page:0,
+            last_add_property_page:1,
+
 
 
         },
@@ -103,6 +131,8 @@ var app = function() {
             add_address: self.add_address,
             get_property_types:self.get_property_types,
             add_property: self.add_property,
+            next_page:self.next_page,
+            prev_page:self.prev_page,
 
         }
 
