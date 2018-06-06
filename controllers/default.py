@@ -21,10 +21,8 @@ def index():
     db.listings.id.readable = False
 
 
-    fields = (db.listings.image, db.listings.address, db.listings.property_type,
-              db.listings.bedrooms, db.listings.bathrooms)
 
-    grid = SQLFORM.grid(db.listings, user_signature=False, fields=fields, create=False, deletable=False,
+    grid = SQLFORM.grid(db.listings, user_signature=False, fields=None, create=False, deletable=False,
                              editable=False, paginate=25, csv=False,
                         links = [lambda row: A('Like', _href=URL("default","like_listing",args=[row.id]))])
     return dict(grid=grid)
