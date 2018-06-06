@@ -24,7 +24,7 @@ var app = function() {
         }
         else
             $("div#add_property_div").hide();
-        self.vue.is_adding_property = !self.vue.is_adding_property
+        self.vue.is_adding_property = !self.vue.is_adding_property;
     };
     self.add_address = function(){
         axios.post(add_address_url,{
@@ -51,7 +51,7 @@ var app = function() {
             .then(function(response){
                 console.log(response.data.property_types);
                 self.vue.property_types = response.data.property_types;
-                self.enumerate(property_types);
+                self.enumerate(self.vue.property_types);
             })
 
     };

@@ -17,8 +17,12 @@
 
 }
 
-#slug_title{
-
+.drop_down_field{
+  background-color: #fff;
+  border-radius: 18px;
+}
+.valid_address{
+  margin-top: 10px;
 }
 
 .home_title{

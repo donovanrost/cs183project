@@ -125,7 +125,6 @@ db.define_table('liked_properties',
 auth.settings.extra_fields['auth_user'] = [
     Field('property', db.property),  # db.property
     Field('rental_group', db.rental_group)  # db.rental_group
-
     ]
 
 
