@@ -23,7 +23,7 @@ var app = function() {
 
     //List out properties on homepage
     self.get_listings = function(){
-        $.getJSON(get_listings_url(0,10),
+        $.getJSON(listings_url,
             function(data){
                 self.vue.listings = data.listings;
                 self.has_more = data.has_more;

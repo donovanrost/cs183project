@@ -11,7 +11,7 @@
   flex: 1;
   justify-content: center;
   align-items: flex-start; */
-  background-color:#003bb3;
+  /*background-color:#003bb3;*/
 }
 .background-pic{
 
@@ -27,7 +27,7 @@
 
 .home_title{
   font-family: "Gill Sans MT";
-  color: #FFF700;
+  /*color: #FFF700;*/
 }
 .content{
   width: 50%;

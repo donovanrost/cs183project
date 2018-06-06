@@ -25,17 +25,27 @@
 
 			</transition>
 
-            <div class="padded">
+            <div v-if="listings.length > 0" class="padded">
                 <h4> Available Listings</h4>
+                <div class="padded">
+                    <input>
+                </div>
                 <div id="listing_containter" class="padded">
                     <div class="fa-border" v-for="listing in listings">
-                        <div class="third padded">
+                        <div class="padded">
                             <h6> Address</h6>
+                            <p>${listing.street}</p>
+                            <p>${listing.city} ${listing.state} ${listing.zip}</p>
                         </div>
-                        <div class="third padded">
+                        <div class="padded">
                             <h6> discription </h6>
-                            ${listing.num_baths}
-                            ${listing.num_bedroom}
+                            <p> Bedrooms: ${listing.num_bedrooms}</p>
+                            <p> Full Bathrooms:${listing.num_fullbaths}</p>
+                            <p> Half Bathrooms: ${listing.num_halfbaths}</p>
+                        </div>
+                        <div class="padded">
+                            <h6> Property Owner </h6>
+                            ${listing.user_email}
                         </div>
                         <button v-if="logged_in">
                             <i class="fa fa-thumbs-up"></i>

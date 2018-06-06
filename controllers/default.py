@@ -105,26 +105,23 @@ def like_listing():
     return
 
 def get_listings():
-    start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
-    end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
     listings = []
+    rows = db(db.listings).select(db.listings.ALL, limitby=(0, 10))
     has_more = False
-    l_rows = db().select(db.listings.ALL, limitby=(start_idx, end_idx + 1))
-    for i, r in enumerate(l_rows):
-        if i < end_idx - start_idx:
-            p = db(db.property.id == r.property_id).select().first()
-            listing = dict(
-                id=p.id,
-                num_bedrooms = p.num_bedrooms,
-                num_fullbaths= p.num_fullbaths,
-                num_halfbaths = p.num_halfbaths,
-                property_type= p.property_type,
-                listed_on = r.listed_on,
-                get_user_email = r.user_email
-            )
-            listings.append(listing)
-        else:
-            has_more = True
+    for i, r in enumerate(rows):
+        p = db(db.property.id == r.property_id).select().first()
+        list = dict(
+            street = p.street,
+            city = p.city,
+            zip = p.zip,
+            state=p.state_,
+            num_bedrooms = p.num_bedrooms,
+            num_fullbaths = p.num_fullbaths,
+            num_halfbaths = p.num_halfbaths,
+            property_id = r.property_id,
+            user_email = r.user_email
+        )
+        listings.append(list)
     return response.json(dict(
         listings=listings,
         has_more=has_more,
