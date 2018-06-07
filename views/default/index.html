@@ -6,7 +6,10 @@
     var my_url = "{{=URL('api', 'my_method')}}";
     var listings_url = "{{=URL('default', 'get_listings')}}";//No need for signature here
 	var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
+	var like_property_url = "{{=URL('default', 'like_property')}}"
 </script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 {{end}}
 
 <div class="main_content">
@@ -38,7 +41,7 @@
                             <p>${listing.city} ${listing.state} ${listing.zip}</p>
                         </div>
                         <div class="padded">
-                            <h6> discription </h6>
+                            <h6> description </h6>
                             <p> Bedrooms: ${listing.num_bedrooms}</p>
                             <p> Full Bathrooms:${listing.num_fullbaths}</p>
                             <p> Half Bathrooms: ${listing.num_halfbaths}</p>
@@ -47,7 +50,7 @@
                             <h6> Property Owner </h6>
                             ${listing.user_email}
                         </div>
-                        <button v-if="logged_in">
+                        <button v-if="logged_in" v-on:click="like_property(listing.property_id)">
                             <i class="fa fa-thumbs-up"></i>
                         </button>
                     </div>
@@ -55,7 +58,6 @@
             </div>
 
         </div>
-
 
     </div>
 	</body>

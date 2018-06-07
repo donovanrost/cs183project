@@ -67,81 +67,8 @@ plugins = PluginManager()
 
 
 
-## after auth = Auth(db)
-auth.settings.extra_fields['auth_user']= [
-    Field('picture', 'upload', uploadfield='picture_file', writable=True),
-    Field('picture_file', 'blob', writable=True),
-    Field('listed_properties'),
-    Field('interest_properties')
-]
-## before auth.define_tables(username=True)
-
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
-
-def get_user_id():
-    return auth.user.id if auth.user is not None else None
-
-db.define_table('address',
-                Field('street', type='string'),
-                Field('city', type='string'),
-                Field('zip', type='string'),
-                Field('state_', type='string'),
-                Field('hash_', type='string'),
-                )
-# something about this feels off to me and I can't quite place it
-db.define_table('rental_group',
-                Field('group_name'),
-                Field('is_active', type='boolean', default=False),     # is a user active in the group or not
-                Field('date_created'),                                 # when a user joined the group
-                Field('is_editing', type='boolean', default=False)     # Like the memo thing from hw3
-                )
-
-db.define_table('group_member',
-                Field('user_email'),
-                Field('group_id', 'reference rental_group'),
-                Field('is_pending', type='boolean', default=False),
-                Field('is_active', type='boolean', defautl=False)
-                )
-
-# in real life there are different types of properties
-# e.g., apartments, houses, flats, maybe just a room
-# as of now, i think these should be rows in the database, not columns
-# I might be wrong about that
-db.define_table('property_type',
-                Field('p_type', type='string')
-                )
-
-# why not have the option to record the history of a property
-# over time.
-# this will probably go unused for the project, but I was just
-# thinking about it
-#defined up here, extened later to deal with cyclic dependencies
-db.define_table('rental_history')
-
-db.define_table('property',
-                Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),    #should be an auth_user
-                Field('street', type='string',required=False),
-                Field('city', type='string',required=False),
-                Field('zip', type='string',required=False),
-                Field('state_', type='string',required=False),
-                Field('num_bedrooms', type='integer'),
-                Field('num_fullbaths', type='integer'),
-                Field('num_halfbaths', type='integer'),
-                Field('property_type', db.property_type),     #db.property_type
-                Field('proof_ownership'),
-                )
-
-auth.settings.extra_fields['auth_user'] = [
-    Field('property', db.property),  # db.property
-    Field('rental_group', db.rental_group)  # db.rental_group
-    ]
-
-
-
-
-
-
 
 # configure email
 mail = auth.settings.mailer

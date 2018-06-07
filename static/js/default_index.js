@@ -41,6 +41,20 @@ var app = function() {
             }
         )
     };
+    self.like_property = function(id){
+        self.vue.liked_property_id = id;
+        console.log(self.vue.liked_property_id);
+        console.log("like property called");
+        axios.post(like_property_url,{
+            property_id:self.vue.liked_property_id,
+        })
+            .then(function(response){
+                if(response == "ok"){
+                    self.liked_property_id = null;
+                }
+
+            })
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -53,10 +67,13 @@ var app = function() {
             has_more: false,
             logged_in: false,
             this_user: null,
+            liked_property_id: null,
+
         },
         methods: {
             //get_more: self.get_more
             add_property: self.add_property,
+            like_property: self.like_property,
         }
 
     });
