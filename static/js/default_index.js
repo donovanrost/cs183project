@@ -44,9 +44,18 @@ var app = function() {
         )
     };
     self.like_property = function(id){
+        enumerate(self.vue.liked_properties);
         self.vue.liked_property_id = id;
         console.log(self.vue.liked_property_id);
-        console.log("like property called");
+        console.log("liked property with id:" + id);
+
+        if(self.vue.liked_properties.includes(self.vue.liked_property_id) ){
+            self.vue.liked_properties.splice(self.vue.get_index_of_property(id), 1);
+        }
+        else{
+            self.vue.liked_properties.push(id);
+
+        }
         axios.post(like_property_url,{
             property_id:self.vue.liked_property_id,
         })
@@ -54,9 +63,9 @@ var app = function() {
                 if(response == "ok"){
                     self.liked_property_id = null;
                 }
-                self.get_liked_properties();
 
             })
+
     };
     self.get_liked_properties = function(){
         axios.get(get_liked_properties_url)
@@ -64,6 +73,7 @@ var app = function() {
             .then(function(response){
                 self.vue.liked_properties = response.data.liked_properties;
                 enumerate(self.vue.liked_properties);
+
             })
     };
     self.is_property_liked = function(property){
@@ -76,9 +86,6 @@ var app = function() {
 
 
     };
-
-
-
 
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
@@ -106,6 +113,18 @@ var app = function() {
         self.vue.form_zip_search = "";
         self.get_listings();
     };
+
+    self.get_index_of_property = function(property){
+        var i;
+        for(i = 0; i < self.vue.liked_properties.length; i++){
+            if(property == self.vue.liked_properties[i].property_id);
+            break;
+        }
+        return i;
+
+
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -135,9 +154,9 @@ var app = function() {
             search_button: self.search_button,
             cancel_search_button: self.cancel_search_button,
             like_property: self.like_property,
-
             get_liked_properties:self.get_liked_properties,
             is_property_liked:self.is_property_liked,
+            get_index_of_property:self.get_index_of_property,
 
         }
 
