@@ -86,6 +86,14 @@ var app = function() {
             })
 
     };
+    self.get_liked_properties = function(){
+        axios.get(get_liked_properties_url)
+
+            .then(function(response){
+                self.vue.liked_properties = response.data.liked_properties;
+                enumerate(self.vue.liked_properties);
+            })
+    };
 
 
 
@@ -293,7 +301,8 @@ var app = function() {
             form_user_search: null,
             form_name: null,
             logged_in: false,
-            has_more: false
+            has_more: false,
+            liked_properties:[],
 
 
         },
@@ -306,7 +315,6 @@ var app = function() {
             next_page:self.next_page,
             prev_page:self.prev_page,
             get_owned_properties:self.get_owned_properties,
-            
 
             // groups
             get_more: self.get_more,
@@ -321,6 +329,7 @@ var app = function() {
             delete_group: self.delete_group,
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
+            get_liked_properties:self.get_liked_properties,
 
         }
 
@@ -329,6 +338,7 @@ var app = function() {
     self.get_users();
     self.get_groups();
     self.get_owned_properties();
+    self.get_liked_properties();
     $("#vue-div").show();
 
     return self;

@@ -6,14 +6,15 @@
     var my_url = "{{=URL('api', 'my_method')}}";
     var listings_url = "{{=URL('default', 'get_listings')}}";//No need for signature here
 	var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
-	var like_property_url = "{{=URL('default', 'like_property')}}"
+	var like_property_url = "{{=URL('default', 'like_property')}}";
+    var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 {{end}}
 
 <div class="main_content">
-	<body class="background-pic">
+    <body class="background-pic">
 	<div class="content">
     	<div id="vue-div" class="display:none">
 			<transition name="fade">
@@ -28,7 +29,7 @@
 
 			</transition>
 
-            <div v-if="listings.length > 0" class="padded">
+            <div v-if="listings.length > 0" class="listings padded">
                 <h4> Available Listings</h4>
                 <div class="padded">
                     <input>
@@ -50,9 +51,21 @@
                             <h6> Property Owner </h6>
                             ${listing.user_email}
                         </div>
-                        <button v-if="logged_in" v-on:click="like_property(listing.property_id)">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
+
+
+                        <div class="padded" v-if="logged_in">
+                            <span>
+                                <button v-on:click="like_property(listing.property_id)">
+                                    <i class="fa fa-thumbs-down"></i>
+                                </button>
+                            </span>
+                            <span>
+                                <button v-on:click="like_property(listing.property_id)">
+                                    <i class="fa fa-thumbs-down"></i>
+                                </button>
+                            </span>
+                        </div>
+
                     </div>
                 </div>
             </div>
