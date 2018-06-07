@@ -67,8 +67,8 @@ def call():
 
 @auth.requires_login()
 def profile():
-    q = db.auth_user.picture
-    pic = db(q).select().first()
+    #q = db.auth_user.picture
+    #pic = db(q).select().first()
     return locals()
 
 def register():
@@ -183,4 +183,18 @@ def like_property():
                                          )
     return "ok"
 
+<<<<<<< HEAD
+=======
+def get_liked_properties():
+    liked_properties = []
+
+    for row in db(db.liked_properties.user_email == auth.user.email).select():
+        if (row.isliked == True):
+            liked_properties.append(row.id)
+
+    print(liked_properties)
+    return response.json(dict(
+        liked_properties=liked_properties,
+        ))
+>>>>>>> donovan
 

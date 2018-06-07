@@ -12,6 +12,8 @@ var app = function() {
             a.push(b[i]);
         }
     };
+    // Enumerates an array.
+    var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;});};
 
     function get_listings_url(start_idx, end_idx) {
         var pp = {
@@ -52,9 +54,31 @@ var app = function() {
                 if(response == "ok"){
                     self.liked_property_id = null;
                 }
+                self.get_liked_properties();
 
             })
     };
+    self.get_liked_properties = function(){
+        axios.get(get_liked_properties_url)
+
+            .then(function(response){
+                self.vue.liked_properties = response.data.liked_properties;
+                enumerate(self.vue.liked_properties);
+            })
+    };
+    self.is_property_liked = function(property){
+        if(self.vue.liked_properties.includes(property)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+    };
+
+
+
 
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
@@ -101,6 +125,8 @@ var app = function() {
             logged_in: false,
             this_user: null,
             liked_property_id: null,
+            liked_properties:[],
+
 
         },
         methods: {
@@ -109,12 +135,20 @@ var app = function() {
             search_button: self.search_button,
             cancel_search_button: self.cancel_search_button,
             like_property: self.like_property,
+<<<<<<< HEAD
+=======
+            get_liked_properties:self.get_liked_properties,
+            is_property_liked:self.is_property_liked,
+
+        }
+>>>>>>> donovan
 
         }
     });
 
     self.get_my_info();
     self.get_listings();
+    self.get_liked_properties();
     $("#vue-div").show();
 
     return self;

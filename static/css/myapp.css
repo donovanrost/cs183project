@@ -5,6 +5,7 @@
 
 /* line 5, ../sass/_main.scss */
 .main_content {
+  background-color: #4F5F74;
   width: 100%;
   /*padding: 32pt 0;
   display: flex;
@@ -12,6 +13,9 @@
   justify-content: center;
   align-items: flex-start; */
   /*background-color:#003bb3;*/
+}
+div.main_content div.listings div.listing_container{
+    background-color: #747C86;
 }
 .background-pic{
 
@@ -37,35 +41,33 @@
 }
 
 div.add_property_div{
-  background-color: wheat;
-  margin: 10px;
-  border: 2px solid red;
-  border-radius: 15px;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
 }
-div.first-page{
-  margin: 10px;
-}
-div.second-page{
-  margin: 10px;
-}
-div.third-page{
-  margin: 10px;
-}
+
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {
-  background-color: wheat;
-  margin: 10px;
-  border: 2px solid red;
-  border-radius: 15px;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+
+    margin-top: 18px;
 }
 /* line 15, ../sass/_main.scss */
 div.main_content div.left_side div.user_info img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
-  max-height: 200px;
-  border-radius: 50%;
+    padding-top: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    max-height: 200px;
+    border-radius: 50%;
 }
 /* line 23, ../sass/_main.scss */
 div.main_content div.left_side div.user_info div.user_text {
@@ -76,47 +78,94 @@ div.main_content div.left_side div.button_list {
   margin: 10px;
 }
 /* line 30, ../sass/_main.scss */
-div.main_content div.left_side div.button_list .btn {
+div.main_content div.left_side div.button_list div.add_btn .btn{
   float: left;
-  background-color: orange;
-  /* CHANGE THIS COLOR, ONLY HERE TO OVERRIDE DEFAULT COLOR */
+  background-color: #5F94B9;
+}
+div.main_content div.left_side div.button_list div.group_btn .btn{
+    float: right;
+    background-color: #5F94B9;
+
 }
 /* line 38, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .right_side_banner {
-        background-color: wheat;
-        margin: 10px;
-        border: 2px solid red;
-        border-radius: 15px;
-        text-align:center;
+    text-align:center;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+
+
 }
 div.main_content div.right_side div.property_info .owned_properties {
-        background-color: wheat;
-        margin: 10px;
-        border: 2px solid red;
-        border-radius: 15px;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 2px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+
 }
-
-
-
+div.main_content div.right_side div.group_info div.right_side_banner {
+    text-align:center;
+    background-color: #F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+}
+div.main_content div.right_side div.one_group {
+    background-color: #F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px 4F5F74;
+    opacity: 0.8;
+}
+div.main_content div.right_side div.one_group div.button_bar .btn{
+    background-color: #5F94B9;
+}
+div.main_content div.right_side div.one_group div.button_bar .delete{
+    background-color: red;
+}
 
 
 /* line 159, ../sass/_main.scss */
+/*
 div.main_content div.right_side div.group_info {
-  background-color: wheat;
-  margin: 10px;
-  border: 2px solid red;
-  border-radius: 15px;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 2px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px 4F5F74;
+    opacity: 0.8;
 }
+*/
 /* line 165, ../sass/_main.scss */
+/*
 div.main_content div.right_side div.group_info .title {
   margin-left: 15px;
 }
+*/
 /* line 171, ../sass/_main.scss */
 div.main_content div.right_side div.group_search {
-  background-color: wheat;
-  margin: 10px;
-  border: 2px solid red;
-  border-radius: 15px;
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px 4F5F74;
+    opacity: 0.8;
+}
+div.main_content div.right_side div.group_info div.my_groups {
+    background-color: F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px 4F5F74;
+    opacity: 0.8;
 }
 /* line 177, ../sass/_main.scss */
 div.main_content div.right_side div.group_search .title {
