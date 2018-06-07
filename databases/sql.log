@@ -1,4 +1,4 @@
-timestamp: 2018-06-05T19:38:28.352407
+timestamp: 2018-06-06T19:22:34.257193
 CREATE TABLE "web2py_session_cs183project"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "locked" CHAR(1),
@@ -9,7 +9,7 @@ CREATE TABLE "web2py_session_cs183project"(
     "session_data" BLOB
 );
 success!
-timestamp: 2018-06-05T19:38:28.358974
+timestamp: 2018-06-06T19:22:34.263196
 CREATE TABLE "auth_user"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "first_name" CHAR(128),
@@ -18,28 +18,24 @@ CREATE TABLE "auth_user"(
     "password" CHAR(512),
     "registration_key" CHAR(512),
     "reset_password_key" CHAR(512),
-    "registration_id" CHAR(512),
-    "picture" CHAR(512),
-    "picture_file" BLOB,
-    "listed_properties" CHAR(512),
-    "interest_properties" CHAR(512)
+    "registration_id" CHAR(512)
 );
 success!
-timestamp: 2018-06-05T19:38:28.362735
+timestamp: 2018-06-06T19:22:34.266447
 CREATE TABLE "auth_group"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "role" CHAR(512),
     "description" TEXT
 );
 success!
-timestamp: 2018-06-05T19:38:28.364950
+timestamp: 2018-06-06T19:22:34.268461
 CREATE TABLE "auth_membership"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
 );
 success!
-timestamp: 2018-06-05T19:38:28.367161
+timestamp: 2018-06-06T19:22:34.270721
 CREATE TABLE "auth_permission"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
@@ -48,7 +44,7 @@ CREATE TABLE "auth_permission"(
     "record_id" INTEGER
 );
 success!
-timestamp: 2018-06-05T19:38:28.369724
+timestamp: 2018-06-06T19:22:34.273719
 CREATE TABLE "auth_event"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "time_stamp" TIMESTAMP,
@@ -58,7 +54,7 @@ CREATE TABLE "auth_event"(
     "description" TEXT
 );
 success!
-timestamp: 2018-06-05T19:38:28.372683
+timestamp: 2018-06-06T19:22:34.276333
 CREATE TABLE "auth_cas"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
@@ -68,7 +64,7 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
-timestamp: 2018-06-05T19:38:28.375296
+timestamp: 2018-06-06T19:22:34.280028
 CREATE TABLE "address"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "street" CHAR(512),
@@ -78,7 +74,7 @@ CREATE TABLE "address"(
     "hash_" CHAR(512)
 );
 success!
-timestamp: 2018-06-05T19:38:28.378001
+timestamp: 2018-06-06T19:22:34.282875
 CREATE TABLE "rental_group"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "group_name" CHAR(512),
@@ -87,7 +83,7 @@ CREATE TABLE "rental_group"(
     "is_editing" CHAR(1)
 );
 success!
-timestamp: 2018-06-05T19:38:28.380648
+timestamp: 2018-06-06T19:22:34.285430
 CREATE TABLE "group_member"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_email" CHAR(512),
@@ -96,22 +92,25 @@ CREATE TABLE "group_member"(
     "is_active" CHAR(1)
 );
 success!
-timestamp: 2018-06-05T19:38:28.382906
+timestamp: 2018-06-06T19:22:34.287795
 CREATE TABLE "property_type"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "p_type" CHAR(512)
 );
 success!
-timestamp: 2018-06-05T19:38:28.384593
+timestamp: 2018-06-06T19:22:34.289466
 CREATE TABLE "rental_history"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT
 );
 success!
-timestamp: 2018-06-05T19:38:28.387042
+timestamp: 2018-06-06T19:22:34.291475
 CREATE TABLE "property"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "property_owner" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
-    "address" INTEGER REFERENCES "address" ("id") ON DELETE CASCADE   UNIQUE,
+    "street" CHAR(512),
+    "city" CHAR(512),
+    "zip" CHAR(512),
+    "state_" CHAR(512),
     "num_bedrooms" INTEGER,
     "num_fullbaths" INTEGER,
     "num_halfbaths" INTEGER,
@@ -119,506 +118,19 @@ CREATE TABLE "property"(
     "proof_ownership" CHAR(512)
 );
 success!
-timestamp: 2018-06-05T19:38:28.391921
+timestamp: 2018-06-06T19:22:34.295193
+CREATE TABLE "liked_properties"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "property_id" INTEGER REFERENCES "property" ("id") ON DELETE CASCADE  ,
+    "isliked" CHAR(1)
+);
+success!
+timestamp: 2018-06-06T19:22:34.297843
 CREATE TABLE "listings"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "property_id" INTEGER REFERENCES "property" ("id") ON DELETE CASCADE  ,
     "user_email" CHAR(512),
     "listed_on" TIMESTAMP
 );
-success!
-timestamp: 2018-06-05T19:38:28.394255
-CREATE TABLE "liked_properties"(
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "user_email" CHAR(512),
-    "property_id" INTEGER REFERENCES "listings" ("id") ON DELETE CASCADE  
-);
-success!
-timestamp: 2018-06-06T14:55:55.875246
-ALTER TABLE "property" ADD "city" CHAR(512);
-timestamp: 2018-06-06T14:55:55.880548
-ALTER TABLE "property" ADD "zip" CHAR(512);
-timestamp: 2018-06-06T14:55:55.889392
-ALTER TABLE "property" ADD "street" CHAR(512);
-timestamp: 2018-06-06T14:55:55.893244
-ALTER TABLE "property" ADD "state_" CHAR(512);
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
 success!

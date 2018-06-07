@@ -95,15 +95,6 @@ def new_group():
     users = db().select(db.auth_user.ALL)
     return dict(users=users)
 
-
-def like_listing():
-    id = request.args[0]
-    db.liked_properties.insert(
-        property_id = id,
-        user_email = auth.user.email
-    )
-    return
-
 def get_listings():
     listings = []
     rows = db(db.listings).select(db.listings.ALL, limitby=(0, 10))
@@ -132,6 +123,7 @@ def get_my_info():
     this_user = auth.user
     logged_in = True if auth.user is not None else False
     return response.json(dict(this_user=this_user, logged_in=logged_in))
+
 
 def search():
     listings = []
@@ -166,3 +158,29 @@ def search():
     return response.json(dict(
         listings=listings
     ))
+
+def like_property():
+    property_id = request.post_vars.property_id
+    is_liked = None
+
+    print(property_id)
+    print(auth.user.email)
+
+    row = db(db.liked_properties.property_id == property_id).select().first()
+
+    if row is None:
+        is_liked = True
+    else:
+       is_liked = not row.isliked
+
+    print(is_liked)
+
+    db.liked_properties.update_or_insert((db.liked_properties.property_id == property_id) &
+                                         (db.liked_properties.user_email == auth.user.email),
+                                         user_email=auth.user.email,
+                                         isliked=is_liked,
+                                         property_id=property_id
+                                         )
+    return "ok"
+
+

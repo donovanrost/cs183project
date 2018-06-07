@@ -306,6 +306,7 @@ var app = function() {
             next_page:self.next_page,
             prev_page:self.prev_page,
             get_owned_properties:self.get_owned_properties,
+            
 
             // groups
             get_more: self.get_more,
@@ -319,7 +320,8 @@ var app = function() {
             remove_from_group: self.remove_from_group,
             delete_group: self.delete_group,
             search_user: self.search_user,
-            clear_user_button: self.clear_user_button
+            clear_user_button: self.clear_user_button,
+
         }
 
     });

@@ -41,6 +41,20 @@ var app = function() {
             }
         )
     };
+    self.like_property = function(id){
+        self.vue.liked_property_id = id;
+        console.log(self.vue.liked_property_id);
+        console.log("like property called");
+        axios.post(like_property_url,{
+            property_id:self.vue.liked_property_id,
+        })
+            .then(function(response){
+                if(response == "ok"){
+                    self.liked_property_id = null;
+                }
+
+            })
+    };
 
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
@@ -86,12 +100,16 @@ var app = function() {
             has_more: false,
             logged_in: false,
             this_user: null,
+            liked_property_id: null,
+
         },
         methods: {
             //get_more: self.get_more
             add_property: self.add_property,
             search_button: self.search_button,
-            cancel_search_button: self.cancel_search_button
+            cancel_search_button: self.cancel_search_button,
+            like_property: self.like_property,
+
         }
     });
 
