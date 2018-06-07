@@ -135,15 +135,13 @@ var app = function() {
             search_button: self.search_button,
             cancel_search_button: self.cancel_search_button,
             like_property: self.like_property,
-<<<<<<< HEAD
-=======
+
             get_liked_properties:self.get_liked_properties,
             is_property_liked:self.is_property_liked,
 
         }
->>>>>>> donovan
 
-        }
+
     });
 
     self.get_my_info();

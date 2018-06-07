@@ -183,8 +183,8 @@ def like_property():
                                          )
     return "ok"
 
-<<<<<<< HEAD
-=======
+
+
 def get_liked_properties():
     liked_properties = []
 
@@ -196,5 +196,5 @@ def get_liked_properties():
     return response.json(dict(
         liked_properties=liked_properties,
         ))
->>>>>>> donovan
+
 
