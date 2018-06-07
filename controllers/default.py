@@ -97,22 +97,28 @@ def new_group():
 
 def get_listings():
     listings = []
-    rows = db(db.listings).select(db.listings.ALL, limitby=(0, 10))
+    page = int(request.vars.page)
+    start = (page-1)*10
+    end = page*10
+    rows = db().select(db.listings.ALL, limitby=(start, end+1))
     has_more = False
     for i, r in enumerate(rows):
-        p = db(db.property.id == r.property_id).select().first()
-        list = dict(
-            street = p.street,
-            city = p.city,
-            zip = p.zip,
-            state=p.state_,
-            num_bedrooms = p.num_bedrooms,
-            num_fullbaths = p.num_fullbaths,
-            num_halfbaths = p.num_halfbaths,
-            property_id = r.property_id,
-            user_email = r.user_email
-        )
-        listings.append(list)
+        if i < end - start:
+            p = db(db.property.id == r.property_id).select().first()
+            list = dict(
+                street = p.street,
+                city = p.city,
+                zip = p.zip,
+                state=p.state_,
+                num_bedrooms = p.num_bedrooms,
+                num_fullbaths = p.num_fullbaths,
+                num_halfbaths = p.num_halfbaths,
+                property_id = r.property_id,
+                user_email = r.user_email
+            )
+            listings.append(list)
+        else:
+            has_more = True
     return response.json(dict(
         listings=listings,
         has_more=has_more,

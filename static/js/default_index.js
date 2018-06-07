@@ -26,9 +26,12 @@ var app = function() {
     //List out properties on homepage
     self.get_listings = function(){
         $.getJSON(listings_url,
+            {
+                page: self.vue.page
+            },
             function(data){
                 self.vue.listings = data.listings;
-                self.has_more = data.has_more;
+                self.vue.has_more = data.has_more;
             }
         )
     };
@@ -77,9 +80,6 @@ var app = function() {
 
     };
 
-
-
-
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
             self.vue.form_zip_search == null && self.vue.form_state_search == null){
@@ -97,6 +97,20 @@ var app = function() {
                 }
             )
         }
+    };
+
+    self.prev_page = function(){
+        self.vue.page -= 1;
+        if(self.vue.page === 1){
+            self.vue.has_less = false;
+        }
+        self.get_listings();
+    };
+
+    self.next_page = function() {
+        self.vue.has_less = true;
+        self.vue.page += 1;
+        self.get_listings();
     };
 
     self.cancel_search_button = function(){
@@ -121,13 +135,13 @@ var app = function() {
             form_street_search: null,
             form_room_search: null,
             form_bath_search: null,
+            has_less: false,
             has_more: false,
             logged_in: false,
             this_user: null,
             liked_property_id: null,
             liked_properties:[],
-
-
+            page: 1
         },
         methods: {
             //get_more: self.get_more
@@ -135,13 +149,11 @@ var app = function() {
             search_button: self.search_button,
             cancel_search_button: self.cancel_search_button,
             like_property: self.like_property,
-
             get_liked_properties:self.get_liked_properties,
             is_property_liked:self.is_property_liked,
-
+            next_page: self.next_page,
+            prev_page: self.prev_page
         }
-
-
     });
 
     self.get_my_info();

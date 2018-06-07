@@ -59,11 +59,7 @@
 
             <div v-if="listings.length > 0" class="listings padded">
                 <h4> Available Listings</h4>
-                <div class="padded">
-                    <input>
-
-                </div>
-                <div class="padded">
+                <div class="padded center">
                     <div class="fa-border" v-for="listing in listings">
                         <div class="padded">
                             <h6> Address</h6>
@@ -85,8 +81,6 @@
                             <i class="fa fa-thumbs-up"></i>
                         </button>
 
-
-
                         <div class="padded" v-if="logged_in">
                             <span>
                                 <button v-on:click="like_property(listing.property_id)">
@@ -99,8 +93,17 @@
                                 </button>
                             </span>
                         </div>
-
-
+                    </div>
+                    <div class="container center padded">
+                        <div class="third">
+                            <button v-if="has_less" class="center" v-on:click="prev_page()"><i class="fa fa-arrow-left"></i> Prev </button>
+                        </div>
+                        <div class="third">
+                            <p class="center"> ${page} </p>
+                        </div>
+                        <div class="third">
+                            <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div v-if="listings.length == 0">
