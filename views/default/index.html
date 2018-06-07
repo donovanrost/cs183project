@@ -15,6 +15,7 @@
 
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 {{end}}
 
@@ -77,10 +78,9 @@
                             ${listing.user_email}
                         </div>
 
-                        <button v-if="logged_in" v-on:click="like_property(listing.property_id)">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
+                        <div class="padded" v-if="logged_in">
 
+<<<<<<< HEAD
                         <div class="padded" v-if="logged_in">
                             <span>
                                 <button v-on:click="like_property(listing.property_id)">
@@ -104,6 +104,20 @@
                         <div class="third">
                             <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
                         </div>
+=======
+                            <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
+                                <i class="fas fa-star"></i>
+                                ${listing.property_id}
+                            </button>
+                            <button v-show="is_property_liked(listing.property_id) == false" v-on:click="like_property(listing.property_id)">
+                                <i class="far fa-star"></i>
+                                ${listing.property_id}
+                            </button>
+
+
+                        </div>
+
+>>>>>>> dononvan
                     </div>
                 </div>
                 <div v-if="listings.length == 0">
