@@ -132,3 +132,37 @@ def get_my_info():
     this_user = auth.user
     logged_in = True if auth.user is not None else False
     return response.json(dict(this_user=this_user, logged_in=logged_in))
+
+def search():
+    listings = []
+    street = request.vars.street
+    city = request.vars.city
+    zip = request.vars.zip
+    state = request.vars.state
+
+    q = None
+    if street:
+        q = db.property.street.contains(street)
+    if city:
+        q = db.property.city.contains(city)
+    if state:
+        q = db.property.state_.contains(state)
+    if zip:
+        q = db.property.zip.contains(zip)
+
+    rows = db(q).select(db.property.ALL, limitby=(0, 10))
+    for i, r in enumerate(rows):
+        list = dict(
+            street=r.street,
+            city=r.city,
+            zip=r.zip,
+            state=r.state_,
+            num_bedrooms=r.num_bedrooms,
+            num_fullbaths=r.num_fullbaths,
+            num_halfbaths=r.num_halfbaths,
+            property_id=r.id
+        )
+        listings.append(list)
+    return response.json(dict(
+        listings=listings
+    ))

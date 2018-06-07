@@ -6,6 +6,7 @@
     var my_url = "{{=URL('api', 'my_method')}}";
     var listings_url = "{{=URL('default', 'get_listings')}}";//No need for signature here
 	var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
+	var search_url = "{{=URL('default', 'search')}}";
 </script>
 {{end}}
 
@@ -25,12 +26,30 @@
 
 			</transition>
 
-            <div v-if="listings.length > 0" class="padded">
-                <h4> Available Listings</h4>
-                <div class="padded">
-                    <input>
+            <div class="padded">
+                <div class="padded container">
+                    <div class="third">
+                        <input class="string" v-model="form_street_search" placeholder="Street" type="text">
+                    </div>
+                    <div class="third">
+                        <input class="string" v-model="form_city_search" placeholder="City" type="text">
+                    </div>
+                    <div class="third">
+                        <input class="string" v-model="form_zip_search" placeholder="Zip Code" type="text">
+                    </div>
+                    <div class="third">
+                        <input class="string" v-model="form_state_search" placeholder="State" type="text">
+                    </div>
+                    <div class="twothirds">
+                        <button v-on:click="search_button()">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                        <button v-on:click="cancel_search_button()">
+                            <i class="fa fa-times"></i> Clear
+                        </button>
+                    </div>
                 </div>
-                <div id="listing_containter" class="padded">
+                <div class="padded">
                     <div class="fa-border" v-for="listing in listings">
                         <div class="padded">
                             <h6> Address</h6>
@@ -47,10 +66,15 @@
                             <h6> Property Owner </h6>
                             ${listing.user_email}
                         </div>
-                        <button v-if="logged_in">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
+                        <div>
+                            <button v-if="logged_in">
+                                <i class="fa fa-thumbs-up"></i>
+                            </button>
+                        </div>
                     </div>
+                </div>
+                <div v-if="listings.length == 0">
+                    <h5> No Results Found </h5>
                 </div>
             </div>
 

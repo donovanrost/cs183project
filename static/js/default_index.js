@@ -42,6 +42,33 @@ var app = function() {
         )
     };
 
+    self.search_button = function(){
+        if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
+            self.vue.form_zip_search == null && self.vue.form_state_search == null){
+            self.clear_search_button();
+        } else {
+            $.getJSON(search_url,
+                {
+                    street: self.vue.form_street_search,
+                    city: self.vue.form_city_search,
+                    zip: self.vue.form_zip_search,
+                    state: self.vue.form_state_search
+                },
+                function (data) {
+                    self.vue.listings = data.listings
+                }
+            )
+        }
+    };
+
+    self.cancel_search_button = function(){
+        self.vue.form_state_search = "";
+        self.vue.form_city_search = "";
+        self.vue.form_street_search = "";
+        self.vue.form_zip_search = "";
+        self.get_listings();
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -50,6 +77,12 @@ var app = function() {
         data: {
             //has_more: false
             listings:[],
+            form_state_search: null,
+            form_city_search: null,
+            form_zip_search: null,
+            form_street_search: null,
+            form_room_search: null,
+            form_bath_search: null,
             has_more: false,
             logged_in: false,
             this_user: null,
@@ -57,8 +90,9 @@ var app = function() {
         methods: {
             //get_more: self.get_more
             add_property: self.add_property,
+            search_button: self.search_button,
+            cancel_search_button: self.cancel_search_button
         }
-
     });
 
     self.get_my_info();

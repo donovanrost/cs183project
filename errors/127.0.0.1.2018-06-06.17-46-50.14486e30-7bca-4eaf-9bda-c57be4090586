@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.NameError'> global name 'limitby' is not defined"
+p3
+sS'layer'
+p4
+S'/Users/EmmyB/Desktop/web2py/applications/cs183project/controllers/default.py'
+p5
+sS'code'
+p6
+S'<code object <module> at 0x10ff47530, file "/Users/EmmyB/Desktop/web2py/applications/cs183project/controllers/default.py", line 10>'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/Users/EmmyB/Desktop/web2py/gluon/restricted.py", line 219, in restricted\n    exec(ccode, environment)\n  File "/Users/EmmyB/Desktop/web2py/applications/cs183project/controllers/default.py", line 171, in <module>\n  File "/Users/EmmyB/Desktop/web2py/gluon/globals.py", line 419, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/EmmyB/Desktop/web2py/applications/cs183project/controllers/default.py", line 153, in search\n    rows = db(q).select(db.property.ALL, limitby(0, 10))\nNameError: global name \'limitby\' is not defined\n'
+p11
+s.
