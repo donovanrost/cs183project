@@ -46,7 +46,6 @@ var app = function() {
                 break;
             }
         }
-
         axios.post(add_property_url, {
 
             street: self.vue.form_street,
