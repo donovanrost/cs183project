@@ -78,6 +78,7 @@
                             ${listing.user_email}
                         </div>
 
+
                         <div class="padded" v-if="logged_in">
                             <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
                                 <i class="fas fa-star"></i>
