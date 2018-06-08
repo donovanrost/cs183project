@@ -28,7 +28,7 @@ def get_users():
         if i < end_idx - start_idx:
             usr = dict(
                 id = r.id,
-                picture = r.picture,
+                #picture = r.picture,
                 email = r.email,
                 first_name = r.first_name,
                 last_name = r.last_name
