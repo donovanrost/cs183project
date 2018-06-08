@@ -4,6 +4,7 @@
 <script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 
@@ -13,8 +14,7 @@
       var add_property_url = "{{=URL('api', 'add_property', user_signature=True)}}";
       var get_owned_properties_url = "{{=URL('api', 'get_owned_properties', user_signature=True)}}";
       var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
-
-
+      var get_my_liked_properties_url ="{{=URL('default', 'get_my_liked_properties')}}";
 </script>
 
 <script>
@@ -55,7 +55,7 @@
                     <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
                     <h6>My Rentals</h6>
                     <h6>My Listings</h6>
-                    <h6>Interesting Properties</h6>
+                    <h6>Liked Properties</h6>
 
 					<div class="add_property">
 
@@ -139,6 +139,7 @@
                             Submit
                         </button>
                     </span>
+
                     <span v-if="add_property_page == 0">
                         <button v-on:click="next_page">
                             <i class="fas fa-arrow-right"></i>
@@ -170,6 +171,29 @@
                 </div>
 
             </div>
+
+			<div class="liked_properties">
+				<div class="right_side_banner">
+                    <h4>Liked Properties <i class="fa fa-thumbs-up"></i></h4>
+                </div>
+				<div class="liked_prop container padded" v-for="property in liked_properties">
+					<div class="padded half">
+                        <h6>Street:</h6><p>${property.street}</p>
+                        <h6>City:</h6> <p>${property.city}</p>
+                        <h6>Zip Code:</h6> <p>${property.zip}</p>
+                        <h6>Sate:</h6><p>${property.state_}</p>
+                    </div>
+                    <div class="padded half">
+                        <h6>Property Type</h6><p>${property.property_type}</p>
+                        <h6>Number of Bedrooms</h6> <p>${property.num_bedrooms}</p>
+                        <h6>Number of full bathrooms</h6><p>${property.num_fullbaths}</p>
+                        <h6>Number of half bathrooms</h6> <p>${property.num_halfbaths}</p>
+                    </div>
+				</div>
+
+
+			</div>
+
 
             <div class="group_info">
                 <div class="right_side_banner">

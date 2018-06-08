@@ -87,13 +87,19 @@ var app = function() {
 
     };
     self.get_liked_properties = function(){
-        axios.get(get_liked_properties_url)
 
-            .then(function(response){
-                self.vue.liked_properties = response.data.liked_properties;
+
+        $.getJSON(get_liked_properties_url,
+            function(data){
+                self.vue.liked_properties = data.liked_properties;
                 enumerate(self.vue.liked_properties);
-            })
+                console.log(self.vue.liked_properties);
+        });
+
+
     };
+
+
 
 
 
@@ -329,8 +335,9 @@ var app = function() {
             delete_group: self.delete_group,
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
-            get_liked_properties:self.get_liked_properties,
 
+
+            get_liked_properties: self.get_liked_properties,
         }
 
     });
@@ -339,6 +346,8 @@ var app = function() {
     self.get_groups();
     self.get_owned_properties();
     self.get_liked_properties();
+
+
     $("#vue-div").show();
 
     return self;

@@ -77,21 +77,18 @@
                             ${listing.user_email}
                         </div>
 
-                        <button v-if="logged_in" v-on:click="like_property(listing.property_id)">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
+
 
                         <div class="padded" v-if="logged_in">
+							<button v-if="logged_in" v-on:click="like_property(listing.property_id)">
+                            	<i class="fa fa-thumbs-up"></i>
+                        	</button>
                             <span>
                                 <button v-on:click="like_property(listing.property_id)">
                                     <i class="fa fa-thumbs-down"></i>
                                 </button>
                             </span>
-                            <span>
-                                <button v-on:click="like_property(listing.property_id)">
-                                    <i class="fa fa-thumbs-down"></i>
-                                </button>
-                            </span>
+
                         </div>
                     </div>
                     <div class="container center padded">
