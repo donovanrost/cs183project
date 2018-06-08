@@ -79,53 +79,32 @@
                         </div>
 
                         <div class="padded" v-if="logged_in">
-
-<<<<<<< HEAD
-                        <div class="padded" v-if="logged_in">
-                            <span>
-                                <button v-on:click="like_property(listing.property_id)">
-                                    <i class="fa fa-thumbs-down"></i>
-                                </button>
-                            </span>
-                            <span>
-                                <button v-on:click="like_property(listing.property_id)">
-                                    <i class="fa fa-thumbs-down"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="container center padded">
-                        <div class="third">
-                            <button v-if="has_less" class="center" v-on:click="prev_page()"><i class="fa fa-arrow-left"></i> Prev </button>
-                        </div>
-                        <div class="third">
-                            <p class="center"> ${page} </p>
-                        </div>
-                        <div class="third">
-                            <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
-                        </div>
-=======
                             <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
                                 <i class="fas fa-star"></i>
-                                ${listing.property_id}
                             </button>
                             <button v-show="is_property_liked(listing.property_id) == false" v-on:click="like_property(listing.property_id)">
                                 <i class="far fa-star"></i>
-                                ${listing.property_id}
                             </button>
-
-
                         </div>
 
->>>>>>> dononvan
+
                     </div>
-                </div>
-                <div v-if="listings.length == 0">
+                    <div class="container center padded">
+                            <div class="third">
+                                <button v-if="has_less" class="center" v-on:click="prev_page()"><i class="fa fa-arrow-left"></i> Prev </button>
+                            </div>
+                            <div class="third">
+                                <p class="center"> ${page} </p>
+                            </div>
+                            <div class="third">
+                                <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    <div v-if="listings.length == 0">
                     <h5> No Results Found </h5>
                 </div>
+             </div>
             </div>
-
-        </div>
 
     </div>
 	</body>

@@ -173,14 +173,11 @@ var app = function() {
             like_property: self.like_property,
             get_liked_properties:self.get_liked_properties,
             is_property_liked:self.is_property_liked,
-<<<<<<< HEAD
             next_page: self.next_page,
-            prev_page: self.prev_page
-=======
+            prev_page: self.prev_page,
             get_index_of_property:self.get_index_of_property,
 
->>>>>>> dononvan
-        }
+        },
     });
 
     self.get_my_info();
