@@ -150,14 +150,21 @@
 
             </div>
 
-            <div class="add_listing_div padded container" id="add_listing_div">
+            <div class="add_listing_div padded container" id="add_listing_div" style="display:none">
                 <h4>List Property</h4>
-                <button class="right" v-on:click="add_listing_button()"><i class="fa fa-times"></i> Cancel</button>
+                <button class="right" v-on:click="add_listing_button(listing_idx)"><i class="fa fa-times"></i> Cancel</button>
+                <div>
+                    <h6>Property</h6>
+                    <p>Street:</p>
+                    <p>City:</p>
+                    <p>Zip Code:</p>
+                    <p>Sate:</p>
+                </div>
                 <div v-if="add_listing_page == 0">
                     <h5> Description </h5>
                     <form>
                         Max Occupants:<select class="drop_down_field" v-model="form_max_occ"><option v-for="n in 10" >${n}</option></select>
-                        Rent: <input type="number" placeholder="$ 0.00" v-model="form_rent">
+                        Rent: <input type="number" placeholder="$ 0.00/mo" v-model="form_rent">
                         start date: <input type="date" v-model="form_start_date">
                         end date: <input type="date" v-model="form_end_date">
                     </form>
@@ -169,7 +176,7 @@
                     <h5> Review Listing </h5>
                     <div class="container padded">
                         <div class="half">
-                            <h6> Property</h6>
+                            <h6>Property</h6>
                             <p>Street:</p>
                             <p>City:</p>
                             <p>Zip Code:</p>
@@ -208,7 +215,7 @@
                     </div>
                     <div class="padded half">
                         <div class="right">
-                            <button v-on:click="add_listing_button()">
+                            <button v-on:click="add_listing_button(p._idx)">
                                 <i class="fa fa-paper-plane"></i>  Post
                             </button>
                         </div>

@@ -22,8 +22,10 @@ var app = function() {
             $("div#add_property_div").show();
             self.get_property_types();
         }
-        else
+        else{
             $("div#add_property_div").hide();
+
+        }
         self.vue.is_adding_property = !self.vue.is_adding_property;
     };
 
@@ -271,13 +273,20 @@ var app = function() {
     };
 
     // listings
-    self.add_listing_button = function(){
+    self.add_listing_button = function(idx){
         self.vue.add_listing_page = 0; 
         if(!self.vue.is_adding_listing) {
             $("div#add_listing_div").show();
+            self.vue.listing_idx  = idx;
         }
-        else
+        else{
             $("div#add_listing_div").hide();
+            self.vue.form_max_occ="";
+            self.vue.form_rent="";
+            self.vue.form_start_date= "";
+            self.vue.form_end_date= "";
+            self.vue.listing_idx = null;
+        }
         self.vue.is_adding_listing = !self.vue.is_adding_listing;
     };
 
@@ -314,6 +323,7 @@ var app = function() {
             form_rent:'',
             form_start_date: "",
             form_end_date: "",
+            listing_idx: null,
             addr_id:"",
             addr_is_valid: "",
             property_types: [],
