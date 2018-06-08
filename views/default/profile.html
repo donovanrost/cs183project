@@ -12,6 +12,7 @@
       var get_property_types_url = "{{=URL('api', 'get_property_types', user_signature=False)}}";
       var add_property_url = "{{=URL('api', 'add_property', user_signature=True)}}";
       var get_owned_properties_url = "{{=URL('api', 'get_owned_properties', user_signature=True)}}";
+      var add_listing_url = "{{=URL('api', 'add_listing', user_signature=True)}}";
       var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
 
 
@@ -149,6 +150,50 @@
 
             </div>
 
+            <div class="add_listing_div padded container" id="add_listing_div">
+                <h4>List Property</h4>
+                <button class="right" v-on:click="add_listing_button()"><i class="fa fa-times"></i> Cancel</button>
+                <div v-if="add_listing_page == 0">
+                    <h5> Description </h5>
+                    <form>
+                        Max Occupants:<select class="drop_down_field" v-model="form_max_occ"><option v-for="n in 10" >${n}</option></select>
+                        Rent: <input type="number" placeholder="$ 0.00" v-model="form_rent">
+                        start date: <input type="date" v-model="form_start_date">
+                        end date: <input type="date" v-model="form_end_date">
+                    </form>
+                    <button v-on:click="next_list_page()">
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div v-if="add_listing_page == 1">
+                    <h5> Review Listing </h5>
+                    <div class="container padded">
+                        <div class="half">
+                            <h6> Property</h6>
+                            <p>Street:</p>
+                            <p>City:</p>
+                            <p>Zip Code:</p>
+                            <p>Sate:</p>
+                        </div>
+                        <div class="half">
+                            <h6> Details </h6>
+                            <p>Max Occupants</p>
+                            <p>Rent </p>
+                            <p>Start Date: </p>
+                            <p>End Date </p>
+                        </div>
+                    </div>
+                    <span>
+                        <button v-on:click="prev_list_page()">
+                            <i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button>
+                            <i class="fa fa-paper-plane"></i> Post
+                        </button>
+                    </span>
+                </div>
+            </div>
+
             <div class="property_info ">
                 <div class="right_side_banner">
                     <h4>My Properties</h4>
@@ -162,13 +207,17 @@
                         <h6>Sate:</h6><p>${p.state_}</p>
                     </div>
                     <div class="padded half">
+                        <div class="right">
+                            <button v-on:click="add_listing_button()">
+                                <i class="fa fa-paper-plane"></i>  Post
+                            </button>
+                        </div>
                         <h6>Property Type</h6><p>${p.property_type}</p>
                         <h6>Number of Bedrooms</h6> <p>${p.num_bedrooms}</p>
                         <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
                         <h6>Number of half bathrooms</h6> <p>${p.num_halfbaths}</p>
                     </div>
                 </div>
-
             </div>
 
             <div class="group_info">

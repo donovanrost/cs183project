@@ -79,3 +79,5 @@ def get_my_info():
     return response.json(dict(this_user=this_user, logged_in=logged_in,my_user_id=my_user_id))
 
 
+def add_listing():
+    return "ok"

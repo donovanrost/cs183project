@@ -271,16 +271,50 @@ var app = function() {
             self.vue.add_property_page--;
     };
 
+    // listings
+    self.add_listing_button = function(){
+        self.vue.add_listing_page = 0; 
+        if(!self.vue.is_adding_listing) {
+            $("div#add_listing_div").show();
+        }
+        else
+            $("div#add_listing_div").hide();
+        self.vue.is_adding_listing = !self.vue.is_adding_listing;
+    };
+
+    self.next_list_page = function() {
+        self.vue.add_listing_page++;
+    };
+
+    self.prev_list_page = function(){
+        if(self.vue.add_listing_page > 0)
+            self.vue.add_listing_page--;
+    };
+
+    self.add_listing = function(id){
+        $.post(add_listing_url,
+            {
+                property_id: id
+            },
+            function () {}
+        )
+    };
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
             is_adding_property:false,
+            is_adding_listing: false,
             form_street: "",
             form_city:"",
             form_state_:"",
             form_zip:"",
+            form_max_occ:"",
+            form_rent:'',
+            form_start_date: "",
+            form_end_date: "",
             addr_id:"",
             addr_is_valid: "",
             property_types: [],
@@ -290,6 +324,7 @@ var app = function() {
             num_halfbaths:"",
             add_property_page:0,
             last_add_property_page:1,
+            add_listing_page:0,
             owned_properties:[],
 
 
@@ -315,6 +350,11 @@ var app = function() {
             next_page:self.next_page,
             prev_page:self.prev_page,
             get_owned_properties:self.get_owned_properties,
+
+            //listings
+            add_listing_button: self.add_listing_button,
+            next_list_page: self.next_list_page,
+            prev_list_page: self.prev_list_page,
 
             // groups
             get_more: self.get_more,
