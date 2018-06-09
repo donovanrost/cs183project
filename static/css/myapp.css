@@ -48,6 +48,15 @@ div.add_property_div{
     box-shadow: 10px 5px 5px #4F5F74;
 }
 
+div.add_property_div div.button_bar div.right-button .btn{
+    float:right;
+}
+div.add_property_div div.button_bar div.left-button .btn{
+    float:left;
+}
+
+
+
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {
     background-color: F0F1F2;
