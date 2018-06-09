@@ -63,7 +63,7 @@
                     Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
                     <button v-on:click="upload_user_image()">Submit</button>
                 </div>
-                <img v-if="" v-bind:src="user_image_url" height="200px" width="200px" class="padded"/>
+                <img v-bind:src="user_image_url" height="200px" width="200px" class="padded"/>
 
                 <!--This the statically served default profile picture
                 {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}-->
@@ -99,7 +99,6 @@
                     </button>
                 </div>
             </div>
-
 
         </div>
 
@@ -206,9 +205,8 @@
                             </button>
                         </span>
 
-
-
                     </div>
+
                     <div class="padded half">
                         <h6>Street:</h6><p>${p.street}</p>
                         <h6>City:</h6> <p>${p.city}</p>
@@ -230,8 +228,6 @@
                     <div class="property_images" v-for="image in p.images">
                         <img v-bind:src="image" height="200px" width="200px" class="padded"/>
                     </div>
-
-
                  </div>
             </div>
 

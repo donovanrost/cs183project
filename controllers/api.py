@@ -66,16 +66,8 @@ def add_property():
 def get_owned_properties():
     owned_properties = []
 
-    # rows = db((db.property.property_owner == auth.user.id) &
-    #           (db.property.id == db.property_images.property_id)).select()
-    # for row in rows:
-    #     owned_properties.append(row)
-    #     print(row)
-
-
     for row in db(db.property.property_owner == auth.user.id).select():
         p = row.id
-        #print(p)
         pics = []
         for r in db(db.property_images.property_id == p).select():
             pics.append(r.image_url)
