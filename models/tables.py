@@ -15,16 +15,6 @@ def get_user_email():
 def get_user_id():
     return auth.user.id if auth.user is not None else None
 
-## after auth = Auth(db)
-auth.settings.extra_fields['auth_user']= [
-    Field('picture', 'upload', uploadfield='picture_file', writable=True),
-    Field('picture_file', 'blob', writable=True),
-    Field('listed_properties'),
-    Field('interest_properties')
-]
-
-
-
 
 
 db.define_table('address',
@@ -80,6 +70,8 @@ db.define_table('property',
                 Field('property_type', db.property_type),     #db.property_type
                 Field('posted', type='boolean', default=False),
                 Field('proof_ownership'),
+                Field('is_editing', type='boolean', default=False),
+                Field('is_uploading', type='boolean', default=False),
                 )
 
 # users can 'like' a property
@@ -99,12 +91,11 @@ db.define_table('listings',
                 Field('max_occ', type='integer')
                 )
 
-
-
-auth.settings.extra_fields['auth_user'] = [
-    Field('property', db.property),  # db.property
-    Field('rental_group', db.rental_group)  # db.rental_group
-    ]
+db.define_table('property_images',
+                Field('property_id', 'reference property'),
+                Field('created_on', 'datetime', default=request.now),
+                Field('image_url'),
+                )
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)

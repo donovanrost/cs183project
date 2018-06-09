@@ -61,7 +61,7 @@ var app = function() {
 
         })
             .then(function(response){
-                console.log(response)
+                console.log(response);
                 if(response.data="ok"){
                     self.get_owned_properties();
                     self.vue.form_street='';
@@ -84,6 +84,9 @@ var app = function() {
                 self.vue.owned_properties = response.data.owned_properties;
                 enumerate(self.vue.owned_properties);
             })
+        // for(var i = 0; i < self.vue.owned_properties.length;i++){
+        //     self.vue.get_property_images(self.vue.owned_properties[i].id)
+        // }
 
     };
     self.get_liked_properties = function(){
@@ -277,6 +280,7 @@ var app = function() {
             self.vue.add_property_page--;
     };
 
+
     // listings
     self.add_listing_button = function(id){
         self.vue.add_listing_page = 0; 
@@ -344,6 +348,124 @@ var app = function() {
         })
     };
 
+    self.upload_file = function (event) {
+        console.log(self.vue.img_prop_id);
+        // Reads the file.
+        var input = $("input#file_input")[0];
+        var file = input.files[0];
+        console.log(file);
+        if (file) {
+            // First, gets an upload URL.
+            console.log("Trying to get the upload url");
+            $.getJSON('http://127.0.0.1:8000/cs183project/uploader/get_upload_url',
+                function (data) {
+                    // We now have upload (and download) URLs.
+                    var put_url = data['signed_url'];
+                    var get_url = data['access_url'];
+                    self.vue.prop_img_url = get_url;
+                    console.log("Received upload url: " + put_url);
+                    // Uploads the file, using the low-level interface.
+                    var req = new XMLHttpRequest();
+                    req.addEventListener("load", self.upload_complete(get_url));
+                    // TODO: if you like, add a listener for "error" to detect failure.
+                    req.open("PUT", put_url, true);
+                    req.send(file);
+                });
+        }
+    };
+        self.upload_user_image = function (event) {
+        // Reads the file.
+        var input = $("input#file_input")[0];
+        var file = input.files[0];
+        console.log(file);
+        if (file) {
+            // First, gets an upload URL.
+            console.log("Trying to get the upload url");
+            $.getJSON('http://127.0.0.1:8000/cs183project/uploader/get_upload_url',
+                function (data) {
+                    // We now have upload (and download) URLs.
+                    var put_url = data['signed_url'];
+                    var get_url = data['access_url'];
+                    self.vue.user_image = get_url;
+                    console.log("Received upload url: " + put_url);
+                    // Uploads the file, using the low-level interface.
+                    var req = new XMLHttpRequest();
+                    req.addEventListener("load", self.upload_user_image_complete(get_url));
+                    // TODO: if you like, add a listener for "error" to detect failure.
+                    req.open("PUT", put_url, true);
+                    req.send(file);
+                });
+        }
+    };
+    self.upload_user_image_complete = function(get_url) {
+        // Hides the uploader div.
+        //self.close_uploader();
+        console.log('The file was uploaded; it is now available at ' + get_url);
+        // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
+        self.insert_user_image_url();
+        self.get_user_image_url();
+    };
+    self.upload_complete = function(get_url) {
+        // Hides the uploader div.
+        self.close_uploader();
+        console.log('The file was uploaded; it is now available at ' + get_url);
+        // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
+        self.insert_property_image_url();
+        self.get_owned_properties();
+    };
+
+    self.open_uploader = function () {
+        $("div#uploader_div").show();
+        self.vue.is_uploading = true;
+    };
+    self.close_uploader = function () {
+        $("div#uploader_div").hide();
+        self.vue.is_uploading = false;
+        $("input#file_input").val(""); // This clears the file choice once uploaded.
+    };
+
+    self.set_img_prop_id = function(p){
+      self.vue.img_prop_id = p.id;
+      p.is_uploading = false;
+    };
+
+    self.insert_user_image_url = function(){
+
+        axios.post(insert_user_image_url_url,{
+            user_image_url: self.vue.user_image,
+        })
+    };
+    self.insert_property_image_url = function(){
+
+        axios.post(insert_property_image_url_url,{
+            prop_img_url: self.vue.prop_img_url,
+            property_id: self.vue.img_prop_id,
+        })
+    };
+    self.get_property_images = function(p){
+        console.log("called");
+        axios.get(get_property_images_url,{
+            params:{
+                property_id:p.id,
+            }
+        })
+            .then(function(response){
+                self.vue.property_images.append(response.data.property_images);
+                enumerate(self.vue.property_images);
+                console.log(self.vue.property_images[0]);
+            })
+    };
+    self.toggle_editing_profile = function(){
+      self.vue.is_editing_profile = !self.vue.is_editing_profile;
+    };
+    self.get_user_image_url = function(){
+        axios.get(get_user_image_url_url)
+            .then(function(response){
+                self.vue.user_image=response.data.image_url;
+            })
+    };
+
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -361,7 +483,7 @@ var app = function() {
             form_end_date: "",
             addr_id:"",
             addr_is_valid: "",
-            property_types: [],
+            property_types:[],
             p_type:"",
             num_bedrooms:"",
             num_fullbaths:"",
@@ -372,6 +494,8 @@ var app = function() {
             owned_properties:[],
             p_idx: null,
 
+            user_image:'',
+            is_editing_profile:false,
 
             // Groups
             is_adding_group: false,
@@ -393,6 +517,18 @@ var app = function() {
             next_page:self.next_page,
             prev_page:self.prev_page,
             get_owned_properties:self.get_owned_properties,
+            upload_file:self.upload_file,
+            upload_complete:self.upload_complete,
+            open_uploader: self.open_uploader,
+            close_uploader: self.close_uploader,
+            set_img_prop_id:self.set_img_prop_id,
+            insert_property_image_url:self.insert_property_image_url,
+            insert_user_image_url:self.insert_user_image_url,
+            toggle_editing_profile:self.toggle_editing_profile,
+            upload_user_image:self.upload_user_image,
+            upload_user_image_complete:self.upload_user_image_complete,
+            get_user_image_url:self.get_user_image_url,
+
 
             //listings
             add_listing_button: self.add_listing_button,
@@ -415,9 +551,13 @@ var app = function() {
             delete_group: self.delete_group,
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
-
-
             get_liked_properties: self.get_liked_properties,
+        },
+        computed:{
+            user_image_url: function(){
+                self.get_user_image_url;
+                return this.user_image;
+            }
         }
 
     });
@@ -426,7 +566,7 @@ var app = function() {
     self.get_groups();
     self.get_owned_properties();
     self.get_liked_properties();
-
+    self.get_user_image_url();
 
     $("#vue-div").show();
 

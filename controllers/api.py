@@ -65,26 +65,12 @@ def add_property():
 
 def get_owned_properties():
     owned_properties = []
-    q = (db.property.property_owner == auth.user.id)
-    rows = db(q).select(db.property.ALL)
-    for i, r in enumerate(rows):
-        list = db(db.listings.property_id == r.id).select().first()
-        prop = dict(
-            id = r.id,
-            property_owner=r.property_owner,
-            street=r.street,
-            city=r.city,
-            state_=r.state_,
-            zip=r.zip,
-            num_bedrooms=r.num_bedrooms,
-            num_fullbaths=r.num_fullbaths,
-            num_halfbaths=r.num_halfbaths,
-            property_type=r.property_type,
-            posted=False,
-            proof_ownership=r.proof_ownership,
-        )
+    for row in db(db.property.property_owner == auth.user.id).select():
+        p = row.id
+        pics = []
+        list = db(db.listings.property_id == p).select().first()
         if list is not None:
-            prop.update(
+            row.update(
                 user_email=list.user_email,
                 listed_on=list.listed_on,
                 rent=list.rent,
@@ -93,7 +79,12 @@ def get_owned_properties():
                 max_occ=list.max_occ,
                 posted=True
             )
-        owned_properties.append(prop)
+        for r in db(db.property_images.property_id == p).select():
+            pics.append(r.image_url)
+            row['images'] = pics
+        owned_properties.append(row)
+    print(owned_properties)
+
     return response.json(dict(
         owned_properties=owned_properties
     ))
@@ -104,6 +95,42 @@ def get_my_info():
     this_user = auth.user
     logged_in = True if auth.user is not None else False
     return response.json(dict(this_user=this_user, logged_in=logged_in,my_user_id=my_user_id))
+
+def insert_property_url():
+    property_id = request.post_vars.property_id
+    img_url = request.post_vars.prop_img_url
+    db.property_images.insert(image_url=img_url, property_id=property_id)
+
+    return 'ok'
+
+def get_property_images():
+    property_id = request.get_vars.property_id
+    property_images = []
+
+    for row in db(db.property_images.property_id == property_id).select():
+        property_images.append(row.image_url)
+
+
+    return response.json(dict(property_images=property_images))
+
+def insert_user_image_url():
+    img_url = request.post_vars.user_image_url
+
+    db.auth_user.update_or_insert((db.auth_user.id == auth.user.id),
+                                  image_url=img_url,
+
+                                  )
+    return 'ok'
+
+def get_user_image_url():
+
+    row = db(db.auth_user.id == auth.user.id).select().first()
+    img_url = row.image_url
+    print(row)
+
+    return response.json(dict(image_url=img_url,
+                              ))
+
 
 
 def add_listing():
@@ -128,6 +155,7 @@ def add_listing():
     return "ok"
 
 def remove_listing():
+    db(db.property.id == request.vars.property_id).update(posted=False)
     db(db.listings.property_id == request.vars.property_id).delete()
     return "ok"
 

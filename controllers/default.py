@@ -169,17 +169,12 @@ def like_property():
     property_id = request.post_vars.property_id
     is_liked = None
 
-    print(property_id)
-    print(auth.user.email)
-
     row = db(db.liked_properties.property_id == property_id).select().first()
 
     if row is None:
         is_liked = True
     else:
        is_liked = not row.isliked
-
-    print(is_liked)
 
     db.liked_properties.update_or_insert((db.liked_properties.property_id == property_id) &
                                          (db.liked_properties.user_email == auth.user.email),

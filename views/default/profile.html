@@ -17,6 +17,10 @@
       var del_listing_url = "{{=URL('api', 'remove_listing', user_signature=True)}}";
       var get_listing_url = "{{=URL('api', 'get_listing', user_signature=True)}}";
       var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
+      var insert_property_image_url_url = "{{=URL('api', 'insert_property_url', user_signature=True)}}";
+      var get_property_images_url = "{{=URL('api', 'get_property_images', user_signature=True)}}";
+      var insert_user_image_url_url = "{{=URL('api', 'insert_user_image_url', user_signature=True)}}";
+      var get_user_image_url_url = "{{=URL('api', 'get_user_image_url', user_signature=True)}}";
       var get_my_liked_properties_url ="{{=URL('default', 'get_my_liked_properties')}}";
 </script>
 
@@ -45,14 +49,23 @@
     <div class="container compressible">
 
         <div class="left_side container quarter max900">
+
             <div class="user_info padded ">
-            {{if auth.user is not None:}}
-                <!--This the statically served default profile picture -->
-                {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}
-            {{else:}}
+                <div class="button-bar">
+                    <button v-on:click="toggle_editing_profile">
+                        <i class="fas fa-user-edit"></i>
+                    </button>
+                </div>
+                <div v-if="is_editing_profile">
+                    Upload an image file: <input id="file_input" type="file" accept="image/jpeg" >
+                    <button v-on:click="upload_user_image()">Submit</button>
+                </div>
+                <img v-bind:src="user_image_url" height="200px" width="200px" class="padded"/>
+
+                <!--This the statically served default profile picture
+                {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}-->
                 <!--This should be the users uploaded profile picture.... if it ever works -->
-                {{=A(IMG(_src=URL('default', 'download', args=pic), _alt=" user image"))}}
-            {{pass}}
+
 
                 <div class="user_text">
                     <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
@@ -83,7 +96,6 @@
                     </button>
                 </div>
             </div>
-
 
         </div>
 
@@ -131,15 +143,24 @@
                         </div>
                     </form>
                 </div>
-                <div class="button_bar padded">
-                    <span v-if="add_property_page == last_add_property_page">
-                        <button v-on:click="prev_page">
+
+                <div class="button_bar padded container">
+                    <div class="left-button half">
+                        <button v-if="add_property_page != 0" v-on:click="prev_page">
                             <i class="fas fa-arrow-left"></i>
                         </button>
-                        <button v-on:click="add_property">
+
+                    </div>
+                    <div class="right-button half">
+                        <button v-if="add_property_page != last_add_property_page" v-on:click="next_page">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button v-else v-on:click="add_property">
                             <i class="far fa-share-square"></i>
                             Submit
                         </button>
+
+                    </div>
                     </span>
 
                     <span v-if="add_property_page == 0">
@@ -199,17 +220,38 @@
                     <h4>My Properties</h4>
                 </div>
                 <div class="owned_properties container padded" v-for="p in owned_properties">
-                    <div v-if='p.posted' class="right">
-                        <button v-on:click="del_listing(p.id)">
+                    <div class="button_bar threequarters padded right">
+                        <button class="btn rounded" v-if="!p.is_uploading" v-on:click="p.is_uploading = true">
+                            <i class="far fa-image"></i>
+                        </button>
+                        <button class="btn rounded padded" v-if="p.is_uploading" v-on:click="p.is_uploading = false">
+                            <i class="far fa-image"></i>
+                        </button>
+
+                        <button v-if="!p.is_editing" class="btn rounded" v-on:click="p.is_editing = true">
+                                <i class="fa fa-edit"></i>
+                        </button>
+                        <span v-if="p.is_editing" class="button_list right">
+                            <!-- trash is not hooked up to anything -->
+                            <button class="btn rounded delete">
+                                    <i class="fa fa-trash"></i>
+                            </button>
+                            <button class="btn rounded" v-on:click="p.is_editing = false">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </span>
+                        <button v-if='p.posted' v-on:click="del_listing(p.id)">
                             <i class="fa fa-ellipsis-h"></i>
                         </button>
                     </div>
                     <div v-if="p.posted" class="padded">
+                        <h5> Listing </h5>
                         <h6>Rent:</h6><p>${p.rent}</p>
                         <h6>Max Occupancy:</h6> <p>${p.max_occ}</p>
                         <h6>Start Date:</h6> <p>${p.start_date}</p>
                         <h6>End Date:</h6><p>${p.end_date}</p>
                     </div>
+
                     <div class="padded half">
                         <h6>Street:</h6><p>${p.street}</p>
                         <h6>City:</h6> <p>${p.city}</p>
@@ -227,8 +269,18 @@
                         <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
                         <h6>Number of half bathrooms</h6> <p>${p.num_halfbaths}</p>
                     </div>
-                </div>
+
+                    <div class="uploader_div" v-if="p.is_uploading == true">
+                        Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
+                        <button v-on:click="set_img_prop_id(p) + upload_file()">Submit</button>
+                    </div>
+
+                    <div class="property_images" v-for="image in p.images">
+                        <img v-bind:src="image" height="200px" width="200px" class="padded"/>
+                    </div>
+                 </div>
             </div>
+
 
 			<div class="liked_properties">
 				<div class="right_side_banner">
@@ -376,6 +428,5 @@
     </div>
     </div>
     </div>
-</div>
 
 <script src="{{=URL('static', 'js/default_profile.js')}}"></script>
