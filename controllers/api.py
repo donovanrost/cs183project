@@ -1,5 +1,8 @@
 # Here go your api methods.
 
+
+from gluon import SQLFORM
+
 def insert_new_address():
     street = request.post_vars.street
     city = request.post_vars.city
@@ -125,6 +128,34 @@ def get_user_image_url():
 
     return response.json(dict(image_url=img_url,
                               ))
+
+
+
+
+def get_liked_properties():
+    liked_properties = []
+
+    for row in db(db.liked_properties.user_email == auth.user.email).select():
+        if (row.isliked == True):
+            liked_properties.append(row.id)
+
+    print(liked_properties + "hello")
+    return response.json(dict(
+        liked_properties=liked_properties,
+        ))
+
+
+def get_my_liked_properties():
+    my_liked_properties = []
+    liked_props = request.get_vars.liked_props
+    #print('hello')
+    #print(liked_props)
+
+
+    for id in liked_props:
+        my_liked_properties.append(db(db.property.id == id).select().first())
+
+    return response.json(dict(my_liked_properties=my_liked_properties))
 
 
 

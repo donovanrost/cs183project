@@ -99,7 +99,7 @@ div.main_content div.left_side div.button_list div.group_btn .btn{
 /* line 38, ../sass/_main.scss */
 div.main_content div.right_side div.property_info .right_side_banner {
     text-align:center;
-    background-color: F0F1F2;
+    background-color: #F0F1F2;
     margin: 10px;
     border: 1px;
     border-radius: 5px;
@@ -108,8 +108,21 @@ div.main_content div.right_side div.property_info .right_side_banner {
 
 
 }
+
+div.main_content div.right_side div.liked_properties .right_side_banner {
+    text-align:center;
+    background-color: #F0F1F2;
+    margin: 10px;
+    border: 1px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+
+
+}
+
 div.main_content div.right_side div.property_info .owned_properties {
-    background-color: F0F1F2;
+    background-color: #F0F1F2;
     margin: 10px;
     border: 2px;
     border-radius: 5px;
@@ -117,6 +130,18 @@ div.main_content div.right_side div.property_info .owned_properties {
     opacity: 0.8;
 
 }
+
+div.main_content div.right_side div.liked_properties .liked_prop {
+    background-color: #F0F1F2;
+    margin: 10px;
+    border: 2px;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #4F5F74;
+    opacity: 0.8;
+
+}
+
+
 div.main_content div.right_side div.group_info div.right_side_banner {
     text-align:center;
     background-color: #F0F1F2;

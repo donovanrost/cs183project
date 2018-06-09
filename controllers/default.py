@@ -158,7 +158,7 @@ def search():
             num_bedrooms=r.num_bedrooms,
             num_fullbaths=r.num_fullbaths,
             num_halfbaths=r.num_halfbaths,
-            property_id=r.id
+            property_id=r.id,
         )
         listings.append(list)
     return response.json(dict(
@@ -188,13 +188,28 @@ def like_property():
 
 def get_liked_properties():
     liked_properties = []
-
+    liked_prop = []
     for row in db(db.liked_properties.user_email == auth.user.email).select():
         if (row.isliked == True):
-            liked_properties.append(row.id)
+            liked_properties.append(row.property_id)
+
+    for id in liked_properties:
+        q = db(db.property.id).select()
+        for r in q:
+            if (r.id == id):
+                liked_prop.append(r)
 
     return response.json(dict(
-        liked_properties=liked_properties,
+        liked_properties=liked_prop,
         ))
 
 
+def get_my_liked_properties():
+    my_liked_properties = []
+    liked_props = request.get_vars.liked_props
+    #print('hello')
+    print(liked_props + "hello")
+
+
+
+    return response.json(dict(my_liked_properties=my_liked_properties))
