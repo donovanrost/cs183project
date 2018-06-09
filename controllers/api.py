@@ -65,14 +65,38 @@ def add_property():
 
 def get_owned_properties():
     owned_properties = []
-
-    for row in db(db.property.property_owner == auth.user.id).select():
-        owned_properties.append(row)
-
+    q = (db.property.property_owner == auth.user.id)
+    rows = db(q).select(db.property.ALL)
+    for i, r in enumerate(rows):
+        list = db(db.listings.property_id == r.id).select().first()
+        prop = dict(
+            id = r.id,
+            property_owner=r.property_owner,
+            street=r.street,
+            city=r.city,
+            state_=r.state_,
+            zip=r.zip,
+            num_bedrooms=r.num_bedrooms,
+            num_fullbaths=r.num_fullbaths,
+            num_halfbaths=r.num_halfbaths,
+            property_type=r.property_type,
+            posted=False,
+            proof_ownership=r.proof_ownership,
+        )
+        if list is not None:
+            prop.update(
+                user_email=list.user_email,
+                listed_on=list.listed_on,
+                rent=list.rent,
+                start_date=list.start_date,
+                end_date=list.end_date,
+                max_occ=list.max_occ,
+                posted=True
+            )
+        owned_properties.append(prop)
     return response.json(dict(
-        owned_properties=owned_properties,
-        ))
-
+        owned_properties=owned_properties
+    ))
 
 #Helper function to get user info and check if logged in or not
 def get_my_info():
@@ -90,15 +114,27 @@ def add_listing():
     end_date = request.vars.end_date
     user_email = request.vars.user_email
 
-    db.listings.insert(
-        property_id=property_id,
-        max_occ = max_occ,
-        rent = rent,
-        start_date = start_date,
-        end_date = end_date,
-        user_email = user_email
-    )
+    row = db(db.property.id == property_id).select().first()
+    if row is not None:
+        row.update_record(posted=True)
+        db.listings.insert(
+            property_id=property_id,
+            max_occ = max_occ,
+            rent = rent,
+            start_date = start_date,
+            end_date = end_date,
+            user_email = user_email
+        )
     return "ok"
+
+def remove_listing():
+    db(db.listings.property_id == request.vars.property_id).delete()
+    return "ok"
+
+def get_listing():
+    row = db(db.listings.property_id == request.vars.property_id).select()
+    return(row)
+
 
 def get_liked_properties():
     liked_properties = []

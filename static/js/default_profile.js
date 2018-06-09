@@ -80,7 +80,6 @@ var app = function() {
     };
     self.get_owned_properties = function(){
         axios.get(get_owned_properties_url)
-
             .then(function(response){
                 self.vue.owned_properties = response.data.owned_properties;
                 enumerate(self.vue.owned_properties);
@@ -279,11 +278,11 @@ var app = function() {
     };
 
     // listings
-    self.add_listing_button = function(idx){
+    self.add_listing_button = function(id){
         self.vue.add_listing_page = 0; 
         if(!self.vue.is_adding_listing) {
             $("div#add_listing_div").show();
-            self.vue.listing_idx  = idx;
+            self.vue.p_idx = id;
         }
         else{
             $("div#add_listing_div").hide();
@@ -291,7 +290,7 @@ var app = function() {
             self.vue.form_rent="";
             self.vue.form_start_date= "";
             self.vue.form_end_date= "";
-            self.vue.listing_idx = null;
+            self.vue.p_idx = null;
         }
         self.vue.is_adding_listing = !self.vue.is_adding_listing;
     };
@@ -308,22 +307,41 @@ var app = function() {
     self.add_listing = function(){
         $.post(add_listing_url,
             {
-                property_id: self.vue.owned_properties[self.vue.listing_idx].id,
-                max_occ: self.vue.form_zip,
+                property_id: self.vue.owned_properties[self.vue.p_idx].id,
+                max_occ: self.vue.form_max_occ,
                 rent: self.vue.form_rent,
                 start_date: self.vue.form_start_date,
                 end_date: self.vue.form_end_date
             },
             function () {
             $("div#add_listing_div").hide();
+                self.get_owned_properties();
                 self.vue.form_max_occ="";
                 self.vue.form_rent="";
                 self.vue.form_start_date= "";
                 self.vue.form_end_date= "";
-                self.vue.listing_idx = null;
                 self.vue.is_adding_listing = !self.vue.is_adding_listing;
+                self.vue.p_idx = null;
             }
         )
+    };
+
+    self.del_listing = function(id) {
+       $.post(del_listing_url,
+           {property_id:id},
+           function () {
+                self.get_owned_properties();
+           })
+    };
+
+    self.get_listing = function(id){
+        $.getJSON(get_listing_url,
+            {
+                query: self.vue.form_user_search
+            },
+            function () {
+
+        })
     };
 
     self.vue = new Vue({
@@ -341,7 +359,6 @@ var app = function() {
             form_rent:'',
             form_start_date: "",
             form_end_date: "",
-            listing_idx: null,
             addr_id:"",
             addr_is_valid: "",
             property_types: [],
@@ -353,6 +370,7 @@ var app = function() {
             last_add_property_page:1,
             add_listing_page:0,
             owned_properties:[],
+            p_idx: null,
 
 
             // Groups
@@ -365,8 +383,6 @@ var app = function() {
             logged_in: false,
             has_more: false,
             liked_properties:[],
-
-
         },
         methods: {
             //properties
@@ -383,6 +399,8 @@ var app = function() {
             next_list_page: self.next_list_page,
             prev_list_page: self.prev_list_page,
             add_listing: self.add_listing,
+            get_listing: self.get_listing,
+            del_listing: self.del_listing,
 
             // groups
             get_more: self.get_more,

@@ -14,6 +14,8 @@
       var add_property_url = "{{=URL('api', 'add_property', user_signature=True)}}";
       var get_owned_properties_url = "{{=URL('api', 'get_owned_properties', user_signature=True)}}";
       var add_listing_url = "{{=URL('api', 'add_listing', user_signature=True)}}";
+      var del_listing_url = "{{=URL('api', 'remove_listing', user_signature=True)}}";
+      var get_listing_url = "{{=URL('api', 'get_listing', user_signature=True)}}";
       var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
       var get_my_liked_properties_url ="{{=URL('default', 'get_my_liked_properties')}}";
 </script>
@@ -127,7 +129,6 @@
                                     </select>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <div class="button_bar padded">
@@ -146,14 +147,12 @@
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </span>
-
                 </div>
-
             </div>
 
             <div class="add_listing_div padded container" id="add_listing_div" style="display:none">
                 <h4>List Property</h4>
-                <button class="right" v-on:click="add_listing_button(listing_idx)"><i class="fa fa-times"></i> Cancel</button>
+                <button class="right" v-on:click="add_listing_button()"><i class="fa fa-times"></i> Cancel</button>
                 <div v-if="add_listing_page == 0">
                     <h5> Description </h5>
                     <form>
@@ -166,15 +165,15 @@
                         <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
-                <div v-if="add_listing_page == 1">
+                <div v-if="add_listing_page == 1 && is_adding_listing">
                     <h5> Review Listing </h5>
                     <div class="container padded">
                         <div class="half">
                             <h6>Property </h6>
-                            <p>Street: ${owned_properties[listing_idx].street}</p>
-                            <p>City: ${owned_properties[listing_idx].city}</p>
-                            <p>Zip Code: ${owned_properties[listing_idx].zip}</p>
-                            <p>State: ${owned_properties[listing_idx].state_}</p>
+                            <p>Street: ${owned_properties[p_idx].street}</p>
+                            <p>City: ${owned_properties[p_idx].city}</p>
+                            <p>Zip Code: ${owned_properties[p_idx].zip}</p>
+                            <p>State: ${owned_properties[p_idx].state_}</p>
                         </div>
                         <div class="half">
                             <h6> Details </h6>
@@ -199,8 +198,18 @@
                 <div class="right_side_banner">
                     <h4>My Properties</h4>
                 </div>
-
                 <div class="owned_properties container padded" v-for="p in owned_properties">
+                    <div v-if='p.posted' class="right">
+                        <button v-on:click="del_listing(p.id)">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <div v-if="p.posted" class="padded">
+                        <h6>Rent:</h6><p>${p.rent}</p>
+                        <h6>Max Occupancy:</h6> <p>${p.max_occ}</p>
+                        <h6>Start Date:</h6> <p>${p.start_date}</p>
+                        <h6>End Date:</h6><p>${p.end_date}</p>
+                    </div>
                     <div class="padded half">
                         <h6>Street:</h6><p>${p.street}</p>
                         <h6>City:</h6> <p>${p.city}</p>
@@ -208,7 +217,7 @@
                         <h6>Sate:</h6><p>${p.state_}</p>
                     </div>
                     <div class="padded half">
-                        <div class="right">
+                        <div v-if='!p.posted' class="right">
                             <button v-on:click="add_listing_button(p._idx)">
                                 <i class="fa fa-paper-plane"></i>  Post
                             </button>
@@ -230,7 +239,7 @@
                         <h6>Street:</h6><p>${property.street}</p>
                         <h6>City:</h6> <p>${property.city}</p>
                         <h6>Zip Code:</h6> <p>${property.zip}</p>
-                        <h6>Sate:</h6><p>${property.state_}</p>
+                        <h6>STate:</h6><p>${property.state_}</p>
                     </div>
                     <div class="padded half">
                         <h6>Property Type</h6><p>${property.property_type}</p>

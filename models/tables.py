@@ -78,6 +78,7 @@ db.define_table('property',
                 Field('num_fullbaths', type='integer'),
                 Field('num_halfbaths', type='integer'),
                 Field('property_type', db.property_type),     #db.property_type
+                Field('posted', type='boolean', default=False),
                 Field('proof_ownership'),
                 )
 
