@@ -317,7 +317,7 @@ var app = function() {
                     // We now have upload (and download) URLs.
                     var put_url = data['signed_url'];
                     var get_url = data['access_url'];
-                    self.vue.user_image_url = get_url;
+                    self.vue.user_image = get_url;
                     console.log("Received upload url: " + put_url);
                     // Uploads the file, using the low-level interface.
                     var req = new XMLHttpRequest();
@@ -334,6 +334,7 @@ var app = function() {
         console.log('The file was uploaded; it is now available at ' + get_url);
         // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
         self.insert_user_image_url();
+        self.get_user_image_url();
     };
     self.upload_complete = function(get_url) {
         // Hides the uploader div.
@@ -341,6 +342,7 @@ var app = function() {
         console.log('The file was uploaded; it is now available at ' + get_url);
         // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
         self.insert_property_image_url();
+        self.get_owned_properties();
     };
 
     self.open_uploader = function () {
@@ -361,8 +363,7 @@ var app = function() {
     self.insert_user_image_url = function(){
 
         axios.post(insert_user_image_url_url,{
-            user_image_url: self.vue.user_image_url,
-
+            user_image_url: self.vue.user_image,
         })
     };
     self.insert_property_image_url = function(){
@@ -391,9 +392,8 @@ var app = function() {
     self.get_user_image_url = function(){
         axios.get(get_user_image_url_url)
             .then(function(response){
-                self.vue.user_image_url=response.data.image_url;
+                self.vue.user_image=response.data.image_url;
             })
-
     };
 
 
@@ -409,7 +409,7 @@ var app = function() {
             form_zip:"",
             addr_id:"",
             addr_is_valid: "",
-            property_types: [],
+            property_types:[],
             p_type:"",
             num_bedrooms:"",
             num_fullbaths:"",
@@ -417,7 +417,7 @@ var app = function() {
             add_property_page:0,
             last_add_property_page:1,
             owned_properties:[],
-            user_image_url:'',
+            user_image:'',
             is_editing_profile:false,
 
             // Groups
@@ -468,9 +468,13 @@ var app = function() {
             delete_group: self.delete_group,
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
-
-
             get_liked_properties: self.get_liked_properties,
+        },
+        computed:{
+            user_image_url: function(){
+                self.get_user_image_url;
+                return this.user_image;
+            }
         }
 
     });
@@ -480,7 +484,6 @@ var app = function() {
     self.get_owned_properties();
     self.get_liked_properties();
     self.get_user_image_url();
-
 
     $("#vue-div").show();
 

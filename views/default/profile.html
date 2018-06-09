@@ -54,7 +54,7 @@
                     </button>
                 </div>
                 <div v-if="is_editing_profile">
-                    Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
+                    Upload an image file: <input id="file_input" type="file" accept="image/jpeg" >
                     <button v-on:click="upload_user_image()">Submit</button>
                 </div>
                 <img v-bind:src="user_image_url" height="200px" width="200px" class="padded"/>
