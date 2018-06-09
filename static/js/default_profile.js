@@ -479,12 +479,9 @@ var app = function() {
     self.get_groups();
     self.get_owned_properties();
     self.get_liked_properties();
-<<<<<<< HEAD
     self.get_user_image_url();
-=======
 
 
->>>>>>> 48e0e161068f63f54ad6c6bb298dd6dcc3e10626
     $("#vue-div").show();
 
     return self;
