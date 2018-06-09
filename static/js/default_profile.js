@@ -35,7 +35,7 @@ var app = function() {
             .then(function(response){
                 console.log(response.data.property_types);
                 self.vue.property_types = response.data.property_types;
-                self.enumerate(self.vue.property_types);
+                enumerate(self.vue.property_types);
             })
 
     };
@@ -305,12 +305,24 @@ var app = function() {
             self.vue.add_listing_page--;
     };
 
-    self.add_listing = function(id){
+    self.add_listing = function(){
         $.post(add_listing_url,
             {
-                property_id: id
+                property_id: self.vue.owned_properties[self.vue.listing_idx].id,
+                max_occ: self.vue.form_zip,
+                rent: self.vue.form_rent,
+                start_date: self.vue.form_start_date,
+                end_date: self.vue.form_end_date
             },
-            function () {}
+            function () {
+            $("div#add_listing_div").hide();
+                self.vue.form_max_occ="";
+                self.vue.form_rent="";
+                self.vue.form_start_date= "";
+                self.vue.form_end_date= "";
+                self.vue.listing_idx = null;
+                self.vue.is_adding_listing = !self.vue.is_adding_listing;
+            }
         )
     };
 
@@ -370,6 +382,7 @@ var app = function() {
             add_listing_button: self.add_listing_button,
             next_list_page: self.next_list_page,
             prev_list_page: self.prev_list_page,
+            add_listing: self.add_listing,
 
             // groups
             get_more: self.get_more,

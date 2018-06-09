@@ -185,17 +185,17 @@
                         </div>
                         <div class="half">
                             <h6> Details </h6>
-                            <p>Max Occupants</p>
-                            <p>Rent </p>
-                            <p>Start Date: </p>
-                            <p>End Date </p>
+                            <p>Max Occupants: ${form_max_occ}</p>
+                            <p>Rent: ${form_rent}</p>
+                            <p>Start Date: ${form_start_date}</p>
+                            <p>End Date: ${form_end_date}</p>
                         </div>
                     </div>
                     <span>
                         <button v-on:click="prev_list_page()">
                             <i class="fa fa-arrow-left"></i>
                         </button>
-                        <button>
+                        <button v-on:click="add_listing()">
                             <i class="fa fa-paper-plane"></i> Post
                         </button>
                     </span>

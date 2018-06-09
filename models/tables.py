@@ -92,7 +92,7 @@ db.define_table('listings',
                 Field('property_id', 'reference property'),
                 Field('user_email', default=get_user_email()),
                 Field('listed_on', 'datetime', default=datetime.datetime.now),
-                Field('Rent', type='integer'),
+                Field('rent', type='integer'),
                 Field('start_date'),
                 Field('end_date'),
                 Field('max_occ', type='integer')

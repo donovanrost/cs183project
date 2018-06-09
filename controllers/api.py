@@ -83,6 +83,21 @@ def get_my_info():
 
 
 def add_listing():
+    property_id = request.vars.property_id
+    max_occ = request.vars.max_occ
+    rent = request.vars.rent
+    start_date = request.vars.start_date
+    end_date = request.vars.end_date
+    user_email = request.vars.user_email
+
+    db.listings.insert(
+        property_id=property_id,
+        max_occ = max_occ,
+        rent = rent,
+        start_date = start_date,
+        end_date = end_date,
+        user_email = user_email
+    )
     return "ok"
 
 def get_liked_properties():
