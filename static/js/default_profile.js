@@ -83,9 +83,9 @@ var app = function() {
                 self.vue.owned_properties = response.data.owned_properties;
                 enumerate(self.vue.owned_properties);
             })
-        for(var i = 0; i < self.vue.owned_properties.length;i++){
-            self.vue.get_property_images(self.vue.owned_properties[i].id)
-        }
+        // for(var i = 0; i < self.vue.owned_properties.length;i++){
+        //     self.vue.get_property_images(self.vue.owned_properties[i].id)
+        // }
 
     };
     self.get_liked_properties = function(){
