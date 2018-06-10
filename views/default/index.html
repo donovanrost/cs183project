@@ -12,6 +12,7 @@
 
 	var like_property_url = "{{=URL('default', 'like_property')}}";
     var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
+    var add_note_url = "{{=URL('api', 'add_new_note',  user_signature=True)}}";
 
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -78,6 +79,9 @@
                             ${listing.user_email}
                         </div>
 
+                        <div v-if="(listing.notes).length > 0" class="notes_div">
+
+                        </div>
 
                         <div class="padded" v-if="logged_in">
                             <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">

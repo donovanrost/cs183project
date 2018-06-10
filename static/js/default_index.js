@@ -142,6 +142,19 @@ var app = function() {
 
     };
 
+    self.add_note = function(property_id){
+        $.post(add_note_url,
+            {
+                property_id: property_id,
+                note_text: self.vue.form_new_note
+            }, function (data) {
+
+            }
+        )
+
+
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -157,6 +170,7 @@ var app = function() {
             form_street_search: null,
             form_room_search: null,
             form_bath_search: null,
+            form_new_note: null,
             has_less: false,
             has_more: false,
             logged_in: false,
@@ -176,6 +190,7 @@ var app = function() {
             next_page: self.next_page,
             prev_page: self.prev_page,
             get_index_of_property:self.get_index_of_property,
+            get_notes: self.get_notes
 
         },
     });
