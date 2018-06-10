@@ -79,10 +79,23 @@
                             ${listing.user_email}
                         </div>
 
-                        <div v-if="(listing.notes).length > 0" class="notes_div">
-
+                        <div class="padded">
+                            <button class="btn" v-on:click="see_notes_button()"> See Reviews </button>
+                            <div v-if="is_viewing_notes">
+                                <h6> Reviews </h6>
+                                <div v-for="note in listing.notes">
+                                    <div>
+                                        ${note.note}
+                                        ${note.created_by}
+                                        ${note.created_on}
+                                    </div>
+                                    <div>
+                                        <button v-on:click="add_note(note.property_id)"> Submit </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button v-if="is_adding_note" v-on:click="" class="btn"><i class="fa fa-pencil"></i> Leave Review </button>
                         </div>
-
                         <div class="padded" v-if="logged_in">
                             <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
                                 <i class="fas fa-star"></i>

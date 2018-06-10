@@ -151,8 +151,10 @@ var app = function() {
 
             }
         )
+    };
 
-
+    self.see_notes_button = function(){
+        self.vue.is_viewing_notes = !self.vue.is_viewing_notes
     };
 
 
@@ -177,7 +179,9 @@ var app = function() {
             this_user: null,
             liked_property_id: null,
             liked_properties:[],
-            page: 1
+            page: 1,
+            is_viewing_notes: false,
+            is_adding_note: false
         },
         methods: {
             //get_more: self.get_more
@@ -190,7 +194,7 @@ var app = function() {
             next_page: self.next_page,
             prev_page: self.prev_page,
             get_index_of_property:self.get_index_of_property,
-            get_notes: self.get_notes
+            see_notes_button: self.see_notes_button
 
         },
     });
