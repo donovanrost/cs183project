@@ -565,6 +565,7 @@ var app = function() {
             owned_properties:[],
             p_idx: null,
 
+
             user_image:'',
             is_editing_profile:false,
 

@@ -68,6 +68,7 @@ def get_owned_properties():
     for row in db(db.property.property_owner == auth.user.id).select():
         p = row.id
         pics = []
+        notes = []
         list = db(db.listings.property_id == p).select().first()
         if list is not None:
             row.update(
@@ -82,6 +83,9 @@ def get_owned_properties():
         for r in db(db.property_images.property_id == p).select():
             pics.append(r.image_url)
             row['images'] = pics
+        for r in db(db.property_notes.property_id == p).select():
+            notes.append(r)
+            row['notes'] = notes
         owned_properties.append(row)
     print(owned_properties)
 
@@ -188,6 +192,19 @@ def get_my_liked_properties():
         my_liked_properties.append(db(db.property.id == id).select().first())
 
     return response.json(dict(my_liked_properties=my_liked_properties))
+
+def add_new_property_note():
+    note = request.post_vars.note
+    property_id = request.post_vars.property_id
+
+    db.property_notes.insert(note=note, property_id=property_id)
+
+    return 'ok'
+
+
+
+
+
 
 
 
