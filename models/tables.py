@@ -96,6 +96,12 @@ db.define_table('property_images',
                 Field('created_on', 'datetime', default=request.now),
                 Field('image_url'),
                 )
+db.define_table('property_notes',
+                Field('property_id', 'reference property'),
+                Field('created_on', 'datetime', default=datetime.datetime.now),
+                Field('created_by', 'reference auth_user', default=get_user_id()),
+                Field('note', 'text'),
+                )
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
