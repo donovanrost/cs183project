@@ -1,6 +1,12 @@
 {{extend 'layout.html'}}
 
 {{block head}}
+
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
+</head>
+
+
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var my_url = "{{=URL('api', 'my_method')}}";
@@ -8,7 +14,7 @@
 	var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
 
 	var search_url = "{{=URL('default', 'search')}}";
-	var like_property_url = "{{=URL('default', 'like_property')}}"
+	var like_property_url = "{{=URL('default', 'like_property')}}";
 
 	var like_property_url = "{{=URL('default', 'like_property')}}";
     var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
@@ -28,43 +34,43 @@
 					<h1 id="slug_title">Slug House</h1>
 					<h4>UCSC Housing Registry</h4>
 				</div>
-
             <div class="padded">
                 <div class="padded container">
 					<div class="search_div">
-						<div class="third">
+						<h5>Search a listing</h5>
+						<div class="search_input third">
 							<input class="string" v-model="form_street_search" placeholder="Street" type="text">
 						</div>
-						<div class="third">
+						<div class="search_input third">
 							<input class="string" v-model="form_city_search" placeholder="City" type="text">
 						</div>
-						<div class="third">
+						<div class="search_input third">
 							<input class="string" v-model="form_zip_search" placeholder="Zip Code" type="text">
 						</div>
-						<div class="third">
+						<div class="search_input third">
 							<input class="string" v-model="form_state_search" placeholder="State" type="text">
 						</div>
-						<div class="twothirds">
-							<button v-on:click="search_button()">
+						<div class="search_btns twothirds ">
+							<button class="rounded" v-on:click="search_button()">
 								<i class="fa fa-search"></i> Search
 							</button>
-							<button v-on:click="cancel_search_button()">
+							<button class="rounded" v-on:click="cancel_search_button()">
 								<i class="fa fa-times"></i> Clear
 							</button>
 						</div>
 					</div>
 
             <div v-if="listings.length > 0" class="listings padded">
-                <h4> Available Listings</h4>
+                <h2 class="home_title"> Available Listings</h2>
                 <div class="padded center">
-                    <div class="fa-border" v-for="listing in listings">
+                    <div class="listing_div fa-border" v-for="listing in listings">
                         <div class="padded">
                             <h6> Address</h6>
                             <p>${listing.street}</p>
                             <p>${listing.city} ${listing.state} ${listing.zip}</p>
                         </div>
                         <div class="padded">
-                            <h6> description </h6>
+                            <h6> Description </h6>
                             <p> Bedrooms: ${listing.num_bedrooms}</p>
                             <p> Full Bathrooms:${listing.num_fullbaths}</p>
                             <p> Half Bathrooms: ${listing.num_halfbaths}</p>
@@ -91,7 +97,7 @@
                                 <button v-if="has_less" class="center" v-on:click="prev_page()"><i class="fa fa-arrow-left"></i> Prev </button>
                             </div>
                             <div class="third">
-                                <p class="center"> ${page} </p>
+								<p class="center">${page} </p>
                             </div>
                             <div class="third">
                                 <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
@@ -103,7 +109,8 @@
              </div>
             </div>
 
-    </div>
+				</div>
+		</div>
 	</body>
 </div>
 
