@@ -23,40 +23,36 @@
     <body class="background-pic">
 	<div class="content">
     	<div id="vue-div" class="display:none">
-			<transition name="fade">
         	<!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
 				<div class="home_title">
 					<h1 id="slug_title">Slug House</h1>
 					<h4>UCSC Housing Registry</h4>
 				</div>
-				<div>
-
-				</div>
-
-			</transition>
 
             <div class="padded">
                 <div class="padded container">
-                    <div class="third">
-                        <input class="string" v-model="form_street_search" placeholder="Street" type="text">
-                    </div>
-                    <div class="third">
-                        <input class="string" v-model="form_city_search" placeholder="City" type="text">
-                    </div>
-                    <div class="third">
-                        <input class="string" v-model="form_zip_search" placeholder="Zip Code" type="text">
-                    </div>
-                    <div class="third">
-                        <input class="string" v-model="form_state_search" placeholder="State" type="text">
-                    </div>
-                    <div class="twothirds">
-                        <button v-on:click="search_button()">
-                            <i class="fa fa-search"></i> Search
-                        </button>
-                        <button v-on:click="cancel_search_button()">
-                            <i class="fa fa-times"></i> Clear
-                        </button>
-                    </div>
+					<div class="search_div">
+						<div class="third">
+							<input class="string" v-model="form_street_search" placeholder="Street" type="text">
+						</div>
+						<div class="third">
+							<input class="string" v-model="form_city_search" placeholder="City" type="text">
+						</div>
+						<div class="third">
+							<input class="string" v-model="form_zip_search" placeholder="Zip Code" type="text">
+						</div>
+						<div class="third">
+							<input class="string" v-model="form_state_search" placeholder="State" type="text">
+						</div>
+						<div class="twothirds">
+							<button v-on:click="search_button()">
+								<i class="fa fa-search"></i> Search
+							</button>
+							<button v-on:click="cancel_search_button()">
+								<i class="fa fa-times"></i> Clear
+							</button>
+						</div>
+					</div>
 
             <div v-if="listings.length > 0" class="listings padded">
                 <h4> Available Listings</h4>
