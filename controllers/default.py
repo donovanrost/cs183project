@@ -114,7 +114,9 @@ def get_listings():
                 num_fullbaths = p.num_fullbaths,
                 num_halfbaths = p.num_halfbaths,
                 property_id = r.property_id,
-                user_email = r.user_email
+                user_email = r.user_email,
+                images=r.images,
+                notes= r.notes,
             )
             listings.append(list)
         else:
