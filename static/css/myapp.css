@@ -4,16 +4,81 @@
 }
 
 /* line 5, ../sass/_main.scss */
+
+
+
 .main_content {
-  background-color: #4F5F74;
-  width: 100%;
-  /*padding: 32pt 0;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: flex-start; */
-  /*background-color:#003bb3;*/
+    /*background-image: linear-gradient(to right top, #2810b3, #0071ff, #00a9ff, #00d9aa, #00ff19);*/
+    background-image: linear-gradient(to right top, #e7f629, #f3db00, #fbbe00, #ffa200, #ff8400);
+    width: 100%;
+    padding: 32pt 0;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Fira Sans';
+
+
 }
+div.home_title{  /*Home_title stuff*/
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    color:white;
+    text-shadow: 0.5px 0.5px gray;
+
+}
+
+h2.home_title{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    color:white;
+    text-shadow: 0.5px 0.5px gray;
+}
+
+input.string{ /*THIS IS FOR THE input boxes*/
+    border-radius:5px;
+}
+
+
+div.search_div{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    border:1px;
+    border-style: outset;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    background-color: whitesmoke;
+    color:#293742;
+
+}
+
+div.listing_div.fa-border{
+    background-color: whitesmoke;
+    border:1px;
+    border-style: outset;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+}
+
+div.search_btns.twothirds{
+    text-align: right;
+    margin-left: 34px;
+    margin-top: 5px;
+}
+
+div.search_input{ /*This changes the input boxes*/
+    width: 400px;
+    margin-top: 5px;
+
+}
+
+
 div.main_content div.listings div.listing_container{
     background-color: #747C86;
 }
