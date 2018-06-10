@@ -12,7 +12,7 @@
 
 	var like_property_url = "{{=URL('default', 'like_property')}}";
     var get_liked_properties_url = "{{=URL('default', 'get_liked_properties')}}";
-    var add_note_url = "{{=URL('api', 'add_new_note',  user_signature=True)}}";
+    var add_note_url = "{{=URL('api', 'add_new_property_note',  user_signature=True)}}";
 
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -79,23 +79,22 @@
                             ${listing.user_email}
                         </div>
 
-                        <div class="padded">
-                            <button class="btn" v-on:click="see_notes_button()"> See Reviews </button>
-                            <div v-if="is_viewing_notes">
+                        <div class="padded property_notes">
+                            <button class="btn" v-on:click="see_notes_button()"> Reviews </button>
+                            <div class="padded" v-if="is_viewing_notes">
                                 <h6> Reviews </h6>
-                                <div v-for="note in listing.notes">
-                                    <div>
-                                        ${note.note}
-                                        ${note.created_by}
-                                        ${note.created_on}
+                                    <div v-for="note in listing.notes">
+                                        <p>${note.note}</p>
                                     </div>
-                                    <div>
-                                        <button v-on:click="add_note(note.property_id)"> Submit </button>
+                                    <button v-if="!is_adding_note" v-on:click="add_note_button()" class="btn"><i class="fa fa-pencil"></i> Add Review </button>
+                                    <div v-if="is_adding_note">
+                                        <textarea maxlength="140" rows="10" cols="30" v-model="form_new_note" placeholder="Leave your review"></textarea>
+                                        <button class="padded" v-on:click="add_note(listing.property_id)"> Submit </button>
+                                        <button class="padded" v-on:click="add_note_button()"> Cancel </button>
                                     </div>
-                                </div>
                             </div>
-                            <button v-if="is_adding_note" v-on:click="" class="btn"><i class="fa fa-pencil"></i> Leave Review </button>
                         </div>
+
                         <div class="padded" v-if="logged_in">
                             <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
                                 <i class="fas fa-star"></i>

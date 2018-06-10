@@ -105,6 +105,8 @@ def get_listings():
     for i, r in enumerate(rows):
         if i < end - start:
             p = db(db.property.id == r.property_id).select().first()
+            images = db(db.property_images.property_id == r.property_id).select(db.property_images.ALL)
+            notes = db(db.property_notes.property_id == r.property_id).select(db.property_notes.ALL)
             list = dict(
                 street = p.street,
                 city = p.city,
@@ -115,8 +117,8 @@ def get_listings():
                 num_halfbaths = p.num_halfbaths,
                 property_id = r.property_id,
                 user_email = r.user_email,
-                images=r.images,
-                notes= r.notes,
+                images=images,
+                notes= notes,
             )
             listings.append(list)
         else:
