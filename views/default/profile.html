@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-
+<link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
 
 <script>
       var add_address_url = "{{=URL('api', 'insert_new_address', user_signature=False)}}";
@@ -52,7 +52,7 @@
 
         <div class="left_side container quarter max900">
 
-            <div class="user_info padded ">
+            <div class="user_info padded">
                 <div class="button-bar">
                     <button v-on:click="toggle_editing_profile">
                         <i class="fas fa-user-edit"></i>
@@ -62,7 +62,7 @@
                     Upload an image file: <input id="file_input" type="file" accept="image/jpeg" >
                     <button v-on:click="upload_user_image()">Submit</button>
                 </div>
-                <img v-bind:src="user_image_url" height="200px" width="200px" class="padded"/>
+                <img v-bind:src="user_image_url" height="200px" width="200px" class="user_img padded"/>
 
                 <!--This the statically served default profile picture
                 {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}-->
