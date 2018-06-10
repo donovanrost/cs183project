@@ -7,11 +7,15 @@ var app = function() {
         //https://jsfiddle.net/czbLyn8h/
         template: '' +
         ' <div class="slideshow-container">' + '<div>' +
-        '   </div class="slide fade"> ' +
+        '   </div class="slide fade container"> ' +
+             '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
 '               <img :src="currentImage" style="width:100%" style="height:150px" />' +
-        '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
+
         '       <a class="next" v-on:click="next">&#10095;</a> ' +
     '       </div>   ' +
+        '   <div style="text-align:center">\n' +
+        '       <span v-for="n in images.length" class="dot" onclick="currentNumber = n-1"></span> ' +
+        '   </div>'  +
         '</div>' ,
         props:['images'],
 
@@ -40,6 +44,26 @@ var app = function() {
         }
 
 });
+
+    Vue.component('owned-property', {
+        //https://jsfiddle.net/czbLyn8h/
+        template:''  ,
+        props:['images'],
+
+        data: function () {
+            return {
+
+            }
+        },
+        methods:{
+
+        },
+        computed: {
+
+
+        }
+});
+
 
 
     var self = {};
@@ -508,6 +532,9 @@ var app = function() {
                 self.vue.user_image=response.data.image_url;
             })
     };
+    self.toggle_expand_properties = function(){
+      self.vue.expand_properties = !self.vue.expand_properties;
+    };
 
 
     self.vue = new Vue({
@@ -552,6 +579,7 @@ var app = function() {
             logged_in: false,
             has_more: false,
             liked_properties:[],
+            expand_properties:true,
         },
         methods: {
             //properties
@@ -573,6 +601,7 @@ var app = function() {
             upload_user_image:self.upload_user_image,
             upload_user_image_complete:self.upload_user_image_complete,
             get_user_image_url:self.get_user_image_url,
+            toggle_expand_properties:self.toggle_expand_properties,
 
 
             //listings
