@@ -243,6 +243,10 @@ var app = function() {
         enumerate(self.vue.members);
     };
 
+    self.add_member_button = function(group_id){
+       self.vue.is_adding_member =  !self.vue.is_adding_member;
+    };
+
     self.add_group_members= function(group_id){
         for(i =0; i <(self.vue.members).length; i++){
             $.post(add_member_url,
@@ -539,6 +543,7 @@ var app = function() {
 
             // Groups
             is_adding_group: false,
+            is_adding_member: false,
             groups: [],
             users: [],
             members: [],
@@ -592,6 +597,7 @@ var app = function() {
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
             get_liked_properties: self.get_liked_properties,
+            add_member_button: self.add_member_button
         },
         computed:{
             user_image_url: function(){

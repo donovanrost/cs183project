@@ -300,7 +300,7 @@
                         <h6>Street:</h6><p>${property.street}</p>
                         <h6>City:</h6> <p>${property.city}</p>
                         <h6>Zip Code:</h6> <p>${property.zip}</p>
-                        <h6>STate:</h6><p>${property.state_}</p>
+                        <h6>State:</h6><p>${property.state_}</p>
                     </div>
                     <div class="padded half">
                         <h6>Property Type</h6><p>${property.property_type}</p>
@@ -322,10 +322,10 @@
                     <div class="one_group container" v-for="group in groups">
                         <div class="container padded">
                             <div class="quarter">
-                                <h6 class="">${group.group_name}</h6>
+                                <h5>${group.group_name}</h5>
                             </div>
                             <div class="button_bar threequarters padded right">
-                                <button class="btn rounded">
+                                <button class="btn rounded" v-on:click="add_member_button(group.group_id)">
                                         <i class="fa fa-plus"></i>
                                 </button>
                                 <button v-if="!group.is_editing" class="btn rounded" v-on:click="edit_group_button(group.group_id)">
@@ -340,23 +340,20 @@
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </span>
-
-
-
                             </div>
-
+                            <div>House Mates</div>
                         </div>
-                        <div class="padded" id="member_list">
-                            <table class="members">
-                                <thead>
-                                    <th>Members</th>
-                                </thead>
-                                <tbody >
-                                    <tr v-for="mem in group.group_members">
-                                        <td>${mem.user_email}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div v-for="mem in group.group_members" class="container user_table" id="user_table">
+                            <div class="quarter">
+                                <img v-bind:src="mem.image_url" class="padded"/>
+                            </div>
+                            <div class="threequarters">
+                                <h6>${mem.user_email}</h6>
+                                <div v-if="mem.is_pending" class="padded right"><i class="fa fa-clock-o"></i> Invitation Sent!</div>
+                                <span v-if="group.is_editing" class="right padded">
+                                    <button class="btn rounded delete" v-on:click=""> <i class="fa fa fa-minus"></i></button>
+                                </span>
+                            </div>
                         </div>
 
                     </div>
@@ -371,13 +368,14 @@
                             <i class="fa fa-times"></i> Cancel
                         </button>
                     </span>
-                    <h5 class="title"> New Group </h5>
+
+                    <h5 v-if="is_adding_group" class="title"> New Housing Group </h5>
                     <div v-if="is_adding_group" class="members">
-                        <form class="padded">
+                        <form v-if="is_adding_group" class="padded">
                             <input class="string" v-model="form_name" placeholder="Enter your Group Name" type="text">
                         </form>
                         <div class="padded">
-                            <table class="member_table padded">
+                            <table v-if="members.length > 0" class="member_table padded">
                                 <thead>
                                     <th>Members</th>
                                     <th></th>
@@ -385,9 +383,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="mem in members">
-                                        <td>
-                                        {{=A(IMG(_src=URL('static/images', 'default_user.jpg'), _alt="default user image"))}}
-                                        </td>
+                                        <td><img v-bind:src="mem.image_url" class="padded"/></td>
                                         <td>${mem.first_name} ${mem.last_name}</td>
                                         <td><i class="fa fa-trash btn" v-on:click="remove_from_group(mem, mem._idx)"></i></td>
                                     </tr>
@@ -395,39 +391,35 @@
                             </table>
                         </div>
                     </div>
-                    <h5 class="title">Add Groupmates</h5>
-                    <div class="padded">
-                        <form class="padded">
-                            <input class="string" v-model="form_user_search" placeholder="Search" type="text">
-                        </form>
-                        <span class="padded">
-                            <button class="btn padded rounded" v-on:click="search_user()">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <button class="btn padded rounded" v-on:click="clear_user_button()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </span>
-                        <table class="user_table">
-                            <thead>
-                                <tr>
-                                    <th>Photo</th>
-                                    <th>User</th>
-                                    <th>add ?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="usr in users">
-                                    <td>${usr.picture}</td>
-                                    <td>${usr.first_name} ${usr.last_name}</td>
-                                    <td><i class="fa fa-plus btn" v-on:click="add_to_group(usr, usr._idx)"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div v-if="has_more" class="show_more">
-                            <button class="btn btn-default rounded" v-on:click="get_more()">
-                                <i class="fa fa-ellipsis-h"></i> Load more
-                            </button>
+                    <div v-if="is_adding_group">
+                        <h5 class="title">Add HausMates</h5>
+                        <div class="padded">
+                            <form class="padded">
+                                <input class="string" v-model="form_user_search" placeholder="Search" type="text">
+                            </form>
+                            <span class="padded">
+                                <button class="btn padded rounded" v-on:click="search_user()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="btn padded rounded" v-on:click="clear_user_button()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </span>
+                            <div v-for="usr in users" class="container user_table" id="user_table">
+                                <div class="third">
+                                    <img v-bind:src="usr.image_url" height="100px" width="100px" class="padded"/>
+                                </div>
+                                <div class="twothirds">
+                                    <h6 >${usr.first_name} ${usr.last_name}</h6>
+                                    <h7>${usr.email}</h7>
+                                    <i class="fa fa-plus btn right" v-on:click="add_to_group(usr, usr._idx)"></i>
+                                </div>
+                            </div>
+                            <div v-if="has_more" class="show_more">
+                                <button class="btn btn-default rounded" v-on:click="get_more()">
+                                    <i class="fa fa-ellipsis-h"></i> Load more
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

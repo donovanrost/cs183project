@@ -28,7 +28,7 @@ def get_users():
         if i < end_idx - start_idx:
             usr = dict(
                 id = r.id,
-                #picture = r.picture,
+                image_url = r.image_url,
                 email = r.email,
                 first_name = r.first_name,
                 last_name = r.last_name
@@ -117,7 +117,9 @@ def get_group_members(group_id):
         mem = dict(
             group_id=r.group_id,
             user_email=r.user_email,
-            is_active=r.is_active
+            image_url = db(db.auth_user.email == r.user_email).select().first().image_url,
+            is_active=r.is_active,
+            is_pending= r.is_pending
         )
         members.append(mem)
     return members
