@@ -117,6 +117,24 @@ div.main_content div.right_side div.property_info .right_side_banner {
 
 
 }
+div.main_content div.right_side div.property_info div.slideshow-container{
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+div.main_content div.right_side div.property_info  .fade-enter-active, .fade-leave-active {
+  /*transition: all 0.8s ease;*/
+  /*overflow: hidden;*/
+  /*visibility: visible;*/
+  /*opacity: 1;*/
+  /*position: absolute;*/
+}
+div.main_content div.right_side div.property_info .fade-enter, .fade-leave-to {
+  /*opacity: 0;*/
+  /*visibility: hidden;*/
+}
+
+
 
 div.main_content div.right_side div.liked_properties .right_side_banner {
     text-align:center;

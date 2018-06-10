@@ -1,6 +1,46 @@
+
+
 // This is the js for the default/profile.html view.
 
 var app = function() {
+    Vue.component('slideshow', {
+        //https://jsfiddle.net/czbLyn8h/
+        template: '' +
+        ' <div class="slideshow-container">' + '<div>' +
+        '   </div class="slide fade"> ' +
+'               <img :src="currentImage" style="width:100%" style="height:150px" />' +
+        '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
+        '       <a class="next" v-on:click="next">&#10095;</a> ' +
+    '       </div>   ' +
+        '</div>' ,
+        props:['images'],
+
+        data: function () {
+            return {
+                images:[],
+                currentNumber: 0,
+            }
+        },
+        methods:{
+
+            next: function() {
+                this.currentNumber += 1;
+                console.log("next " + this.currentNumber);
+            },
+            prev: function() {
+                this.currentNumber -= 1;
+                console.log("prev " + this.currentNumber);
+
+            }
+        },
+        computed: {
+    	    currentImage: function() {
+      	    return this.images[this.currentNumber % this.images.length];
+            }
+        }
+
+});
+
 
     var self = {};
 
@@ -578,3 +618,4 @@ var APP = null;
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x
 jQuery(function(){APP = app();});
+

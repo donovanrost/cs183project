@@ -6,6 +6,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 
 
 <script>
@@ -268,16 +270,23 @@
                         <h6>Number of Bedrooms</h6> <p>${p.num_bedrooms}</p>
                         <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
                         <h6>Number of half bathrooms</h6> <p>${p.num_halfbaths}</p>
+
                     </div>
 
                     <div class="uploader_div" v-if="p.is_uploading == true">
                         Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
                         <button v-on:click="set_img_prop_id(p) + upload_file()">Submit</button>
                     </div>
-
+                    <slideshow :images="p.images"></slideshow>
+                    <!--
                     <div class="property_images" v-for="image in p.images">
                         <img v-bind:src="image" height="200px" width="200px" class="padded"/>
                     </div>
+                    -->
+
+
+
+
                  </div>
             </div>
 
