@@ -74,8 +74,8 @@ div.search_btns.twothirds{
     text-align: right;
     margin-left: 34px;
     margin-top: 5px;
-}
 
+}
 
 
 div.search_input{ /*This changes the input boxes*/
@@ -83,6 +83,13 @@ div.search_input{ /*This changes the input boxes*/
     margin-top: 5px;
 
 }
+
+div.search_input{ /*This changes the input boxes*/
+    width: 400px;
+    margin-top: 5px;
+
+}
+
 
 
 div.main_content div.listings div.listing_container{
@@ -135,7 +142,9 @@ div.add_property_div div.button_bar div.left-button .btn{
     float:left;
 }
 
-
+img.user_img.padded{
+    padding-left: 0px;
+}
 
 div.user_table img{
     display: block;
