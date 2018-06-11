@@ -20,8 +20,9 @@
 }
 
 div.slide_image.padded.half{
-    margin-top: 115px;
+    margin-top: 90px;
     margin-right: 5.6px;
+    margin-bottom: 40px;
 
 }
 
@@ -221,6 +222,25 @@ div.main_content div.right_side div.property_info div.slideshow-container{
 
 }
 
+p.solid{
+    border-style: solid;
+    border-radius: 50%;
+}
+
+div.property_notes{
+    padding-left: 0px;
+    padding-bottom: 30px;
+}
+
+button.avail_listings.rounded.btn{
+    margin-top: 30px;
+    margin-left: 165px;
+}
+
+div.avail_listings{
+    padding-top: 30px;
+    padding-left: 165px;
+}
 div.main_content div.right_side div.property_info .prev, .next {
   cursor: pointer;
   /*position: absolute;*/
@@ -279,6 +299,16 @@ div.main_content div.right_side div.property_info .dot {
   background-color: #717171;
 }
 
+div.right_side.container.threequarters.max900.compressible{
+    width: 600px;
+    position: relative;
+    margin-left: 12px;
+}
+
+div.container.compressible{
+    margin-left: 170px;
+}
+
 /* Fading animation */
 div.main_content div.right_side div.property_info .fade {
   -webkit-animation-name: fade;
@@ -294,6 +324,32 @@ div.main_content div.right_side div.property_info .owned_properties {
     box-shadow: 10px 5px 5px ;
 
 
+}
+
+h6.review_text_title{
+    color: orangered;
+    padding-left: 20px;
+}
+
+div.review_text{
+    padding-left: 20px;
+}
+
+button.add_review_btn.btn{
+    margin-left: 20px;
+}
+
+button.review_btn1.rounded.padded{
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+button.review_btn2.rounded.padded{
+    margin-top: 5px;
+}
+
+button.star_btn.rounded{
+    margin-left: -15px;
 }
 
 div.main_content div.right_side div.liked_properties .liked_prop {

@@ -62,44 +62,46 @@
                 <h2 class="home_title"> Available Listings</h2>
                 <div class="padded center">
                     <div class="listing_div fa-border" v-for="listing in listings">
-                        <div class="padded">
+                        <div class="avail_listings">
                             <slideshow :images="listing.images"></slideshow>
                             <h6> Address</h6>
                             <p>${listing.street}</p>
                             <p>${listing.city} ${listing.state} ${listing.zip}</p>
                         </div>
-                        <div class="padded">
+                        <div class="avail_listings">
                             <h6> Description </h6>
                             <p> Bedrooms: ${listing.num_bedrooms}</p>
                             <p> Full Bathrooms:${listing.num_fullbaths}</p>
                             <p> Half Bathrooms: ${listing.num_halfbaths}</p>
                         </div>
-                        <div class="padded">
+                        <div class="avail_listings">
                             <h6> Property Owner </h6>
                             ${listing.user_email}
                         </div>
 
-                        <div class="padded property_notes">
-                            <button class="btn" v-on:click="see_notes_button()"> Reviews </button>
-                            <div class="padded" v-if="is_viewing_notes">
-                                <h6> Reviews </h6>
-                                    <div v-for="note in listing.notes">
-                                        <p>${note.note}</p>
+                        <div class="property_notes">
+
+                            <button class="avail_listings rounded btn" v-on:click="see_notes_button()"> Reviews </button>
+
+                            <div  v-if="is_viewing_notes">
+                                <h6 class="review_text_title"> Reviews </h6>
+                                    <div class="review_text" v-for="note in listing.notes">
+                                        <p class="solid">${note.note}</p>
                                     </div>
-                                    <button v-if="!is_adding_note && logged_in" v-on:click="add_note_button()" class="btn"><i class="fa fa-pencil"></i> Add Review </button>
+                                    <button v-if="!is_adding_note && logged_in" v-on:click="add_note_button()" class="add_review_btn rounded btn"><i class="fa fa-pencil-square-o"></i> Add Review </button>
                                     <div v-if="is_adding_note">
                                         <textarea maxlength="140" rows="10" cols="30" v-model="form_new_note" placeholder="Leave your review"></textarea>
-                                        <button class="padded" v-on:click="add_note(listing.property_id)"> Submit </button>
-                                        <button class="padded" v-on:click="add_note_button()"> Cancel </button>
+                                        <button class="review_btn1 rounded padded" v-on:click="add_note(listing.property_id)"> Submit </button>
+                                        <button class="review_btn2 rounded padded" v-on:click="add_note_button()"> Cancel </button>
                                     </div>
                             </div>
                         </div>
 
                         <div class="padded" v-if="logged_in">
-                            <button v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
+                            <button class="star_btn rounded" v-show="is_property_liked(listing.property_id) == true" v-on:click="like_property(listing.property_id)">
                                 <i class="fas fa-star"></i>
                             </button>
-                            <button v-show="is_property_liked(listing.property_id) == false" v-on:click="like_property(listing.property_id)">
+                            <button class="star_btn rounded" v-show="is_property_liked(listing.property_id) == false" v-on:click="like_property(listing.property_id)">
                                 <i class="far fa-star"></i>
                             </button>
                         </div>

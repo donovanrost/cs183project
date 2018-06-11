@@ -54,13 +54,13 @@
 
             <div class="user_info padded">
                 <div class="button-bar">
-                    <button v-on:click="toggle_editing_profile">
+                    <button class="rounded" v-on:click="toggle_editing_profile">
                         <i class="fas fa-user-edit"></i>
                     </button>
                 </div>
                 <div v-if="is_editing_profile">
                     Upload an image file: <input id="file_input" type="file" accept="image/jpeg" >
-                    <button v-on:click="upload_user_image()">Submit</button>
+                    <button class="rounded" v-on:click="upload_user_image()">Submit</button>
                 </div>
                 <img v-bind:src="user_image_url" height="200px" width="200px" class="user_img"/>
 
@@ -216,7 +216,7 @@
             <div class="property_info ">
 
                 <div class="right_side_banner container" id="my-properties">
-                        <h4>My Properties</h4>
+                        <h4>My Properties <i class="fa fa-home"></i></h4>
 
                 </div>
                 <div class="owned_properties container padded" v-for="p in owned_properties">
@@ -315,7 +315,7 @@
 
             <div class="group_info" >
                 <div class="right_side_banner" id="groups">
-                    <h4>Groups</h4>
+                    <h4>Groups<i class="fa fa-users"></i></h4>
                 </div>
                 <!--<div class="my_groups"> -->
                     <div class="one_group container" v-for="group in groups">
