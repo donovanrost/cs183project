@@ -71,9 +71,9 @@
 
                 <div class="user_text">
                     <h3>{{=auth.user.first_name}} {{=auth.user.last_name}}</h3>
-                    <h6>My Rentals</h6>
-                    <h6>My Listings</h6>
-                    <h6>Liked Properties</h6>
+                    <a href="#my-properties"><h6>My Property</h6></a>
+                    <a href="#liked-properties"><h6>Liked Properties</h6></a>
+                    <a href="#groups"><h6>Groups</h6></a>
 
 					<div class="add_property">
 
@@ -215,7 +215,7 @@
 
             <div class="property_info ">
 
-                <div class="right_side_banner container">
+                <div class="right_side_banner container" id="my-properties">
                         <h4>My Properties</h4>
 
                 </div>
@@ -288,8 +288,8 @@
             </div>
 
 
-			<div class="liked_properties">
-				<div class="right_side_banner">
+			<div class="liked_properties" >
+				<div class="right_side_banner" id="liked-properties">
                     <h4>Liked Properties <i class="fa fa-thumbs-up"></i></h4>
                 </div>
 				<div class="liked_prop container padded" v-for="property in liked_properties">
@@ -311,8 +311,8 @@
 			</div>
 
 
-            <div class="group_info">
-                <div class="right_side_banner">
+            <div class="group_info" >
+                <div class="right_side_banner" id="groups">
                     <h4>Groups</h4>
                 </div>
                 <!--<div class="my_groups"> -->
