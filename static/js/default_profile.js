@@ -28,11 +28,20 @@ var app = function() {
         methods:{
 
             next: function() {
-                this.currentNumber += 1;
+                if(this.currentNumber < this.images.length)
+                    this.currentNumber += 1;
+                else
+                    this.currentNumber -= 1;
                 console.log("next " + this.currentNumber);
             },
             prev: function() {
-                this.currentNumber -= 1;
+
+                if(this.currentNumber != 0){
+                    this.currentNumber -= 1;
+                }
+                else{
+                    this.currentNumber += 1;
+                }
                 console.log("prev " + this.currentNumber);
 
             }
