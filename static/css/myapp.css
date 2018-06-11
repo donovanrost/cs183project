@@ -19,8 +19,14 @@
     font-family: 'Fira Sans';
 }
 
-div.property_info{
+div.slide_image.padded.half{
+    margin-top: 115px;
+    margin-right: 5.6px;
 
+}
+
+img.user_img.padded{
+    border-radius: 50%;
 }
 
 
@@ -95,9 +101,6 @@ div.search_input{ /*This changes the input boxes*/
 div.main_content div.listings div.listing_container{
     background-color: #747C86;
 }
-.background-pic{
-
-}
 
 .drop_down_field{
   background-color: #fff;
@@ -142,9 +145,6 @@ div.add_property_div div.button_bar div.left-button .btn{
     float:left;
 }
 
-img.user_img.padded{
-    padding-left: 0px;
-}
 
 div.user_table img{
     display: block;
@@ -166,7 +166,7 @@ table.member_table img{
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {
     background-color: whitesmoke;
-    margin-right: 550px;
+    margin-right: 400px;
     border: 1px;
     border-radius: 5px;
     box-shadow: 10px 5px 5px;
@@ -175,7 +175,7 @@ div.main_content div.left_side div.user_info {
 }
 /* line 15, ../sass/_main.scss */
 div.main_content div.left_side div.user_info img {
-    padding-top: 15px;
+
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -218,6 +218,7 @@ div.main_content div.right_side div.property_info div.slideshow-container{
   max-width: 1000px;
   position: relative;
   margin: auto;
+
 }
 
 div.main_content div.right_side div.property_info .prev, .next {
