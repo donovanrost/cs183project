@@ -231,27 +231,31 @@
                         <button v-if="!p.is_editing" class="btn rounded" v-on:click="p.is_editing = true">
                                 <i class="fa fa-edit"></i>
                         </button>
+                        <button v-if='!p.posted' class="btn rounded" v-on:click="add_listing_button(p._idx)">
+                            <i class="fa fa-paper-plane"></i>  Post
+                        </button>
                         <span v-if="p.is_editing" class="button_list right">
                             <!-- trash is not hooked up to anything -->
-                            <button class="btn rounded delete">
-                                    <i class="fa fa-trash"></i>
+                            <button class="btn rounded delete" v-on:click="del_listing(p.id)">
+                                <i class="fa fa-trash"></i>
                             </button>
                             <button class="btn rounded" v-on:click="p.is_editing = false">
                                 <i class="fa fa-times"></i>
                             </button>
                         </span>
-                        <button v-if='p.posted' v-on:click="del_listing(p.id)">
-                            <i class="fa fa-ellipsis-h"></i>
-                        </button>
                     </div>
-                    <div v-if="p.posted" class="padded">
-                        <h5> Listing </h5>
-                        <h6>Rent:</h6><p>${p.rent}</p>
-                        <h6>Max Occupancy:</h6> <p>${p.max_occ}</p>
-                        <h6>Start Date:</h6> <p>${p.start_date}</p>
-                        <h6>End Date:</h6><p>${p.end_date}</p>
+                    <div class="container">
+                        <div v-if="p.posted" class="padded half">
+                            <h5> Listing </h5>
+                            <h6>Rent:</h6><p>${p.rent}</p>
+                            <h6>Max Occupancy:</h6> <p>${p.max_occ}</p>
+                            <h6>Start Date:</h6> <p>${p.start_date}</p>
+                            <h6>End Date:</h6><p>${p.end_date}</p>
+                        </div>
+                        <div class="padded half">
+                            <slideshow :images="p.images"></slideshow>
+                        </div>
                     </div>
-
                     <div class="padded half">
                         <h6>Street:</h6><p>${p.street}</p>
                         <h6>City:</h6> <p>${p.city}</p>
@@ -259,11 +263,6 @@
                         <h6>Sate:</h6><p>${p.state_}</p>
                     </div>
                     <div class="padded half">
-                        <div v-if='!p.posted' class="right">
-                            <button v-on:click="add_listing_button(p._idx)">
-                                <i class="fa fa-paper-plane"></i>  Post
-                            </button>
-                        </div>
                         <h6>Property Type</h6><p>${p.property_type}</p>
                         <h6>Number of Bedrooms</h6> <p>${p.num_bedrooms}</p>
                         <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
@@ -275,7 +274,7 @@
                         Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
                         <button v-on:click="set_img_prop_id(p) + upload_file()">Submit</button>
                     </div>
-                    <slideshow :images="p.images"></slideshow>
+
                     <!--
                     <div class="property_images" v-for="image in p.images">
                         <img v-bind:src="image" height="200px" width="200px" class="padded"/>
@@ -323,9 +322,6 @@
                                 <h5>${group.group_name}</h5>
                             </div>
                             <div class="button_bar threequarters padded right">
-                                <button class="btn rounded" v-on:click="add_member_button(group.group_id)">
-                                        <i class="fa fa-plus"></i>
-                                </button>
                                 <button v-if="!group.is_editing" class="btn rounded" v-on:click="edit_group_button(group.group_id)">
                                     <i class="fa fa-edit"></i>
                                 </button>
@@ -341,16 +337,13 @@
                             </div>
                             <div>House Mates</div>
                         </div>
-                        <div v-for="mem in group.group_members" class="container user_table" id="user_table">
+                        <div v-for="mem in group.group_members" class="container user_table padded" id="user_table">
                             <div class="quarter">
                                 <img v-bind:src="mem.image_url" class="padded"/>
                             </div>
                             <div class="threequarters">
                                 <h6>${mem.user_email}</h6>
                                 <div v-if="mem.is_pending" class="padded right"><i class="fa fa-clock-o"></i> Invitation Sent!</div>
-                                <span v-if="group.is_editing" class="right padded">
-                                    <button class="btn rounded delete" v-on:click=""> <i class="fa fa fa-minus"></i></button>
-                                </span>
                             </div>
                         </div>
 
@@ -390,7 +383,7 @@
                         </div>
                     </div>
                     <div v-if="is_adding_group">
-                        <h5 class="title">Add HausMates</h5>
+                        <h5 class="title">Add House Mates</h5>
                         <div class="padded">
                             <form class="padded">
                                 <input class="string" v-model="form_user_search" placeholder="Search" type="text">
