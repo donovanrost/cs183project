@@ -63,6 +63,7 @@
                 <div class="padded center">
                     <div class="listing_div fa-border" v-for="listing in listings">
                         <div class="padded">
+                            <slideshow :images="listing.images"></slideshow>
                             <h6> Address</h6>
                             <p>${listing.street}</p>
                             <p>${listing.city} ${listing.state} ${listing.zip}</p>

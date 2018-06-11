@@ -104,8 +104,10 @@ def get_listings():
     has_more = False
     for i, r in enumerate(rows):
         if i < end - start:
+            images = []
+            for j in db(db.property_images.property_id == r.property_id).select():
+                images.append(j.image_url)
             p = db(db.property.id == r.property_id).select().first()
-            images = db(db.property_images.property_id == r.property_id).select(db.property_images.ALL)
             notes = db(db.property_notes.property_id == r.property_id).select(db.property_notes.ALL)
             list = dict(
                 street = p.street,
