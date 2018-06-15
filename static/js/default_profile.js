@@ -6,7 +6,8 @@ var app = function() {
     Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
         template: '' +
-        ' <div class="slideshow-container">' + '<div>' +
+        ' <div v-if="images.length > 0" class="slideshow-container">' +
+            '<div>' +
         '   </div class="slide fade container"> ' +
              '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
 '               <img :src="currentImage" style="width:100%" style="height:150px" />' +
@@ -48,25 +49,6 @@ var app = function() {
             }
         }
 
-});
-
-    Vue.component('owned-property', {
-        //https://jsfiddle.net/czbLyn8h/
-        template:''  ,
-        props:['images'],
-
-        data: function () {
-            return {
-
-            }
-        },
-        methods:{
-
-        },
-        computed: {
-
-
-        }
 });
 
 

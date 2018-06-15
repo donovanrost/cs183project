@@ -11,12 +11,15 @@
     /*background-image: linear-gradient(to right top, #2810b3, #0071ff, #00a9ff, #00d9aa, #00ff19);*/
     background-image: linear-gradient(to right top, #e7f629, #f3db00, #fbbe00, #ffa200, #ff8400);
     width: 100%;
+/*
     padding: 32pt 0;
     display: flex;
     flex: 1;
-    justify-content: center;
     align-items: flex-start;
+*/
     font-family: 'Fira Sans';
+        justify-content: center;
+
 }
 
 div.slide_image.padded.half{
@@ -91,14 +94,6 @@ div.search_input{ /*This changes the input boxes*/
 
 }
 
-div.search_input{ /*This changes the input boxes*/
-    width: 400px;
-    margin-top: 5px;
-
-}
-
-
-
 div.main_content div.listings div.listing_container{
     background-color: #747C86;
 }
@@ -167,7 +162,6 @@ table.member_table img{
 /* line 9, ../sass/_main.scss */
 div.main_content div.left_side div.user_info {
     background-color: whitesmoke;
-    margin-right: 400px;
     border: 1px;
     border-radius: 5px;
     box-shadow: 10px 5px 5px;
@@ -192,6 +186,22 @@ div.main_content div.left_side div.user_info div.user_text {
 div.main_content div.left_side div.button_list {
   margin: 10px;
 }
+div.main_content div.right_side div.property_info div.owned_properties div.button-bar{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+}
+div.main_content div.right_side div.property_info div.owned_properties div.button-bar .icon{
+}
+div.main_content div.right_side div.property_info div.owned_properties div.property-info{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+
+
+}
+
+
 /* line 30, ../sass/_main.scss */
 div.main_content div.left_side div.button_list div.add_btn .btn{
   float: left;
@@ -216,9 +226,9 @@ div.main_content div.right_side div.property_info .right_side_banner {
 
 }
 div.main_content div.right_side div.property_info div.slideshow-container{
-  max-width: 1000px;
+  /*max-width: 1000px;*/
   position: relative;
-  margin: auto;
+  /*margin: auto;
 
 }
 
@@ -300,13 +310,10 @@ div.main_content div.right_side div.property_info .dot {
 }
 
 div.right_side.container.threequarters.max900.compressible{
-    width: 600px;
-    position: relative;
     margin-left: 12px;
 }
 
 div.container.compressible{
-    margin-left: 170px;
 }
 
 /* Fading animation */
@@ -391,7 +398,7 @@ div.main_content div.right_side div.one_group {
 
 }
 
-div.
+
 
 div.main_content div.right_side div.one_group div.button_bar .btn{
     background-color: #5F94B9;

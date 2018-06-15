@@ -219,7 +219,34 @@
                         <h4>My Properties <i class="fa fa-home"></i></h4>
 
                 </div>
-                <div class="owned_properties container padded" v-for="p in owned_properties">
+                <div class="owned_properties container padded" v-for="property in owned_properties">
+                    <div class="button-bar container padded">
+                        <a class="icon" ><i v-if="!property.is_uploading" v-on:click="property.is_uploading = true" class="far fa-image" ></i></a>
+                        <a class="icon" ><i v-if="property.is_uploading" v-on:click="property.is_uploading = false" class="red far fa-image"></i></a>
+                        <a class="icon"><i v-if="!property.is_editing"  v-on:click="property.is_editing = true" class="fa fa-edit"></i></a>
+                        <a class="icon"><i v-if="property.is_editing" v-on:click="property.is_editing = false" class="fa fa-times"></i></a>
+                    </div>
+                    <div class="uploader_div" v-if="property.is_uploading">
+                        Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
+                        <button v-on:click="set_img_prop_id(property) + upload_file()">Submit</button>
+                    </div>
+                    <div class="property-info container">
+                        <slideshow :images="property.images"></slideshow>
+                        <div class="address">
+                            <address>
+                                ${property.street} <br>
+                                ${property.city}, ${property.state_} ${property.zip}
+                            </address>
+                        </div>
+                        <div class="details">
+                            <p>${property.num_bedrooms} bedrooms</p>
+                            <p>${property.num_fullbaths} full bathrooms</p>
+                            <p>${property.num_halfbaths} half bathrooms</p>
+                        </div>
+                    </div>
+
+
+<!--
                     <div class="button_bar threequarters padded right">
                         <button class="btn rounded" v-if="!p.is_uploading" v-on:click="p.is_uploading = true">
                             <i class="far fa-image"></i>
@@ -228,14 +255,13 @@
                             <i class="far fa-image"></i>
                         </button>
 
-                        <button v-if="!p.is_editing" class="btn rounded" v-on:click="p.is_editing = true">
+                        <button class="btn rounded" v-if="!p.is_editing"  v-on:click="p.is_editing = true">
                                 <i class="fa fa-edit"></i>
                         </button>
-                        <button v-if='!p.posted' class="btn rounded" v-on:click="add_listing_button(p._idx)">
+                        <button class="btn rounded" v-if='!p.posted'  v-on:click="add_listing_button(p._idx)">
                             <i class="fa fa-paper-plane"></i>  Post
                         </button>
                         <span v-if="p.is_editing" class="button_list right">
-                            <!-- trash is not hooked up to anything -->
                             <button class="btn rounded delete" v-on:click="del_listing(p.id)">
                                 <i class="fa fa-trash"></i>
                             </button>
@@ -277,16 +303,10 @@
                         <button v-on:click="set_img_prop_id(p) + upload_file()">Submit</button>
                     </div>
 
-                    <!--
-                    <div class="property_images" v-for="image in p.images">
-                        <img v-bind:src="image" height="200px" width="200px" class="padded"/>
-                    </div>
-                    -->
+
+-->
 
 
-
-
-                 </div>
             </div>
 
 
