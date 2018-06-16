@@ -174,19 +174,23 @@ def search():
 def like_property():
     property_id = request.post_vars.property_id
     is_liked = None
+    liked_property = None
 
-    row = db(db.liked_properties.property_id == property_id).select().first()
+    for row in db(db.liked_properties.user_id == auth.user.id).select():
+        if row.property_id == property_id:
+            liked_property = row
 
-    if row is None:
+    if liked_property is None:
         is_liked = True
     else:
-       is_liked = not row.isliked
+       is_liked = not liked_property.isliked
 
     db.liked_properties.update_or_insert((db.liked_properties.property_id == property_id) &
                                          (db.liked_properties.user_email == auth.user.email),
                                          user_email=auth.user.email,
                                          isliked=is_liked,
-                                         property_id=property_id
+                                         property_id=property_id,
+                                         user_id=auth.user.id,
                                          )
     return "ok"
 
@@ -195,7 +199,7 @@ def like_property():
 def get_liked_properties():
     liked_properties = []
     liked_prop = []
-    for row in db(db.liked_properties.user_email == auth.user.email).select():
+    for row in db(db.liked_properties.user_id == auth.user.id).select():
         if (row.isliked == True):
             liked_properties.append(row.property_id)
 
@@ -215,7 +219,5 @@ def get_my_liked_properties():
     liked_props = request.get_vars.liked_props
     #print('hello')
     print(liked_props + "hello")
-
-
 
     return response.json(dict(my_liked_properties=my_liked_properties))

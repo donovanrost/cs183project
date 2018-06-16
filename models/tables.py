@@ -79,6 +79,7 @@ db.define_table('liked_properties',
                 Field('user_email', default=get_user_email()),
                 Field('property_id', 'reference property',),
                 Field('isliked', 'boolean'),
+                Field('user_id', 'reference auth_user')
                 )
 
 db.define_table('listings',

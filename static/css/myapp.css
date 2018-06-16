@@ -197,7 +197,7 @@ div.main_content div.right_side div.property_info div.owned_properties div.prope
     display:flex;
     flex-direction:row;
     justify-content: space-evenly;
-
+    flex-wrap: wrap;
 
 }
 
