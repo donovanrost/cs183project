@@ -46,19 +46,25 @@ def add_property():
     num_bedrooms = request.post_vars.num_bedrooms
     num_fullbaths = request.post_vars.num_fullbaths
     num_halfbaths = request.post_vars.num_halfbaths
+    street_number = request.post_vars.street_number
     street = request.post_vars.street
     city = request.post_vars.city
     zip = request.post_vars.zip
     state_ = request.post_vars.state_
+    country = request.post_vars.country
+
+    print("state:" + state_)
 
     db.property.insert(property_type=property_type,
                         num_bedrooms=num_bedrooms,
                         num_fullbaths=num_fullbaths,
                         num_halfbaths=num_halfbaths,
+                        street_number=street_number,
                         street=street,
                         city=city,
                         zip=zip,
                         state_=state_,
+                        country=country,
                         )
 
     return "ok"

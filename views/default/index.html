@@ -19,12 +19,12 @@
 
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
 {{end}}
 
 <div class="main_content">
-    <body class="background-pic">
 	<div class="content">
     	<div id="vue-div" class="display:none">
         	<!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
@@ -32,23 +32,14 @@
 					<h1 id="slug_title">Slug House</h1>
 					<h4>UCSC Housing Registry</h4>
 				</div>
-            <div class="padded">
                 <div class="padded container">
 					<div class="search_div">
 						<h5>Search a listing</h5>
-						<div class="search_input third">
-							<input class="string" v-model="form_street_search" placeholder="Street" type="text">
-						</div>
-						<div class="search_input third">
-							<input class="string" v-model="form_city_search" placeholder="City" type="text">
-						</div>
-						<div class="search_input third">
-							<input class="string" v-model="form_zip_search" placeholder="Zip Code" type="text">
-						</div>
-						<div class="search_input third">
-							<input class="string" v-model="form_state_search" placeholder="State" type="text">
-						</div>
-						<div class="search_btns twothirds ">
+                        <input class="string search_input" v-model="form_street_search" placeholder="Street" type="text">
+                        <input class="string search_input" v-model="form_city_search" placeholder="City" type="text">
+                        <input class="string search_input" v-model="form_zip_search" placeholder="Zip Code" type="text">
+                        <input class="string search_input" v-model="form_state_search" placeholder="State" type="text">
+						<div class="search_btns ">
 							<button class="rounded" v-on:click="search_button()">
 								<i class="fa fa-search"></i> Search
 							</button>
@@ -57,6 +48,7 @@
 							</button>
 						</div>
 					</div>
+            <div class="padded">
 
             <div v-if="listings.length > 0" class="listings padded">
                 <h2 class="home_title"> Available Listings</h2>
@@ -118,7 +110,7 @@
                             <div class="third">
                                 <button v-if="has_more" class="center" v-on:click="next_page()"> Next <i class="fa fa-arrow-right"></i></button>
                             </div>
-                        </div>
+                    </div>
                     <div v-if="listings.length == 0">
                     <h5> No Results Found </h5>
                 </div>
@@ -127,8 +119,7 @@
 
 				</div>
 		</div>
-	</body>
+    </div>
 </div>
-
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

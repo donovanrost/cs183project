@@ -49,11 +49,23 @@
         </div>
       </div>
     </footer>
+
+
+
+
+
+
+
   </body>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDc4LGwVJrxczV6__L23jHlb-a5FqzmlGI"></script>
+
   <script src="{{=URL('static','js/marked.min.js')}}"></script>
   <script src="{{=URL('static','js/vue.min.js')}}"></script>
+
   {{block bottomjs}}{{end}}
   <script>
-    jQuery('.social a').each(function(){var t=jQuery(this); t.attr('href',t.attr('href').replace('{url}',encodeURIComponent(window.location.href)));});
+    jQuery('.social a').each(function(){var t=jQuery(this); t.attr('href',t.attr('href').replace('{url}',
+            encodeURIComponent(window.location.href)));});
   </script>
+
 </html>

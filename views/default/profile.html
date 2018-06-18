@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
 
+
 <script>
       var add_address_url = "{{=URL('api', 'insert_new_address', user_signature=False)}}";
       var get_property_types_url = "{{=URL('api', 'get_property_types', user_signature=False)}}";
@@ -39,6 +40,9 @@
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
     var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
 </script>
+
+
+
 
 {{end}}
 
@@ -106,13 +110,48 @@
                 <h4>Add a new property </h4>
                 <div v-if="add_property_page == 0">
                     <h5>What is the address?</h5>
+
+                        <div id="locationField">
+                            <input id="autocomplete" placeholder="Enter your address" v-on:focus="geolocate()" type="text">
+                        </div>
+
+                        <table id="address">
+                          <tr>
+                            <td class="label">Street address</td>
+                            <td class="slimField"><input class="field" id="street_number" v-model="form_street_number" disabled="true"></td>
+                            <td class="wideField" colspan="2"><input class="field" id="route" v-model="form_street" disabled="true"></td>
+                          </tr>
+                          <tr>
+                            <td class="label">City</td>
+                            <!-- Note: Selection of address components in this example is typical.
+                                 You may need to adjust it for the locations relevant to your app. See
+                                 https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+                            -->
+                            <td class="wideField" colspan="3"><input class="field" id="locality" v-model="form_city" disabled="true"></td>
+                          </tr>
+                          <tr>
+                            <td class="label">State</td>
+                            <td class="slimField"><input type="text" class="field" id="administrative_area_level_1" v-model="form_state_" disabled="true"></td>
+                            <td class="label">Zip code</td>
+                            <td class="wideField"><input class="field" id="postal_code" v-model="form_zip" disabled="true"></td>
+                          </tr>
+                          <tr>
+                            <td class="label">Country</td>
+                            <td class="wideField" colspan="3"><input type="text" class="field" id="country" v-model="form_country" disabled="true"></td>
+                          </tr>
+                        </table>
+
+
+
+                    <!--
                     <form>
+
                         Street: <input type="text" name="street" v-model="form_street" placeholder="Street..."><br>
                         City: <input type="text" name="city" v-model="form_city" placeholder="City..."><br>
                         Zip Code: <input type="text" name="zip" v-model="form_zip" placeholder="Zip code..."><br>
                         State: <input type="text" name="state" v-model="form_state_" placeholder="City..."><br>
                     </form>
-
+                    -->
                 </div>
                 <div v-if="add_property_page == 1">
                     <h5>Tell us about the property</h5>
@@ -244,67 +283,6 @@
                             <p>${property.num_halfbaths} half bathrooms</p>
                         </div>
                     </div>
-
-
-<!--
-                    <div class="button_bar threequarters padded right">
-                        <button class="btn rounded" v-if="!p.is_uploading" v-on:click="p.is_uploading = true">
-                            <i class="far fa-image"></i>
-                        </button>
-                        <button class="btn rounded padded" v-if="p.is_uploading" v-on:click="p.is_uploading = false">
-                            <i class="far fa-image"></i>
-                        </button>
-
-                        <button class="btn rounded" v-if="!p.is_editing"  v-on:click="p.is_editing = true">
-                                <i class="fa fa-edit"></i>
-                        </button>
-                        <button class="btn rounded" v-if='!p.posted'  v-on:click="add_listing_button(p._idx)">
-                            <i class="fa fa-paper-plane"></i>  Post
-                        </button>
-                        <span v-if="p.is_editing" class="button_list right">
-                            <button class="btn rounded delete" v-on:click="del_listing(p.id)">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                            <button class="btn rounded" v-on:click="p.is_editing = false">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </span>
-                    </div>
-                    <div class="container">
-                        <div v-if="p.posted" class="half">
-                            <h5> Listing </h5>
-                            <h6>Rent:</h6><p>${p.rent}</p>
-                            <h6>Max Occupancy:</h6> <p>${p.max_occ}</p>
-                            <h6>Start Date:</h6> <p>${p.start_date}</p>
-                            <h6>End Date:</h6><p>${p.end_date}</p>
-
-                        </div>
-
-                        <div class="slide_image padded half">
-                            <slideshow :images="p.images"></slideshow>
-                        </div>
-                    </div>
-                    <div class="padded half">
-                        <h6>Street:</h6><p>${p.street}</p>
-                        <h6>City:</h6> <p>${p.city}</p>
-                        <h6>Zip Code:</h6> <p>${p.zip}</p>
-                        <h6>Sate:</h6><p>${p.state_}</p>
-                    </div>
-                    <div class="padded half">
-                        <h6>Property Type</h6><p>${p.property_type}</p>
-                        <h6>Number of Bedrooms</h6> <p>${p.num_bedrooms}</p>
-                        <h6>Number of full bathrooms</h6><p>${p.num_fullbaths}</p>
-                        <h6>Number of half bathrooms</h6> <p>${p.num_halfbaths}</p>
-
-                    </div>
-
-                    <div class="uploader_div" v-if="p.is_uploading == true">
-                        Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
-                        <button v-on:click="set_img_prop_id(p) + upload_file()">Submit</button>
-                    </div>
-
-
--->
 
 
             </div>
@@ -442,5 +420,7 @@
     </div>
     </div>
     </div>
+</div>
 
 <script src="{{=URL('static', 'js/default_profile.js')}}"></script>
+

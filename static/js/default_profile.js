@@ -2,6 +2,7 @@
 
 // This is the js for the default/profile.html view.
 
+
 var app = function() {
     Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
@@ -27,7 +28,6 @@ var app = function() {
             }
         },
         methods:{
-
             next: function() {
                 if(this.currentNumber+1 < this.images.length)
                     this.currentNumber += 1;
@@ -38,9 +38,7 @@ var app = function() {
                 if(this.currentNumber != 0){
                     this.currentNumber -= 1;
                 }
-
                 console.log("prev " + this.currentNumber);
-
             }
         },
         computed: {
@@ -56,6 +54,100 @@ var app = function() {
     var self = {};
 
     Vue.config.silent = false; // show all warnings
+
+          // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      self.initAutocomplete = function() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', self.fillInAddress);
+      };
+
+
+      self.fillInAddress = function() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+        self.vue.form_lat = place.geometry.location.lat();
+        self.vue.form_lng = place.geometry.location.lng();
+        console.log("lat/log: " + self.vue.form_lat + " / " + self.vue.form_lng);
+
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            if(addressType == 'street_number'){
+                self.vue.form_street_number = val;
+            }
+            if(addressType == 'route'){
+                self.vue.form_street = val;
+            }
+            if(addressType == 'locality'){
+                self.vue.form_city = val;
+            }
+            if(addressType == 'administrative_area_level_1'){
+                self.vue.form_state_ = val;
+            }
+            if(addressType == 'country'){
+                self.vue.form_country = val;
+            }
+            if(addressType == 'postal_code'){
+                self.vue.form_zip = val;
+            }
+
+          }
+        }
+      };
+
+
+    // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+    self.geolocate = function() {
+        self.vue.initAutocomplete();
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            self.vue.autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      };
+
+
 
     // Extends an array
     self.extend = function(a, b) {
@@ -100,11 +192,12 @@ var app = function() {
             }
         }
         axios.post(add_property_url, {
-
+            street_number:self.vue.form_street_number,
             street: self.vue.form_street,
             city: self.vue.form_city,
             state_: self.vue.form_state_,
             zip: self.vue.form_zip,
+            country:self.vue.form_country,
             num_bedrooms: self.vue.num_bedrooms,
             num_fullbaths: self.vue.num_fullbaths,
             num_halfbaths: self.vue.num_halfbaths,
@@ -115,10 +208,12 @@ var app = function() {
                 console.log(response);
                 if(response.data="ok"){
                     self.get_owned_properties();
+                    self.vue.form_street_number='';
                     self.vue.form_street='';
                     self.vue.form_city='';
                     self.vue.form_state_='';
                     self.vue.form_zip='';
+                    self.vue.form_country='';
                     self.vue.num_bedrooms='';
                     self.vue.num_fullbaths='';
                     self.vue.num_halfbaths='';
@@ -152,10 +247,6 @@ var app = function() {
 
 
     };
-
-
-
-
 
     //------------------- GROUP CODE ================================================
     function get_users_url(start_idx, end_idx) {
@@ -531,10 +622,14 @@ var app = function() {
         data: {
             is_adding_property:false,
             is_adding_listing: false,
+            form_street_number:"",
             form_street: "",
             form_city:"",
             form_state_:"",
             form_zip:"",
+            form_lat:null,
+            form_lng:null,
+            form_country:"",
             form_max_occ:"",
             form_rent:'',
             form_start_date: "",
@@ -551,6 +646,8 @@ var app = function() {
             add_listing_page:0,
             owned_properties:[],
             p_idx: null,
+            placeSearch:null,
+            autocomplete:null,
 
 
             user_image:'',
@@ -590,6 +687,10 @@ var app = function() {
             upload_user_image_complete:self.upload_user_image_complete,
             get_user_image_url:self.get_user_image_url,
             toggle_expand_properties:self.toggle_expand_properties,
+            geolocate:self.geolocate,
+            fillInAddress:self.fillInAddress,
+            initAutocomplete:self.initAutocomplete,
+
 
 
             //listings
@@ -641,4 +742,5 @@ var APP = null;
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x
 jQuery(function(){APP = app();});
+
 

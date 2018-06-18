@@ -59,15 +59,30 @@ input.string{ /*THIS IS FOR THE input boxes*/
 div.search_div{
     display: flex;
     flex-flow: column wrap;
-    align-items: center;
+    /*align-items: center;*/
+    justify-content: center space-between;
     border:1px;
     border-style: outset;
     border-radius: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    /*padding-top: 15px;*/
+    /*padding-bottom: 15px;*/
     width: 100%;
     background-color: whitesmoke;
     color:#293742;
+    padding: 15px;
+
+}
+
+div.search_div .search_input{ /*This changes the input boxes*/
+    width: auto;
+    margin-top: 5px;
+
+}
+
+div.search_btns.twothirds{
+    text-align: right;
+    margin-left: 34px;
+    margin-top: 5px;
 
 }
 
@@ -80,19 +95,10 @@ div.listing_div.fa-border{
 
 }
 
-div.search_btns.twothirds{
-    text-align: right;
-    margin-left: 34px;
-    margin-top: 5px;
-
-}
 
 
-div.search_input{ /*This changes the input boxes*/
-    width: 400px;
-    margin-top: 5px;
 
-}
+
 
 div.main_content div.listings div.listing_container{
     background-color: #747C86;
