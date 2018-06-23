@@ -25,6 +25,7 @@ def get_users():
     q = (db.auth_user.id != auth.user.id)
     rows = db(q).select(db.auth_user.ALL, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
+
         if i < end_idx - start_idx:
             usr = dict(
                 id = r.id,
@@ -63,8 +64,10 @@ def search_users():
 
 def get_groups():
     groups =[]
-    q = (db.group_member.user_email == auth.user.email)
-    rows= db(q).select(db.group_member.ALL)
+    q = (db.group_member.user_id == auth.user.id)
+    rows= db(q).select()#db.group_member.ALL)
+    print(rows)
+
     for i, r in enumerate(rows):
         gr = db(db.rental_group.id == r.group_id).select().first()
         grp = dict(
@@ -81,20 +84,25 @@ def get_groups():
 
 @auth.requires_signature()
 def add_group():
-    members = []
-    g_id = db.rental_group.insert(
-        is_active = True,
-        group_name = request.vars.group_name
-    )
 
+    print("ehh?")
+
+    members = []
+    # makes the new group
+    g_id = db.rental_group.insert(
+        is_active=True,
+        group_name=request.vars.group_name
+    )
+    print("ehh?")
+
+    # add the group creator as the first member
     m_id = db.group_member.insert(
         group_id=g_id,
-        user_email=auth.user.email
+        user_id=auth.user.id
     )
-
     mem = dict(
-        group_id = g_id,
-        user_email = auth.user.email
+        group_id=g_id,
+        user_id=auth.user.id
     )
     members.append(mem)
 
@@ -110,32 +118,57 @@ def delete_group():
     return "ok"
 
 def get_group_members(group_id):
+
     members = []
     q = (db.group_member.group_id == group_id)
     rows = db(q).select(db.group_member.ALL)
+
     for i, r in enumerate(rows):
         mem = dict(
             group_id=r.group_id,
-            user_email=r.user_email,
-            image_url = db(db.auth_user.email == r.user_email).select().first().image_url,
+            user_email=db(db.auth_user.id == r.user_id).select().first().email,
+            image_url=db(db.auth_user.id == r.user_id).select().first().image_url,
+            first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
+            last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
             is_active=r.is_active,
-            is_pending= r.is_pending
+            is_pending=r.is_pending,
+
         )
         members.append(mem)
     return members
 
 def get_members():
-    members=[]
+    members = []
     q = (db.group_member.group_id == request.vars.group_id)
     rows = db(q).select(db.group_member.ALL)
+
     for i, r in enumerate(rows):
         mem = dict(
             group_id=r.group_id,
-            user_email = r.user_email,
-            is_active = r.is_active
+            user_email=db(db.auth_user.user_id == r.user_id).select().first().user_email,
+            image_url=db(db.auth_user.user_id == r.user_id).select().first().image_url,
+            first_name=db(db.auth_user.user_id == r.user_id).select().first().first_name,
+            last_name=db(db.auth_user.user_id == r.user_id).select().first().last_name,
+            is_active=r.is_active,
+            is_pending=r.is_pending,
+
         )
         members.append(mem)
 
+#     members=[]
+#     q = (db.group_member.group_id == request.vars.group_id)
+#
+#     #selects all group members
+#     rows = db(q).select(db.group_member.ALL)
+#
+#     for i, r in enumerate(rows):
+#         mem = dict(
+#             group_id=r.group_id,
+#             user_email = r.user_email,
+#             is_active = r.is_active
+#         )
+#         members.append(mem)
+#
     return response.json(dict(
         members=members
     ))
@@ -154,11 +187,11 @@ def clean_members():
 def add_member():
     m_id = db.group_member.insert(
         group_id  = request.vars.group_id,
-        user_email = request.vars.user_email
+        user_id = request.vars.user_id
     )
 
     return response.json(dict(member=dict(
         id = m_id,
         group_id=request.vars.group_id,
-        user_email=request.vars.user_email
+        user_id=request.vars.user_id
     )))

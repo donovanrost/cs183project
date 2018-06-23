@@ -1,9 +1,11 @@
 
-
 // This is the js for the default/profile.html view.
 
 
+
 var app = function() {
+
+
     Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
         template: '' +
@@ -102,7 +104,6 @@ var app = function() {
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
           var addressType = place.address_components[i].types[0];
-          if (componentForm[addressType]) {
             var val = place.address_components[i][componentForm[addressType]];
             if(addressType == 'street_number'){
                 self.vue.form_street_number = val;
@@ -124,8 +125,8 @@ var app = function() {
             }
 
           }
-        }
-      };
+        };
+
 
 
     // Bias the autocomplete object to the user's geographical location,
@@ -354,7 +355,7 @@ var app = function() {
             $.post(add_member_url,
                {
                    group_id: group_id,
-                   user_email: (self.vue.members)[i].email
+                   user_id: (self.vue.members)[i].id,
                },
                function (data) {
                    self.get_groups();
@@ -519,7 +520,7 @@ var app = function() {
                 });
         }
     };
-        self.upload_user_image = function (event) {
+    self.upload_user_image = function (event) {
         // Reads the file.
         var input = $("input#file_input")[0];
         var file = input.files[0];
@@ -715,7 +716,7 @@ var app = function() {
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
             get_liked_properties: self.get_liked_properties,
-            add_member_button: self.add_member_button
+            add_member_button: self.add_member_button,
         },
         computed:{
             user_image_url: function(){

@@ -5,7 +5,8 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
@@ -316,7 +317,26 @@
                     <h4>Groups<i class="fa fa-users"></i></h4>
                 </div>
                 <!--<div class="my_groups"> -->
-                    <div class="one_group container" v-for="group in groups">
+                <div class="one_group container padded" v-for="group in groups">
+                    <div class="button-bar container padded">
+                        <a class="icon"><i v-if="!group.is_editing"  v-on:click="edit_group_button(group.group_id)"class="fa fa-edit"></i></a>
+                        <a class="icon"><i v-if="group.is_editing" v-on:click="delete_group(group.group_id)" class="fa fa-trash"></i></a>
+                        <a class="icon"><i v-if="group.is_editing" v-on:click="cancel_edit_group(group.group_id)" class="fa fa-times"></i></a>
+                    </div>
+                    <h6>House Mates</h6>
+                    <div v-for="mem in group.group_members" class="container member-list padded" id="user_table">
+                        <img v-bind:src="mem.image_url" class="padded"/>
+                        <div class="member-info">
+                            <p>${mem.first_name} ${mem.last_name}</p>
+                            <p>${mem.user_email}</p>
+                        </div>
+                        <div v-if="mem.is_pending" class="padded right"><i class="fa fa-clock-o"></i> Invitation Sent!</div>
+                    </div>
+
+
+
+
+<!--
                         <div class="container padded">
                             <div class="quarter">
                                 <h5>${group.group_name}</h5>
@@ -346,7 +366,7 @@
                                 <div v-if="mem.is_pending" class="padded right"><i class="fa fa-clock-o"></i> Invitation Sent!</div>
                             </div>
                         </div>
-
+-->
                     </div>
                 <!--</div> -->
 

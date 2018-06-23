@@ -2,6 +2,37 @@
 
 var app = function() {
 
+    Vue.component('google-map',{
+       template:'<div class="google-map" :id="mapName"></div>',
+
+        name: 'google-map',
+        props: ['name'],
+          data: function () {
+            return {
+              mapName: this.name + "-map",
+            }
+          },
+          mounted: function () {
+            const element = document.getElementById(this.mapName)
+            const options = {
+              zoom: 14,
+              center: new google.maps.LatLng(51.501527,-0.1921837)
+            };
+
+            const map = new google.maps.Map(element, options);
+          }
+
+
+
+    });
+
+
+
+
+
+
+
+
 Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
         template: '' +
@@ -210,6 +241,7 @@ Vue.component('slideshow', {
         self.vue.is_adding_note = !self.vue.is_adding_note
     };
 
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -233,7 +265,7 @@ Vue.component('slideshow', {
             liked_properties:[],
             page: 1,
             is_viewing_notes: false,
-            is_adding_note: false
+            is_adding_note: false,
         },
         methods: {
             //get_more: self.get_more
@@ -248,7 +280,7 @@ Vue.component('slideshow', {
             get_index_of_property:self.get_index_of_property,
             see_notes_button: self.see_notes_button,
             add_note_button: self.add_note_button,
-            add_note: self.add_note
+            add_note: self.add_note,
 
         },
     });
@@ -256,6 +288,7 @@ Vue.component('slideshow', {
     self.get_my_info();
     self.get_listings();
     self.get_liked_properties();
+
     $("#vue-div").show();
 
     return self;

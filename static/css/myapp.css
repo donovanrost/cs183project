@@ -18,9 +18,18 @@
     align-items: flex-start;
 */
     font-family: 'Fira Sans';
-        justify-content: center;
+    /*justify-content: center;*/
 
 }
+
+div.main_content div.top-of-page{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    flex-basis: auto;
+    align-items:center;
+}
+
 
 div.slide_image.padded.half{
     margin-top: 90px;
@@ -57,6 +66,7 @@ input.string{ /*THIS IS FOR THE input boxes*/
 
 
 div.search_div{
+    width:80%;
     display: flex;
     flex-flow: column wrap;
     /*align-items: center;*/
@@ -66,7 +76,6 @@ div.search_div{
     border-radius: 10px;
     /*padding-top: 15px;*/
     /*padding-bottom: 15px;*/
-    width: 100%;
     background-color: whitesmoke;
     color:#293742;
     padding: 15px;
@@ -94,13 +103,17 @@ div.listing_div.fa-border{
     margin-bottom: 10px;
 
 }
+div.main_content div.bottom-of-page{
+    width:100%;
+    display:flex;
+        justify-content: center;
 
+}
+div.main_content div.bottom-of-page div.map{
+    background-color: black;
+}
 
-
-
-
-
-div.main_content div.listings div.listing_container{
+div.main_content div.bottom-of-page div.listings div.listing_container{
     background-color: #747C86;
 }
 
@@ -116,9 +129,7 @@ div.main_content div.listings div.listing_container{
   font-family: "Gill Sans MT";
   /*color: #FFF700;*/
 }
-.content{
-  width: 50%;
-}
+
 .banner{
     text-align: center;
 }
@@ -234,7 +245,32 @@ div.main_content div.right_side div.property_info .right_side_banner {
 div.main_content div.right_side div.property_info div.slideshow-container{
   /*max-width: 1000px;*/
   position: relative;
-  /*margin: auto;
+  /*margin: auto;*/
+
+}
+
+div.main_content div.right_side div.group_info div.one_group div.button-bar{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+}
+div.main_content div.right_side div.group_info div.one_group div.member-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border: 2px solid grey;
+    margin-bottom: 5px;
+    margin-right: 2px;
+}
+div.main_content div.right_side div.group_info div.one_group div.member-list >img{
+
+    max-height: 150px;
+    border-radius: 50%;
+
+}
+div.main_content div.right_side div.group_info div.one_group div.member-list div.member-info{
+    margin-top: auto;
+    margin-bottom: auto;
 
 }
 

@@ -53,7 +53,6 @@ def add_property():
     state_ = request.post_vars.state_
     country = request.post_vars.country
 
-    print("state:" + state_)
 
     db.property.insert(property_type=property_type,
                         num_bedrooms=num_bedrooms,
@@ -93,7 +92,6 @@ def get_owned_properties():
             notes.append(r)
             row['notes'] = notes
         owned_properties.append(row)
-    print(owned_properties)
 
     return response.json(dict(
         owned_properties=owned_properties
@@ -136,7 +134,6 @@ def get_user_image_url():
 
     row = db(db.auth_user.id == auth.user.id).select().first()
     img_url = row.image_url
-    print(row)
 
     return response.json(dict(image_url=img_url,
                               ))
@@ -181,7 +178,6 @@ def get_liked_properties():
         if (row.isliked == True):
             liked_properties.append(row.id)
 
-    print(liked_properties + "hello")
     return response.json(dict(
         liked_properties=liked_properties,
         ))
@@ -190,8 +186,6 @@ def get_liked_properties():
 def get_my_liked_properties():
     my_liked_properties = []
     liked_props = request.get_vars.liked_props
-    #print('hello')
-    #print(liked_props)
 
 
     for id in liked_props:

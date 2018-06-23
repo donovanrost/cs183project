@@ -85,6 +85,10 @@ def testpage():
     form = SQLFORM(db.address)
     return dict(form=form)
 
+def lfg():
+    form = SQLFORM(db.address)
+    return dict(form=form)
+
 @auth.requires_login()
 def change_user_image():
     form = SQLFORM(db.auth_user.picture)
@@ -217,7 +221,5 @@ def get_liked_properties():
 def get_my_liked_properties():
     my_liked_properties = []
     liked_props = request.get_vars.liked_props
-    #print('hello')
-    print(liked_props + "hello")
 
     return response.json(dict(my_liked_properties=my_liked_properties))

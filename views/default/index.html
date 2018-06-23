@@ -28,29 +28,30 @@
 	<div class="content">
     	<div id="vue-div" class="display:none">
         	<!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+            <div class="top-of-page">
 				<div class="home_title">
 					<h1 id="slug_title">Slug House</h1>
 					<h4>UCSC Housing Registry</h4>
 				</div>
-                <div class="padded container">
-					<div class="search_div">
-						<h5>Search a listing</h5>
-                        <input class="string search_input" v-model="form_street_search" placeholder="Street" type="text">
-                        <input class="string search_input" v-model="form_city_search" placeholder="City" type="text">
-                        <input class="string search_input" v-model="form_zip_search" placeholder="Zip Code" type="text">
-                        <input class="string search_input" v-model="form_state_search" placeholder="State" type="text">
-						<div class="search_btns ">
-							<button class="rounded" v-on:click="search_button()">
-								<i class="fa fa-search"></i> Search
-							</button>
-							<button class="rounded" v-on:click="cancel_search_button()">
-								<i class="fa fa-times"></i> Clear
-							</button>
-						</div>
-					</div>
-            <div class="padded">
+                <div class="search_div">
+                    <h5>Search a listing</h5>
+                    <input class="string search_input" v-model="form_street_search" placeholder="Street" type="text">
+                    <input class="string search_input" v-model="form_city_search" placeholder="City" type="text">
+                    <input class="string search_input" v-model="form_zip_search" placeholder="Zip Code" type="text">
+                    <input class="string search_input" v-model="form_state_search" placeholder="State" type="text">
+                    <div class="search_btns ">
+                        <button class="rounded" v-on:click="search_button()">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                        <button class="rounded" v-on:click="cancel_search_button()">
+                            <i class="fa fa-times"></i> Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-of-page">
 
-            <div v-if="listings.length > 0" class="listings padded">
+                <div v-if="listings.length > 0" class="listings padded">
                 <h2 class="home_title"> Available Listings</h2>
                 <div class="padded center">
                     <div class="listing_div fa-border" v-for="listing in listings">
@@ -117,9 +118,11 @@
              </div>
             </div>
 
-				</div>
-		</div>
+
+
+            </div>
     </div>
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
+</div>
