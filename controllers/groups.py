@@ -144,6 +144,8 @@ def get_members():
 
     for i, r in enumerate(rows):
         mem = dict(
+            # DON'T KNOW IF THIS WORKS HAVEN'T TESTED
+            # IF IT DOESN"T LOOK AT get_group_members()
             group_id=r.group_id,
             user_email=db(db.auth_user.user_id == r.user_id).select().first().user_email,
             image_url=db(db.auth_user.user_id == r.user_id).select().first().image_url,
@@ -195,3 +197,37 @@ def add_member():
         group_id=request.vars.group_id,
         user_id=request.vars.user_id
     )))
+
+
+
+def get_groups2():
+
+    groups=[]
+
+    #gets the groups to which the auth.user belongs
+    for row in db(db.group_member.user_id == auth.user.id).select():
+        members=[]
+        group_id = row.group_id
+
+        #finds other group members
+        for r in db(db.group_member.group_id == group_id).select():
+            mem=dict(
+                user_id=db(db.auth_user.id == r.user_id).select().first().id,
+                first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
+                last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
+                user_email=db(db.auth_user.id == r.user_id).select().first().email,
+                user_image=db(db.auth_user.id == r.user_id).select().first().image_url,
+            )
+            members.append(mem)
+        group=dict(
+            group_id=group_id,
+            group_name=db(db.rental_group.id == group_id).select().first().group_name,
+            members=members,
+        )
+        groups.append(group)
+
+    print(groups)
+
+    return response.json(dict(
+        groups=groups,
+    ))

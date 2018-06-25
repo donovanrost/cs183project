@@ -201,7 +201,37 @@ def add_new_property_note():
 
     return 'ok'
 
+def get_all_lfg_posts():
+    lfg_posts=[]
 
+    for row in db(db.lfg_posts.id  > 0).select():
+        lfg_post = dict(
+            user_id=db(db.auth_user.id == row.user_id).select().first().id,
+            user_email=db(db.auth_user.id == row.user_id).select().first().email,
+            image_url=db(db.auth_user.id == row.user_id).select().first().image_url,
+            first_name=db(db.auth_user.id == row.user_id).select().first().first_name,
+            last_name=db(db.auth_user.id == row.user_id).select().first().last_name,
+            city=row.city,
+            post_text=row.post_text,
+        )
+        lfg_posts.append(lfg_post)
+
+    return response.json(dict(lfg_posts=lfg_posts))
+
+def send_invitation_to_group():
+    sender_id=auth.user.id
+    receiver_id=request.post_vars.receiver_id
+    invitation_text=request.post_vars.invitation_text
+    group_id=request.post_vars.group_id
+
+    db.group_invitation.insert(
+        group_id=group_id,
+        sender_id=sender_id,
+        receiver_id=receiver_id,
+        invitation_text=invitation_text,
+    )
+
+    return 'ok'
 
 
 

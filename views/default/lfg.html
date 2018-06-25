@@ -4,6 +4,28 @@
 <script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var get_all_lfg_posts_url ="{{=URL('api', 'get_all_lfg_posts')}}";
+    var get_groups2_url = "{{=URL('groups', 'get_groups2', user_signature=True)}}"
+    var send_invitation_to_group_url ="{{=URL('api', 'send_invitation_to_group', user_signature=True)}}";
+
+
+</script>
+
+<script>
+    var users_url = "{{=URL('groups', 'get_users', user_signature=True)}}";
+    var search_users_url = "{{=URL('groups', 'search_users', user_signature=True)}}";
+    var groups_url = "{{=URL('groups', 'get_groups', user_signature=True)}}";
+    var members_url = "{{=URL('groups', 'get_members', user_signature=True)}}";
+    var add_group_url = "{{=URL('groups', 'add_group', user_signature=True)}}";
+    var toggle_is_editing = "{{=URL('groups', 'is_editing', user_signature=True)}}";
+    var add_member_url = "{{=URL('groups', 'add_member', user_signature=True)}}";
+    var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
+    var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
+    var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
+    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
+</script>
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
       integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -13,7 +35,31 @@
 
 {{end}}
 <div id="vue-div" class="main_content">
-    <p>klkhlfkas</p>
+
+    <div class="lfg-page">
+
+        <div class="left-side">
+
+            <div class="my-groups" v-for="group in groups2">
+                <group :group="group"></group>
+            </div>
+
+        </div>
+
+
+
+        <div class="right-side ">
+            <div class="search">
+                <input type="text">
+            </div>
+            <div class="lfg-posts" v-for="post in allLFGPosts">
+                <lfg_post :lfg_post_data="post" :groups="groups2"></lfg_post>
+
+            </div>
+        </div>
+
+    </div>
+
 
 </div>
 

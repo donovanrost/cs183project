@@ -107,6 +107,20 @@ db.define_table('property_notes',
                 Field('note', 'text'),
                 )
 
+db.define_table('lfg_posts',
+                Field('user_id', 'reference auth_user'),
+                Field('city', ),
+                Field('post_text', 'text'),
+
+                )
+
+db.define_table('group_invitation',
+                Field('group_id', 'reference rental_group'),
+                Field('sender_id', 'reference auth_user'),
+                Field('receiver_id', 'reference auth_user'),
+                Field('invitation_text', 'text'),
+                )
+
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
 

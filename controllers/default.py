@@ -88,6 +88,10 @@ def testpage():
 def lfg():
     form = SQLFORM(db.address)
     return dict(form=form)
+def messages():
+    form = SQLFORM(db.address)
+    return dict(form=form)
+
 
 @auth.requires_login()
 def change_user_image():
