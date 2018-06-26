@@ -131,7 +131,7 @@ def get_group_members(group_id):
             first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
             last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
             is_active=r.is_active,
-            is_pending=r.is_pending,
+            #is_pending=r.is_pending,
 
         )
         members.append(mem)
@@ -204,27 +204,29 @@ def get_groups2():
 
     groups=[]
 
-    #gets the groups to which the auth.user belongs
+    # gets the groups to which the auth.user belongs
     for row in db(db.group_member.user_id == auth.user.id).select():
         members=[]
         group_id = row.group_id
 
-        #finds other group members
-        for r in db(db.group_member.group_id == group_id).select():
-            mem=dict(
-                user_id=db(db.auth_user.id == r.user_id).select().first().id,
-                first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
-                last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
-                user_email=db(db.auth_user.id == r.user_id).select().first().email,
-                user_image=db(db.auth_user.id == r.user_id).select().first().image_url,
+        # makes sure is_member == True for this user
+        if row.is_member:
+            # finds other group members
+            for r in db(db.group_member.group_id == group_id).select():
+                mem = dict(
+                    user_id=db(db.auth_user.id == r.user_id).select().first().id,
+                    first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
+                    last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
+                    user_email=db(db.auth_user.id == r.user_id).select().first().email,
+                    user_image=db(db.auth_user.id == r.user_id).select().first().image_url,
+                )
+                members.append(mem)
+            group = dict(
+                group_id=group_id,
+                group_name=db(db.rental_group.id == group_id).select().first().group_name,
+                members=members,
             )
-            members.append(mem)
-        group=dict(
-            group_id=group_id,
-            group_name=db(db.rental_group.id == group_id).select().first().group_name,
-            members=members,
-        )
-        groups.append(group)
+            groups.append(group)
 
     print(groups)
 

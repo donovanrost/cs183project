@@ -218,17 +218,27 @@ def get_all_lfg_posts():
 
     return response.json(dict(lfg_posts=lfg_posts))
 
-def send_invitation_to_group():
+def send_group_invitation():
     sender_id=auth.user.id
     receiver_id=request.post_vars.receiver_id
     invitation_text=request.post_vars.invitation_text
     group_id=request.post_vars.group_id
 
-    db.group_invitation.insert(
+
+    invitation_id = db.group_invitation.insert(
         group_id=group_id,
         sender_id=sender_id,
         receiver_id=receiver_id,
-        invitation_text=invitation_text,
+
+    )
+    print(invitation_id)
+
+    #
+    db.group_member.insert(
+        user_id=receiver_id,
+        group_id=group_id,
+        group_invitation_id=invitation_id,
+
     )
 
     return 'ok'

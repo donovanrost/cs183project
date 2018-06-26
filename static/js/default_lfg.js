@@ -30,7 +30,7 @@ var app = function() {
             methods:{
                 send_invitation: function(){
 
-                    axios.post(send_invitation_to_group_url,{
+                    axios.post(send_group_invitation_url,{
                         group_id: this.selected_group.group_id,
                         invitation_text: this.invitation_text,
                         receiver_id: this.receiver_info.user_id,
@@ -55,6 +55,7 @@ var app = function() {
             </div>
             <invitation v-show="is_inviting==true" :groups="groups" :receiver_info="lfg_post_data"></invitation>
             <div class="lfg-post-user">
+                
                 <img v-bind:src="lfg_post_data.image_url" class="thumbnail"/>
                 <div class="lfg-post-user-info">
                     <p>{{this.lfg_post_data.first_name}} {{this.lfg_post_data.last_name}}</p>
@@ -91,14 +92,42 @@ var app = function() {
 
         }
 });
+Vue.component('group_member', {
+        template: `
+        <div class="group-member padded" >
+            <img v-bind:src="member.user_image" class="thumbnail" />
+            <div class="member-details padded">
+                <p>{{member.first_name}} {{member.last_name}} </p>
+                <p>{{member.user_email}}</p>
+            </div>
+
+
+        </div>
+
+        
+        `
+         ,
+        props:['member',],
+
+        data: function () {
+             return {
+            }
+        },
+        methods:{
+
+        },
+        computed: {
+
+        }
+});
+
 
 Vue.component('group', {
         template: `
         <div class="group padded">
             <p>{{group.group_name}}</p>
-            <div class="members padded" v-for="member in group.members">
-                <p>{{member.first_name}} {{member.last_name}} </p>
-                <p>{{member.user_email}}</p>
+            <div class="members " v-for="member in group.members">
+                <group_member :member="member"></group_member>
             </div>
         </div>
 
@@ -144,7 +173,7 @@ Vue.component('group', {
     };
 
     self.addLFGPost = function(){
-
+        //TODO: do this
     };
 
     self.get_groups = function () {

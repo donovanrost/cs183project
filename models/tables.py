@@ -22,7 +22,6 @@ db.define_table('address',
                 Field('city', type='string'),
                 Field('zip', type='string'),
                 Field('state_', type='string'),
-                Field('hash_', type='string'),
                 )
 
 # something about this feels off to me and I can't quite place it
@@ -30,16 +29,25 @@ db.define_table('rental_group',
                 Field('group_name'),
                 Field('is_active', type='boolean', default=False),     # is a user active in the group or not
                 Field('date_created'),                                 # when a user joined the group
-                Field('is_editing', type='boolean', default=False)     # Like the memo thing from hw3
+                Field('is_editing', type='boolean', default=False),   # Like the memo thing from hw3
+                )
+
+db.define_table('group_invitation',
+                Field('group_id', 'reference rental_group'),
+                Field('sender_id', 'reference auth_user'),
+                Field('receiver_id', 'reference auth_user'),
+                Field('is_accepted', 'boolean', default=False),
+                Field('responded_to', 'boolean', default=False),
                 )
 
 
 db.define_table('group_member',
-                #Field('user_email'),
                 Field('user_id', 'reference auth_user'),
                 Field('group_id', 'reference rental_group'),
-                Field('is_pending', type='boolean', default=False),
-                Field('is_active', type='boolean', defautl=False)
+                Field('is_active', type='boolean', defautl=False),
+                Field('group_invitation_id', 'reference group_invitation'),
+                Field('is_member', type='boolean', default=False),
+
                 )
 
 
@@ -60,7 +68,7 @@ db.define_table('property_type',
 db.define_table('rental_history')
 
 db.define_table('property',
-                Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),    #should be an auth_user
+                Field('property_owner', db.auth_user, default=get_user_id(), readable=False, writable=False),
                 Field('street_number', type='string', required=False),
                 Field('street', type='string',required=False),
                 Field('city', type='string',required=False),
@@ -70,7 +78,7 @@ db.define_table('property',
                 Field('num_bedrooms', type='integer'),
                 Field('num_fullbaths', type='integer'),
                 Field('num_halfbaths', type='integer'),
-                Field('property_type', db.property_type),     #db.property_type
+                Field('property_type', db.property_type),
                 Field('posted', type='boolean', default=False),
                 Field('proof_ownership'),
                 Field('is_editing', type='boolean', default=False),
@@ -114,12 +122,17 @@ db.define_table('lfg_posts',
 
                 )
 
-db.define_table('group_invitation',
-                Field('group_id', 'reference rental_group'),
+db.define_table('message_content',
+                Field('message_body', 'text'),
+                )
+
+db.define_table('message_headers',
                 Field('sender_id', 'reference auth_user'),
                 Field('receiver_id', 'reference auth_user'),
-                Field('invitation_text', 'text'),
+                Field('content_id', 'reference message_content'),
+
                 )
+
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
