@@ -201,11 +201,13 @@ def add_new_property_note():
 
     return 'ok'
 
-def get_all_lfg_posts():
-    lfg_posts=[]
 
-    for row in db(db.lfg_posts.id  > 0).select():
+def get_all_lfg_posts():
+    lfg_posts = []
+
+    for row in db(db.lfg_posts.is_active).select():
         lfg_post = dict(
+            post_id=row.id,
             user_id=db(db.auth_user.id == row.user_id).select().first().id,
             user_email=db(db.auth_user.id == row.user_id).select().first().email,
             image_url=db(db.auth_user.id == row.user_id).select().first().image_url,
@@ -218,11 +220,16 @@ def get_all_lfg_posts():
 
     return response.json(dict(lfg_posts=lfg_posts))
 
+
 def send_group_invitation():
-    sender_id=auth.user.id
-    receiver_id=request.post_vars.receiver_id
-    invitation_text=request.post_vars.invitation_text
-    group_id=request.post_vars.group_id
+
+    # TODO: when an invitatin is sent, a 'message' should be sent to the inbox... whenever that is ready
+    sender_id = auth.user.id
+    group_id = request.post_vars.group_id
+    receiver_id = request.post_vars.receiver_id
+
+
+
 
 
     invitation_id = db.group_invitation.insert(
@@ -231,7 +238,8 @@ def send_group_invitation():
         receiver_id=receiver_id,
 
     )
-    print(invitation_id)
+
+
 
     #
     db.group_member.insert(
@@ -241,7 +249,90 @@ def send_group_invitation():
 
     )
 
+    # for the response
+    q = db(db.auth_user.id == request.post_vars.receiver_id).select().first()
+    print("q: ")
+    print(q)
+
+    new_member = dict(
+        user_id=request.post_vars.receiver_id,
+        first_name=q.first_name,
+        last_name=q.last_name,
+        user_email=q.email,
+        user_image=q.image_url,
+        is_member=False,
+    )
+
+
+    return response.json(dict(
+        new_member=new_member,
+    ))
+
+
+def get_available_cities():
+
+    available_cities = []
+
+    for row in db(db.available_cities.id > 0).select():
+        available_cities.append(row)
+
+    return response.json(dict(available_cities=available_cities))
+
+
+def post_lfg_post():
+
+    user_id = auth.user.id
+    post_text = request.post_vars.post_text
+    city = request.post_vars.city
+
+    db.lfg_posts.insert(
+        user_id=user_id,
+        post_text=post_text,
+        city=city,
+    )
+
+
+def accept_invitation():
+
+    user_id = request.post_vars.user_id
+    group_id = request.post_vars.group_id
+
+    rows = db(db.group_member.group_id == group_id).select()
+
+    for r in rows:
+        if r.user_id == user_id:
+            r.update_record(is_member=True)
+
+    for post in db(db.lfg_posts.user_id == user_id).select():
+        post.update_record(is_active=False)
+
+
     return 'ok'
+
+
+def get_this_user_id():
+    if auth.user is not None:
+        user_id = auth.user.id
+    else:
+        user_id = 0
+
+
+    return response.json(dict(user_id=user_id))
+
+
+def edit_lfg_post():
+    post_id = request.post_vars.post_id
+    post_text = request.post_vars.post_text
+
+    post = db(db.lfg_posts.id == post_id).select().first()
+
+    post.update_record(post_text=post_text)
+
+    return 'ok'
+
+
+    
+
 
 
 

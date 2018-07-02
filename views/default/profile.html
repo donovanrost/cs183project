@@ -39,7 +39,7 @@
     var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
     var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
-    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
+    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}";
 </script>
 
 
@@ -87,21 +87,17 @@
 
             </div>
             <div class="button_list container">
-                <div class="add_btn half">
                      <button v-if="!is_adding_property" class="rounded" v-on:click="add_property_button()" >
                         <i class="fa fa-plus"></i>
-                        Add Property
+                        Property
                      </button>
                      <button v-if="is_adding_property" class="rounded" v-on:click="add_property_button()" >
                         <i class="fa fa-close"></i>
                         Close
                     </button>
-                </div>
-                <div class="half group_btn">
                     <button v-if="!is_adding_group" class="rounded " v-on:click="add_group_button()">
-                            <i class="fa fa-plus"></i> Create Group
+                            <i class="fa fa-plus"></i> Group
                     </button>
-                </div>
             </div>
 
         </div>

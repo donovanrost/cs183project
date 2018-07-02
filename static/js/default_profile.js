@@ -548,7 +548,6 @@ var app = function() {
         // Hides the uploader div.
         //self.close_uploader();
         console.log('The file was uploaded; it is now available at ' + get_url);
-        // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
         self.insert_user_image_url();
         self.get_user_image_url();
     };
@@ -556,7 +555,6 @@ var app = function() {
         // Hides the uploader div.
         self.close_uploader();
         console.log('The file was uploaded; it is now available at ' + get_url);
-        // TODO: The file is uploaded.  Now you have to insert the get_url into the database, etc.
         self.insert_property_image_url();
         self.get_owned_properties();
     };

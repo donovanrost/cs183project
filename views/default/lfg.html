@@ -6,10 +6,13 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     var get_all_lfg_posts_url ="{{=URL('api', 'get_all_lfg_posts')}}";
-    var get_groups2_url = "{{=URL('groups', 'get_groups2', user_signature=True)}}"
+    var get_groups2_url = "{{=URL('groups', 'get_groups2', user_signature=True)}}";
     var send_group_invitation_url ="{{=URL('api', 'send_group_invitation', user_signature=True)}}";
-
-
+    var get_available_cities_url = "{{=URL('api', 'get_available_cities', user_signature=False)}}";
+    var post_lfg_post_url = "{{=URL('api', 'post_lfg_post', user_signature=True)}}";
+    var accept_invitation_url = "{{=URL('api', 'accept_invitation', user_signature=True)}}";
+    var get_this_user_id_url = "{{=URL('api', 'get_this_user_id', user_signature=True)}}";
+    var edit_lfg_post_url = "{{=URL('api', 'edit_lfg_post', user_signature=True)}}";
 </script>
 
 <script>
@@ -23,7 +26,7 @@
     var del_member_url = "{{=URL('groups', 'del_member', user_signature=True)}}";
     var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
-    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}"
+    var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}";
 </script>
 
 
@@ -39,21 +42,18 @@
     <div class="lfg-page">
 
         <div class="left-side">
-
             <div class="my-groups" v-for="group in groups2">
-                <group :group="group"></group>
+                <group :group="group" :logged_in_user="this_user_id"></group>
             </div>
-
         </div>
 
 
-
         <div class="right-side ">
-            <div class="search">
-                <input type="text">
+            <div class="lfg-header">
+                <add_lfg_post :available_cities="available_cities"></add_lfg_post>
             </div>
             <div class="lfg-posts" v-for="post in allLFGPosts">
-                <lfg_post :lfg_post_data="post" :groups="groups2"></lfg_post>
+                <lfg_post :lfg_post_data="post" :groups="groups2" :logged_in_user="this_user_id"></lfg_post>
 
             </div>
         </div>

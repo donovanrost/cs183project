@@ -85,15 +85,12 @@ def get_groups():
 @auth.requires_signature()
 def add_group():
 
-    print("ehh?")
-
     members = []
     # makes the new group
     g_id = db.rental_group.insert(
         is_active=True,
         group_name=request.vars.group_name
     )
-    print("ehh?")
 
     # add the group creator as the first member
     m_id = db.group_member.insert(
@@ -112,10 +109,12 @@ def add_group():
         members=members
     )))
 
+
 def delete_group():
     db(db.group_member.group_id == request.vars.group_id).delete()
     db(db.rental_group.id == request.vars.group_id).delete()
     return "ok"
+
 
 def get_group_members(group_id):
 
@@ -175,6 +174,7 @@ def get_members():
         members=members
     ))
 
+
 def del_member():
     "Deletes a track from the table"
     db(db.group_member.user_email == request.vars.user_email).delete()
@@ -209,24 +209,33 @@ def get_groups2():
         members=[]
         group_id = row.group_id
 
-        # makes sure is_member == True for this user
-        if row.is_member:
+        # # makes sure is_member == True for this user
+        # if row.is_member:
             # finds other group members
-            for r in db(db.group_member.group_id == group_id).select():
-                mem = dict(
-                    user_id=db(db.auth_user.id == r.user_id).select().first().id,
-                    first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
-                    last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
-                    user_email=db(db.auth_user.id == r.user_id).select().first().email,
-                    user_image=db(db.auth_user.id == r.user_id).select().first().image_url,
-                )
-                members.append(mem)
-            group = dict(
-                group_id=group_id,
-                group_name=db(db.rental_group.id == group_id).select().first().group_name,
-                members=members,
+        for r in db(db.group_member.group_id == group_id).select():
+
+            if not r.is_member:
+            # check to see if invitation has been declined
+                invitations = db(db.group_invitation.group_id == row.group_id).select(db.group_invitation.ALL)
+                for i in invitations:
+                    if i.receiver_id == r.user_id:
+                        if not i.is_accepted & i.responded_to:
+                            continue
+            mem = dict(
+                user_id=db(db.auth_user.id == r.user_id).select().first().id,
+                first_name=db(db.auth_user.id == r.user_id).select().first().first_name,
+                last_name=db(db.auth_user.id == r.user_id).select().first().last_name,
+                user_email=db(db.auth_user.id == r.user_id).select().first().email,
+                user_image=db(db.auth_user.id == r.user_id).select().first().image_url,
+                is_member=r.is_member,
             )
-            groups.append(group)
+            members.append(mem)
+        group = dict(
+            group_id=group_id,
+            group_name=db(db.rental_group.id == group_id).select().first().group_name,
+            members=members,
+        )
+        groups.append(group)
 
     print(groups)
 

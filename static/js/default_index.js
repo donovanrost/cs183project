@@ -215,7 +215,7 @@ Vue.component('slideshow', {
             if(property == self.vue.liked_properties[i].property_id);
             break;
         }
-        
+
         return i;
 
 

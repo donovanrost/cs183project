@@ -11,6 +11,10 @@
     /*background-image: linear-gradient(to right top, #2810b3, #0071ff, #00a9ff, #00d9aa, #00ff19);*/
     background-image: linear-gradient(to right top, #e7f629, #f3db00, #fbbe00, #ffa200, #ff8400);
     width: 100%;
+    display: block;
+    overflow: auto;
+    height:auto;
+    min-height: 100%;
 
 }
 
@@ -91,26 +95,24 @@ div.search_div{
     border:1px;
     border-style: outset;
     border-radius: 10px;
-    /*padding-top: 15px;*/
-    /*padding-bottom: 15px;*/
     background-color: whitesmoke;
     color:#293742;
     padding: 15px;
 
 }
 
-div.search_div .search_input{ /*This changes the input boxes*/
-    width: auto;
-    margin-top: 5px;
+/*div.search_div .search_input{ !*This changes the input boxes*!*/
+    /*width: auto;*/
+    /*margin-top: 5px;*/
 
-}
+/*}*/
 
-div.search_btns.twothirds{
-    text-align: right;
-    margin-left: 34px;
-    margin-top: 5px;
+/*div.search_btns.twothirds{*/
+    /*text-align: right;*/
+    /*margin-left: 34px;*/
+    /*margin-top: 5px;*/
 
-}
+/*}*/
 
 div.listing_div.fa-border{
     background-color: whitesmoke;
@@ -126,21 +128,19 @@ div.main_content div.bottom-of-page{
         justify-content: center;
 
 }
-div.main_content div.bottom-of-page div.map{
-    background-color: black;
-}
+
 
 div.main_content div.bottom-of-page div.listings div.listing_container{
     background-color: #747C86;
 }
 
-.drop_down_field{
-  background-color: #fff;
-  border-radius: 18px;
-}
-.valid_address{
-  margin-top: 10px;
-}
+/*.drop_down_field{*/
+  /*background-color: #fff;*/
+  /*border-radius: 18px;*/
+/*}*/
+/*.valid_address{*/
+  /*margin-top: 10px;*/
+/*}*/
 
 .home_title{
   font-family: "Gill Sans MT";
@@ -218,7 +218,13 @@ div.main_content div.left_side div.user_info div.user_text {
 }
 /* line 27, ../sass/_main.scss */
 div.main_content div.left_side div.button_list {
-  margin: 10px;
+    margin: 10px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+
 }
 div.main_content div.right_side div.property_info div.owned_properties div.button-bar{
     display:flex;

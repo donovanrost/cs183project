@@ -119,6 +119,7 @@ db.define_table('lfg_posts',
                 Field('user_id', 'reference auth_user'),
                 Field('city', ),
                 Field('post_text', 'text'),
+                Field('is_active', default=True),
 
                 )
 
@@ -133,6 +134,9 @@ db.define_table('message_headers',
 
                 )
 
+db.define_table('available_cities',
+                Field('city', 'string'),
+                )
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
