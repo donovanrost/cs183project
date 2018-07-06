@@ -6,20 +6,22 @@ var app = function() {
        template:`
        <div class="listing-container">
         <slideshow :images="listing.images"></slideshow>
-        <div class="property-details">
+        <div class="property-address">
             <p>{{listing.street}}</p>
             <p>{{listing.city}} {{listing.state}} {{listing.zip}}</p>
-            
-            <p> {{listing.num_bedrooms}} Bedrooms</p>
-            <p> {{listing.num_fullbaths}} Full Bathrooms</p>
-            <p> {{listing.num_halfbaths}} Half Bathrooms</p>
         </div>
-        <div class="listing-details">
-            <p>$ {{listing.rent}}/month</p>
-            <p>{{listing.term_length}} months</p>
-            <p>{{listing.available_on}}</p>
-            <p>Available on {{listing.available_on}}</p>
-        
+        <div class="details-container">
+            <div class="property-details ">
+                <p> {{listing.num_bedrooms}} Bedrooms</p>
+                <p> {{listing.num_fullbaths}} Full Bathrooms</p>
+                <p> {{listing.num_halfbaths}} Half Bathrooms</p>
+            </div>
+            <div class="listing-details">
+                <p>$ {{listing.rent}}/month</p>
+                <p>{{listing.term_length}} months</p>
+                <p>{{listing.available_on}}</p>
+                <p>Available on {{listing.available_on}}</p>
+            </div>
         </div>
        </div>
        

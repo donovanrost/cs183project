@@ -29,10 +29,21 @@
     margin-bottom: 1em;
     background-color:whitesmoke;
     width:100%;
-    border: 2px solid black;
-
-
-
+    border: 2px solid #efefef;
+}
+.property-address{
+    padding-left:1em;
+}
+.details-container{
+    display:flex;
+    justify-content: flex-start;
+    padding-left: 1em;
+}
+.property-details{
+    width:50%;
+}
+.listing-details{
+    width:50%;
 }
 
 .slide-container{
