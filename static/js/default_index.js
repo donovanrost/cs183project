@@ -2,25 +2,38 @@
 
 var app = function() {
 
-    Vue.component('google-map',{
-       template:'<div class="google-map" :id="mapName"></div>',
+    Vue.component('listing',{
+       template:`
+       <div class="listing-container">
+        <slideshow :images="listing.images"></slideshow>
+        <div class="property-details">
+            <p>{{listing.street}}</p>
+            <p>{{listing.city}} {{listing.state}} {{listing.zip}}</p>
+            
+            <p> {{listing.num_bedrooms}} Bedrooms</p>
+            <p> {{listing.num_fullbaths}} Full Bathrooms</p>
+            <p> {{listing.num_halfbaths}} Half Bathrooms</p>
+        </div>
+        <div class="listing-details">
+            <p>$ {{listing.rent}}/month</p>
+            <p>{{listing.term_length}} months</p>
+            <p>{{listing.available_on}}</p>
+            <p>Available on {{listing.available_on}}</p>
+        
+        </div>
+       </div>
+       
+       
+       
+       `,
 
-        name: 'google-map',
-        props: ['name'],
+        name: '',
+        props: ['listing'],
           data: function () {
             return {
-              mapName: this.name + "-map",
             }
           },
-          mounted: function () {
-            const element = document.getElementById(this.mapName)
-            const options = {
-              zoom: 14,
-              center: new google.maps.LatLng(51.501527,-0.1921837)
-            };
 
-            const map = new google.maps.Map(element, options);
-          }
 
 
 
@@ -35,18 +48,17 @@ var app = function() {
 
 Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
-        template: '' +
-        ' <div class="slideshow-container">' + '<div>' +
-        '   </div class="slide fade container"> ' +
-             '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
-'               <img :src="currentImage" style="width:100%" style="height:150px" />' +
-
-        '       <a class="next" v-on:click="next">&#10095;</a> ' +
-    '       </div>   ' +
-        '   <div style="text-align:center">\n' +
-        '       <span v-for="n in images.length" class="dot" onclick="currentNumber = n-1"></span> ' +
-        '   </div>'  +
-        '</div>' ,
+        template: `
+        <div class="slideshow">
+            <div class="slide-container">
+                <a id="prevButton" v-on:click="prev">&#10094;</a>
+                <a id="nextButton" v-on:click="next">&#10095;</a>
+                <img class="slide" :src="currentImage"/>
+            </div>
+        </div>
+        
+        `
+     ,
         props:['images'],
 
         data: function () {

@@ -52,9 +52,10 @@
             <div class="bottom-of-page">
 
                 <div v-if="listings.length > 0" class="listings padded">
-                <h2 class="home_title"> Available Listings</h2>
-                <div class="padded center">
-                    <div class="listing_div fa-border" v-for="listing in listings">
+                    <h2 class="home_title"> Available Listings</h2>
+                    <div v-for="listing in listings">
+                        <listing :listing="listing"></listing>
+<!--
                         <div class="avail_listings">
                             <slideshow :images="listing.images"></slideshow>
                             <h6> Address</h6>
@@ -99,6 +100,7 @@
                             </button>
                         </div>
 
+-->
 
                     </div>
                     <div class="container center padded">

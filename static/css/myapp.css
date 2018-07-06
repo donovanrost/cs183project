@@ -7,6 +7,7 @@
 
 
 
+
 .main_content {
     /*background-image: linear-gradient(to right top, #2810b3, #0071ff, #00a9ff, #00d9aa, #00ff19);*/
     background-image: linear-gradient(to right top, #e7f629, #f3db00, #fbbe00, #ffa200, #ff8400);
@@ -16,6 +17,74 @@
     height:auto;
     min-height: 100%;
 
+}
+.listings{
+    flex-grow: 3;
+    max-width: 60%;
+
+}
+
+.listing-container{
+    /*border: 2px solid gray;*/
+    margin-bottom: 1em;
+    background-color:whitesmoke;
+    width:100%;
+    border: 2px solid black;
+
+
+
+}
+
+.slide-container{
+    border-bottom: 2px solid darkgray;
+    max-height:300px;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    position: relative;
+
+}
+.slide{
+    margin-left: auto;
+    margin-right: auto;
+    max-height:100%;
+    width: 100%;
+    object-fit: contain;
+}
+#prevButton{
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    left: 5%;
+    font-size:30px;
+    color:darkgray;
+    cursor:pointer;
+}
+#nextButton{
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    right: 5%;
+    font-size:30px;
+    color:darkgray;
+    cursor:pointer;
+}
+
+div.main_content div.bottom-of-page{
+    width:100%;
+    display:flex;
+    justify-content: center;
+
+}
+
+
+.lfg-header{
+    border:1px;
+    border-style: outset;
+    border-radius: 2px;
+    background-color: whitesmoke;
+    color:#293742;
+    padding: 15px;
 }
 
 div.main_content div.messages-page {
@@ -52,12 +121,7 @@ div.main_content div.top-of-page{
 }
 
 
-div.slide_image.padded.half{
-    margin-top: 90px;
-    margin-right: 5.6px;
-    margin-bottom: 40px;
 
-}
 
 img.user_img.padded{
     border-radius: 50%;
@@ -101,46 +165,10 @@ div.search_div{
 
 }
 
-/*div.search_div .search_input{ !*This changes the input boxes*!*/
-    /*width: auto;*/
-    /*margin-top: 5px;*/
-
-/*}*/
-
-/*div.search_btns.twothirds{*/
-    /*text-align: right;*/
-    /*margin-left: 34px;*/
-    /*margin-top: 5px;*/
-
-/*}*/
-
-div.listing_div.fa-border{
-    background-color: whitesmoke;
-    border:1px;
-    border-style: outset;
-    border-radius: 10px;
-    margin-bottom: 10px;
-
-}
-div.main_content div.bottom-of-page{
-    width:100%;
-    display:flex;
-        justify-content: center;
-
-}
 
 
-div.main_content div.bottom-of-page div.listings div.listing_container{
-    background-color: #747C86;
-}
 
-/*.drop_down_field{*/
-  /*background-color: #fff;*/
-  /*border-radius: 18px;*/
-/*}*/
-/*.valid_address{*/
-  /*margin-top: 10px;*/
-/*}*/
+
 
 .home_title{
   font-family: "Gill Sans MT";
@@ -480,7 +508,7 @@ div.main_content div.lfg-posts div.lfg-post div.lfg-post-user img {
     height: 50px;
     border-radius: 5px;
     box-shadow: 0px 0px 3px #666;
-        margin-top: auto;
+    margin-top: auto;
     margin-bottom: auto;
 }
 .group-member{
@@ -634,3 +662,18 @@ div.main_content div.right_side div.group_search .pic {
 div.main_content div.right_side div.group_search .p {
   margin-left: 15px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -50,7 +50,18 @@
 
         <div class="right-side ">
             <div class="lfg-header">
-                <add_lfg_post :available_cities="available_cities"></add_lfg_post>
+                <div>
+                    <input type="radio" id="search" value="search" v-model="selected_action">
+                    <label for="search">Search</label>
+                    <input type="radio" id="post-user" value="post-self" v-model="selected_action">
+                    <label for="post-user">Post Self</label>
+                    <input type="radio" id="post-group" value="post-group" v-model="selected_action">
+                    <label for="post-group">Post Group</label>
+
+                </div>
+                <add_lfg_post v-if="selected_action == 'post-self'" :available_cities="available_cities"></add_lfg_post>
+                <add_lfg_group_post v-if="selected_action == 'post-group'"
+                           :groups="groups2"         :available_cities="available_cities" ></add_lfg_group_post>
             </div>
             <div class="lfg-posts" v-for="post in allLFGPosts">
                 <lfg_post :lfg_post_data="post" :groups="groups2" :logged_in_user="this_user_id"></lfg_post>

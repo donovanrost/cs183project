@@ -97,10 +97,12 @@ db.define_table('listings',
                 Field('property_id', 'reference property'),
                 Field('user_email', default=get_user_email()),
                 Field('listed_on', 'datetime', default=datetime.datetime.now),
-                Field('rent', type='integer'),
+                Field('rent', type='integer', required=True),
                 Field('start_date'),
                 Field('end_date'),
-                Field('max_occ', type='integer')
+                Field('max_occ', type='integer'),
+                Field('available_on', type='datetime'),
+                Field('term_length', type='integer'),
                 )
 
 db.define_table('property_images',
@@ -136,6 +138,30 @@ db.define_table('message_headers',
 
 db.define_table('available_cities',
                 Field('city', 'string'),
+                )
+
+db.define_table('rental_agreements',
+                Field('landlord_id', 'reference auth_user'),
+                Field('group_id', 'reference rental_group'),
+                Field('signed_date', 'datetime'),
+                Field('start_date', 'datetime'),
+                Field('end_date', 'datetime'),
+                )
+
+db.define_table('clause',
+                Field('clause_text', 'text'),
+                Field('is_default', 'boolean'),
+                )
+
+db.define_table('agreement_clause_relation',
+                Field('rental_agreement_id', 'reference rental_agreements'),
+                Field('clause_id', 'reference clause'),
+                )
+
+db.define_table('agreement_signature_relation',
+                Field('rental_agreement_id', 'reference rental_agreements'),
+                Field('user_id', 'reference auth_user'),
+                Field('signed_date', 'datetime'),
                 )
 
 # after defining tables, uncomment below to enable auditing

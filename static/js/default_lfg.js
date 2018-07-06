@@ -1,6 +1,46 @@
 var app = function() {
 
 
+    Vue.component('add_lfg_group_post',{
+        template:`
+        <div class="add-lfg-group-post">
+            <select v-model="selected_city">
+                <option v-for="city in available_cities" :value="city">{{city.city}}</option>
+            </select>
+             <select v-model="selected_group">
+                <option v-for="group in groups" :value="group">{{group.group_name}}</option>
+            </select>
+            <textarea v-model="post_text" placeholder="Tell the world about this group"></textarea>
+            <button v-on:click="this.post_lfg_post">
+                Post
+            </button>
+        </div>
+        `,
+        props:['groups', 'available_cities'],
+
+        data: function () {
+            return{
+                selected_city:null,
+                selected_group:null,
+                post_text:'',
+
+            }
+        },
+        methods:{
+            post_lfg_post: function(){
+                axios.post(post_lfg_group_post_url,{
+                    city:this.selected_city.id,
+                    post_text:this.post_text,
+                })
+                    .then(
+                        self.getAllLFGPosts()
+                    )
+            }
+
+        },
+
+    });
+
 
     Vue.component('add_lfg_post',{
             template:`
@@ -146,22 +186,6 @@ var app = function() {
                         receiver_id: this.receiver_id,
 
                     });
-
-                        // .then(function(response){
-                        //          console.log("number of groups: " + this.groups.length);
-                        //         // this.selected_group.members.push(response.data.new_member);
-                        //
-                        //     for(var i = 0; i < this.groups.length; i++){
-                        //         console.log('ALKSDHLASKD');
-                        //
-                        //         if(this.groups[i].id == this.selected_group.id){
-                        //             this.groups[i].members.push(response.data.new_member);
-                        //             break;
-                        //         }
-                        //     }
-                        //
-                        //
-                        // });
 
                     this.invite_button();
                     self.vue.get_groups2();
@@ -331,7 +355,7 @@ Vue.component('group', {
         groups2:[],
         available_cities:[],
         this_user_id: null,
-
+        selected_action:'post-self',
     },
     methods:{
         getAllLFGPosts:self.getAllLFGPosts,

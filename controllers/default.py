@@ -110,6 +110,11 @@ def get_listings():
     end = page*10
     rows = db().select(db.listings.ALL, limitby=(start, end+1))
     has_more = False
+
+    # p --> property info
+    # r --> listing info
+    # i --> page number
+
     for i, r in enumerate(rows):
         if i < end - start:
             images = []
@@ -129,6 +134,8 @@ def get_listings():
                 user_email = r.user_email,
                 images=images,
                 notes= notes,
+                rent=r.rent,
+                term_length=r.term_length,
             )
             listings.append(list)
         else:
