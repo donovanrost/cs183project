@@ -241,7 +241,7 @@ def send_group_invitation():
 
 
 
-    #
+
     db.group_member.insert(
         user_id=receiver_id,
         group_id=group_id,

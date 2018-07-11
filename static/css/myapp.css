@@ -18,10 +18,17 @@
     min-height: 100%;
 
 }
+
+.property-container{
+    margin-bottom: 1em;
+    background-color:whitesmoke;
+    width:100%;
+    border: 2px solid #efefef;
+}
+
 .listings{
     flex-grow: 3;
     max-width: 60%;
-
 }
 
 .listing-container{

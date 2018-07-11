@@ -23,6 +23,14 @@ var app = function() {
                 <p>Available on {{listing.available_on}}</p>
             </div>
         </div>
+        <div class="social-stuff">
+            <button v-if="logged_in" class="star_btn" v-on:click="this.like_button">
+                <i v-if="is_liked == true" class="fas fa-star"></i>
+                <i v-if="is_liked == false" class="far fa-star"></i>
+
+            </button>
+
+        </div>
        </div>
        
        
@@ -33,11 +41,24 @@ var app = function() {
         props: ['listing'],
           data: function () {
             return {
+                is_liked:this.listing.is_liked,
+                logged_in: self.vue.logged_in
             }
           },
+        methods:{
+           like_button: function(){
+               this.is_liked = !this.is_liked;
+               this.like_property();
+               console.log(this.is_liked);
+           },
+            like_property: function(){
+                       axios.post(like_property_url,{
+            property_id:this.listing.property_id,
+            })
 
+            },
 
-
+        },
 
     });
 
@@ -138,49 +159,49 @@ Vue.component('slideshow', {
             }
         )
     };
-    self.like_property = function(id){
-        enumerate(self.vue.liked_properties);
-        self.vue.liked_property_id = id;
-        console.log(self.vue.liked_property_id);
-        console.log("liked property with id:" + id);
-
-        if(self.vue.liked_properties.includes(self.vue.liked_property_id) ){
-            self.vue.liked_properties.splice(self.vue.get_index_of_property(id), 1);
-        }
-        else{
-            self.vue.liked_properties.push(id);
-
-        }
-        axios.post(like_property_url,{
-            property_id:self.vue.liked_property_id,
-        })
-            .then(function(response){
-                if(response == "ok"){
-                    self.liked_property_id = null;
-                }
-
-            })
-
-    };
-    self.get_liked_properties = function(){
-        axios.get(get_liked_properties_url)
-
-            .then(function(response){
-                self.vue.liked_properties = response.data.liked_properties;
-                enumerate(self.vue.liked_properties);
-
-            })
-    };
-    self.is_property_liked = function(property){
-        if(self.vue.liked_properties.includes(property)){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-
-    };
+    // self.like_property = function(id){
+    //     enumerate(self.vue.liked_properties);
+    //     self.vue.liked_property_id = id;
+    //     console.log(self.vue.liked_property_id);
+    //     console.log("liked property with id:" + id);
+    //
+    //     if(self.vue.liked_properties.includes(self.vue.liked_property_id) ){
+    //         self.vue.liked_properties.splice(self.vue.get_index_of_property(id), 1);
+    //     }
+    //     else{
+    //         self.vue.liked_properties.push(id);
+    //
+    //     }
+    //     axios.post(like_property_url,{
+    //         property_id:self.vue.liked_property_id,
+    //     })
+    //         .then(function(response){
+    //             if(response == "ok"){
+    //                 self.liked_property_id = null;
+    //             }
+    //
+    //         })
+    //
+    // };
+    // self.get_liked_properties = function(){
+    //     axios.get(get_liked_properties_url)
+    //
+    //         .then(function(response){
+    //             self.vue.liked_properties = response.data.liked_properties;
+    //             enumerate(self.vue.liked_properties);
+    //
+    //         })
+    // };
+    // self.is_property_liked = function(property){
+    //     if(self.vue.liked_properties.includes(property)){
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    //
+    //
+    // };
 
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
@@ -276,8 +297,8 @@ Vue.component('slideshow', {
             has_more: false,
             logged_in: false,
             this_user: null,
-            liked_property_id: null,
-            liked_properties:[],
+            // liked_property_id: null,
+            // liked_properties:[],
             page: 1,
             is_viewing_notes: false,
             is_adding_note: false,
@@ -287,9 +308,9 @@ Vue.component('slideshow', {
             add_property: self.add_property,
             search_button: self.search_button,
             cancel_search_button: self.cancel_search_button,
-            like_property: self.like_property,
-            get_liked_properties:self.get_liked_properties,
-            is_property_liked:self.is_property_liked,
+            // like_property: self.like_property,
+            // get_liked_properties:self.get_liked_properties,
+            // is_property_liked:self.is_property_liked,
             next_page: self.next_page,
             prev_page: self.prev_page,
             get_index_of_property:self.get_index_of_property,
@@ -302,7 +323,7 @@ Vue.component('slideshow', {
 
     self.get_my_info();
     self.get_listings();
-    self.get_liked_properties();
+    //self.get_liked_properties();
 
     $("#vue-div").show();
 

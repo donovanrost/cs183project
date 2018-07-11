@@ -255,53 +255,18 @@
                         <h4>My Properties <i class="fa fa-home"></i></h4>
 
                 </div>
-                <div class="owned_properties container padded" v-for="property in owned_properties">
-                    <div class="button-bar container padded">
-                        <a class="icon" ><i v-if="!property.is_uploading" v-on:click="property.is_uploading = true" class="far fa-image" ></i></a>
-                        <a class="icon" ><i v-if="property.is_uploading" v-on:click="property.is_uploading = false" class="red far fa-image"></i></a>
-                        <a class="icon"><i v-if="!property.is_editing"  v-on:click="property.is_editing = true" class="fa fa-edit"></i></a>
-                        <a class="icon"><i v-if="property.is_editing" v-on:click="property.is_editing = false" class="fa fa-times"></i></a>
-                    </div>
-                    <div class="uploader_div" v-if="property.is_uploading">
-                        Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
-                        <button v-on:click="set_img_prop_id(property) + upload_file()">Submit</button>
-                    </div>
-                    <div class="property-info container">
-                        <slideshow :images="property.images"></slideshow>
-                        <div class="address">
-                            <address>
-                                ${property.street} <br>
-                                ${property.city}, ${property.state_} ${property.zip}
-                            </address>
-                        </div>
-                        <div class="details">
-                            <p>${property.num_bedrooms} bedrooms</p>
-                            <p>${property.num_fullbaths} full bathrooms</p>
-                            <p>${property.num_halfbaths} half bathrooms</p>
-                        </div>
-                    </div>
+                <div class="" v-for="property in owned_properties">
+                    <property :property="property"></property>
 
-
-            </div>
+                </div>
 
 
 			<div class="liked_properties" >
 				<div class="right_side_banner" id="liked-properties">
                     <h4>Liked Properties <i class="fa fa-thumbs-up"></i></h4>
                 </div>
-				<div class="liked_prop container padded" v-for="property in liked_properties">
-					<div class="padded half">
-                        <h6>Street:</h6><p>${property.street}</p>
-                        <h6>City:</h6> <p>${property.city}</p>
-                        <h6>Zip Code:</h6> <p>${property.zip}</p>
-                        <h6>State:</h6><p>${property.state_}</p>
-                    </div>
-                    <div class="padded half">
-                        <h6>Property Type</h6><p>${property.property_type}</p>
-                        <h6>Number of Bedrooms</h6> <p>${property.num_bedrooms}</p>
-                        <h6>Number of full bathrooms</h6><p>${property.num_fullbaths}</p>
-                        <h6>Number of half bathrooms</h6> <p>${property.num_halfbaths}</p>
-                    </div>
+				<div v-for="property in liked_properties">
+                    <property :property="property"></property>
 				</div>
 
 

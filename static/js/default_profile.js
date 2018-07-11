@@ -4,23 +4,19 @@
 
 
 var app = function() {
-
-
     Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
-        template: '' +
-        ' <div v-if="images.length > 0" class="slideshow-container">' +
-            '<div>' +
-        '   </div class="slide fade container"> ' +
-             '       <a class="prev" v-on:click="prev">&#10094;</a> ' +
-'               <img :src="currentImage" style="width:100%" style="height:150px" />' +
-
-        '       <a class="next" v-on:click="next">&#10095;</a> ' +
-    '       </div>   ' +
-        '   <div style="text-align:center">\n' +
-        '       <span v-for="n in images.length" class="dot" onclick="currentNumber = n-1"></span> ' +
-        '   </div>'  +
-        '</div>' ,
+        template: `
+        <div class="slideshow">
+            <div class="slide-container">
+                <a id="prevButton" v-on:click="prev">&#10094;</a>
+                <a id="nextButton" v-on:click="next">&#10095;</a>
+                <img class="slide" :src="currentImage"/>
+            </div>
+        </div>
+        
+        `
+     ,
         props:['images'],
 
         data: function () {
@@ -31,7 +27,7 @@ var app = function() {
         },
         methods:{
             next: function() {
-                if(this.currentNumber+1 < this.images.length)
+                if(this.currentNumber+1< this.images.length)
                     this.currentNumber += 1;
                 console.log("next " + this.currentNumber);
             },
@@ -48,8 +44,67 @@ var app = function() {
       	    return this.images[this.currentNumber % this.images.length];
             }
         }
-
 });
+
+    Vue.component('property',{
+       template:`
+   <div class="property-container">
+        <slideshow :images="property.images"></slideshow>
+        <div class="button-bar container padded right" >
+        <!--v-if="logged_in_user == property.property_owner">-->
+            <a class="icon" ><i v-if="!property.is_uploading" v-on:click="property.is_uploading = true" class="far fa-image" ></i></a>
+            <a class="icon" ><i v-if="property.is_uploading" v-on:click="property.is_uploading = false" class="red far fa-image"></i></a>
+            <a class="icon"><i v-if="!property.is_editing"  v-on:click="property.is_editing = true" class="fa fa-edit"></i></a>
+            <a class="icon"><i v-if="property.is_editing" v-on:click="property.is_editing = false" class="fa fa-times"></i></a>
+        </div>
+        <div class="uploader_div" v-if="property.is_uploading">
+            Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
+            <button class="right" v-on:click="upload_file()">Submit</button>
+        </div>
+        <div class="property-address">
+            <p>{{property.street}}</p>
+            <p>{{property.city}} {{property.state}} {{property.zip}}</p>
+        </div>
+        <div class="details-container">
+            <div class="property-details">
+                <p> {{property.num_bedrooms}} Bedrooms</p>
+                <p> {{property.num_fullbaths}} Full Bathrooms</p>
+                <p> {{property.num_halfbaths}} Half Bathrooms</p>
+            </div>
+            <!--
+             I need to put listing info right here. I think the best way to do that is to check if the 
+             logged in user == property owner && if the property is listed, show the listing info
+             -->
+            
+            <!--<div class="listing-details">-->
+                <!--<p>$ {{listing.rent}}/month</p>-->
+                <!--<p>{{listing.term_length}} months</p>-->
+                <!--<p>{{listing.available_on}}</p>-->
+                <!--<p>Available on {{listing.available_on}}</p>-->
+            <!--</div>-->
+        </div>
+   </div>
+       `,
+
+        name: '',
+        props: ['property'],
+          data: function () {
+            return {
+                img_url:'',
+                is_uploading:false,
+            }
+          },
+        methods: {
+
+            upload_file: function (event) {
+                self.vue.img_prop_id = this.property.id;
+                self.vue.upload_file(event);
+
+            },
+        }
+
+    });
+
 
 
 

@@ -122,20 +122,29 @@ def get_listings():
                 images.append(j.image_url)
             p = db(db.property.id == r.property_id).select().first()
             notes = db(db.property_notes.property_id == r.property_id).select(db.property_notes.ALL)
+
+            is_liked = False
+            if auth.user is not None:
+                liked_properties = db((db.liked_properties.property_id == r.property_id) &
+                               (db.liked_properties.user_id == auth.user.id)).select().first()
+                if liked_properties is not None:
+                    is_liked = liked_properties.isliked
+
             list = dict(
-                street = p.street,
-                city = p.city,
-                zip = p.zip,
+                street=p.street,
+                city=p.city,
+                zip=p.zip,
                 state=p.state_,
-                num_bedrooms = p.num_bedrooms,
-                num_fullbaths = p.num_fullbaths,
-                num_halfbaths = p.num_halfbaths,
-                property_id = r.property_id,
-                user_email = r.user_email,
+                num_bedrooms=p.num_bedrooms,
+                num_fullbaths=p.num_fullbaths,
+                num_halfbaths=p.num_halfbaths,
+                property_id=r.property_id,
+                user_email=r.user_email,
                 images=images,
-                notes= notes,
+                notes=notes,
                 rent=r.rent,
                 term_length=r.term_length,
+                is_liked=is_liked,
             )
             listings.append(list)
         else:
@@ -208,7 +217,6 @@ def like_property():
                                          user_id=auth.user.id,
                                          )
     return "ok"
-
 
 
 def get_liked_properties():
