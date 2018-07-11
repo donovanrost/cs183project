@@ -27,7 +27,6 @@ var app = function() {
             <button v-if="logged_in" class="star_btn" v-on:click="this.like_button">
                 <i v-if="is_liked == true" class="fas fa-star"></i>
                 <i v-if="is_liked == false" class="far fa-star"></i>
-
             </button>
 
         </div>

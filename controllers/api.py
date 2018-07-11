@@ -239,9 +239,6 @@ def send_group_invitation():
 
     )
 
-
-
-
     db.group_member.insert(
         user_id=receiver_id,
         group_id=group_id,
@@ -251,8 +248,6 @@ def send_group_invitation():
 
     # for the response
     q = db(db.auth_user.id == request.post_vars.receiver_id).select().first()
-    print("q: ")
-    print(q)
 
     new_member = dict(
         user_id=request.post_vars.receiver_id,

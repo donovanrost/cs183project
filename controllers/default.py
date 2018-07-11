@@ -221,20 +221,52 @@ def like_property():
 
 def get_liked_properties():
     liked_properties = []
-    liked_prop = []
-    for row in db(db.liked_properties.user_id == auth.user.id).select():
-        if (row.isliked == True):
-            liked_properties.append(row.property_id)
+    # liked_prop = []
+    # for row in db(db.liked_properties.user_id == auth.user.id).select():
+    #     if (row.isliked == True):
+    #         liked_properties.append(row.property_id)
+    #
+    # for id in liked_properties:
+    #     q = db(db.property.id).select()
+    #     for r in q:
+    #         if (r.id == id):
+    #             liked_prop.append(r)
+    #
+    # return response.json(dict(
+    #     liked_properties=liked_prop,
+    #     ))
 
-    for id in liked_properties:
-        q = db(db.property.id).select()
-        for r in q:
-            if (r.id == id):
-                liked_prop.append(r)
+    for rows in db((db.liked_properties.user_id == auth.user.id) & (db.liked_properties.isliked == True)).select():
+        prop = db(db.property.id == rows.property_id).select().first()
+
+        images = []
+        for i in db(db.property_images.property_id == rows.property_id).select():
+            images.append(i.image_url)
+
+        is_liked = False
+        if auth.user is not None:
+            liked_property = db((db.liked_properties.property_id == rows.property_id) &
+                                  (db.liked_properties.user_id == auth.user.id)).select().first()
+            if liked_properties is not None:
+                is_liked = liked_property.isliked
+
+        property=dict(
+            street=prop.street,
+            city=prop.city,
+            state=prop.state_,
+            zip=prop.zip,
+            num_fullbaths=prop.num_fullbaths,
+            num_halfbaths=prop.num_halfbaths,
+            num_bedrooms=prop.num_bedrooms,
+            images=images,
+            is_liked=is_liked,
+
+        )
+        liked_properties.append(property)
 
     return response.json(dict(
-        liked_properties=liked_prop,
-        ))
+        liked_properties=liked_properties,
+    ))
 
 
 def get_my_liked_properties():

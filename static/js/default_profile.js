@@ -83,6 +83,12 @@ var app = function() {
                 <!--<p>Available on {{listing.available_on}}</p>-->
             <!--</div>-->
         </div>
+        <div class="social-stuff">
+            <button v-if="logged_in" class="star_btn" v-on:click="this.like_button">
+                <i v-if="is_liked == true" class="fas fa-star"></i>
+                <i v-if="is_liked == false" class="far fa-star"></i>
+            </button>
+        </div>
    </div>
        `,
 
@@ -92,6 +98,9 @@ var app = function() {
             return {
                 img_url:'',
                 is_uploading:false,
+                is_liked:this.property.is_liked,
+                logged_in: self.vue.logged_in
+
             }
           },
         methods: {
@@ -99,6 +108,17 @@ var app = function() {
             upload_file: function (event) {
                 self.vue.img_prop_id = this.property.id;
                 self.vue.upload_file(event);
+
+            },
+           like_button: function(){
+               this.is_liked = !this.is_liked;
+               this.like_property();
+               console.log(this.is_liked);
+           },
+            like_property: function(){
+                axios.post(like_property_url,{
+                    property_id:this.property.property_id,
+                })
 
             },
         }
