@@ -49,15 +49,15 @@ var app = function() {
     Vue.component('property',{
        template:`
    <div class="property-container">
-        <slideshow :images="property.images"></slideshow>
-        <div class="button-bar container padded right" >
-        <!--v-if="logged_in_user == property.property_owner">-->
-            <a class="icon" ><i v-if="!property.is_uploading" v-on:click="property.is_uploading = true" class="far fa-image" ></i></a>
-            <a class="icon" ><i v-if="property.is_uploading" v-on:click="property.is_uploading = false" class="red far fa-image"></i></a>
-            <a class="icon"><i v-if="!property.is_editing"  v-on:click="property.is_editing = true" class="fa fa-edit"></i></a>
-            <a class="icon"><i v-if="property.is_editing" v-on:click="property.is_editing = false" class="fa fa-times"></i></a>
+        <slideshow v-if="property.images.length > 0" :images="property.images"></slideshow>
+        <div class="button-bar container padded right" v-if="this.property.is_owned">
+        
+            <a class="icon" ><i v-if="!is_uploading" v-on:click="is_uploading = true" class="far fa-image" ></i></a>
+            <a class="icon" ><i v-if="is_uploading" v-on:click="is_uploading = false" class="red far fa-image"></i></a>
+            <a class="icon"><i v-if="!is_editing"  v-on:click="is_editing = true" class="fa fa-edit"></i></a>
+            <a class="icon"><i v-if="is_editing" v-on:click="is_editing = false" class="fa fa-times"></i></a>
         </div>
-        <div class="uploader_div" v-if="property.is_uploading">
+        <div class="uploader_div" v-if="this.is_uploading == true">
             Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
             <button class="right" v-on:click="upload_file()">Submit</button>
         </div>
@@ -97,16 +97,17 @@ var app = function() {
           data: function () {
             return {
                 img_url:'',
-                is_uploading:false,
                 is_liked:this.property.is_liked,
-                logged_in: self.vue.logged_in
-
+                logged_in: self.vue.logged_in,
+                is_uploading:false,
+                is_editing:false,
+                property_id:this.property.property_id,
             }
           },
         methods: {
 
             upload_file: function (event) {
-                self.vue.img_prop_id = this.property.id;
+                self.vue.img_prop_id = this.property_id;
                 self.vue.upload_file(event);
 
             },
@@ -116,6 +117,7 @@ var app = function() {
                console.log(this.is_liked);
            },
             like_property: function(){
+                console.log(this.property.property_id);
                 axios.post(like_property_url,{
                     property_id:this.property.property_id,
                 })

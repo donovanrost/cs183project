@@ -53,7 +53,6 @@ def add_property():
     state_ = request.post_vars.state_
     country = request.post_vars.country
 
-
     db.property.insert(property_type=property_type,
                         num_bedrooms=num_bedrooms,
                         num_fullbaths=num_fullbaths,
@@ -70,28 +69,58 @@ def add_property():
 
 def get_owned_properties():
     owned_properties = []
+    # for row in db(db.property.property_owner == auth.user.id).select():
+    #     p = row.id
+    #     pics = []
+    #     notes = []
+    #     list = db(db.listings.property_id == p).select().first()
+    #     if list is not None:
+    #         row.update(
+    #             user_email=list.user_email,
+    #             listed_on=list.listed_on,
+    #             rent=list.rent,
+    #             start_date=list.start_date,
+    #             end_date=list.end_date,
+    #             max_occ=list.max_occ,
+    #             posted=True
+    #         )
+    #     for r in db(db.property_images.property_id == p).select():
+    #         pics.append(r.image_url)
+    #         row['images'] = pics
+    #     for r in db(db.property_notes.property_id == p).select():
+    #         notes.append(r)
+    #         row['notes'] = notes
+    #     row['is_owned'] = True
+    #     owned_properties.append(row)
+
     for row in db(db.property.property_owner == auth.user.id).select():
-        p = row.id
-        pics = []
-        notes = []
-        list = db(db.listings.property_id == p).select().first()
-        if list is not None:
-            row.update(
-                user_email=list.user_email,
-                listed_on=list.listed_on,
-                rent=list.rent,
-                start_date=list.start_date,
-                end_date=list.end_date,
-                max_occ=list.max_occ,
-                posted=True
-            )
-        for r in db(db.property_images.property_id == p).select():
-            pics.append(r.image_url)
-            row['images'] = pics
-        for r in db(db.property_notes.property_id == p).select():
-            notes.append(r)
-            row['notes'] = notes
-        owned_properties.append(row)
+
+        images = []
+        for i in db(db.property_images.property_id == row.id).select():
+            images.append(i.image_url)
+
+        is_liked = False
+        if auth.user is not None:
+            liked_property = db((db.liked_properties.property_id == row.id) &
+                                  (db.liked_properties.user_id == auth.user.id)).select().first()
+            if liked_property is not None:
+                is_liked = liked_property.isliked
+
+        prop = dict(
+            street=row.street,
+            city=row.city,
+            state=row.state_,
+            zip=row.zip,
+            num_bedrooms=row.num_bedrooms,
+            num_halfbaths=row.num_halfbaths,
+            num_fullbaths=row.num_fullbaths,
+            is_owned=True,
+            property_id=row.id,
+            images=images,
+            is_liked=is_liked,
+        )
+        owned_properties.append(prop)
+
 
     return response.json(dict(
         owned_properties=owned_properties

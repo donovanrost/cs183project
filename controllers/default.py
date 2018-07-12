@@ -207,7 +207,7 @@ def like_property():
     if liked_property is None:
         is_liked = True
     else:
-       is_liked = not liked_property.isliked
+        is_liked = not liked_property.isliked
 
     db.liked_properties.update_or_insert((db.liked_properties.property_id == property_id) &
                                          (db.liked_properties.user_email == auth.user.email),
@@ -221,23 +221,15 @@ def like_property():
 
 def get_liked_properties():
     liked_properties = []
-    # liked_prop = []
-    # for row in db(db.liked_properties.user_id == auth.user.id).select():
-    #     if (row.isliked == True):
-    #         liked_properties.append(row.property_id)
-    #
-    # for id in liked_properties:
-    #     q = db(db.property.id).select()
-    #     for r in q:
-    #         if (r.id == id):
-    #             liked_prop.append(r)
-    #
-    # return response.json(dict(
-    #     liked_properties=liked_prop,
-    #     ))
 
     for rows in db((db.liked_properties.user_id == auth.user.id) & (db.liked_properties.isliked == True)).select():
         prop = db(db.property.id == rows.property_id).select().first()
+        print(prop)
+
+
+        is_owned = False
+        if prop.property_owner == auth.user.id:
+            is_owned = True
 
         images = []
         for i in db(db.property_images.property_id == rows.property_id).select():
@@ -250,7 +242,7 @@ def get_liked_properties():
             if liked_properties is not None:
                 is_liked = liked_property.isliked
 
-        property=dict(
+        property = dict(
             street=prop.street,
             city=prop.city,
             state=prop.state_,
@@ -260,6 +252,8 @@ def get_liked_properties():
             num_bedrooms=prop.num_bedrooms,
             images=images,
             is_liked=is_liked,
+            is_owned=is_owned,
+
 
         )
         liked_properties.append(property)
