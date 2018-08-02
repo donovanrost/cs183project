@@ -97,6 +97,11 @@ def add_group():
         group_id=g_id,
         user_id=auth.user.id
     )
+    q = db((db.group_member.group_id == g_id) & (db.group_member.user_id == auth.user.id)).select().first()
+    q.update_record(is_member=True)
+
+
+
     mem = dict(
         group_id=g_id,
         user_id=auth.user.id
@@ -156,20 +161,6 @@ def get_members():
         )
         members.append(mem)
 
-#     members=[]
-#     q = (db.group_member.group_id == request.vars.group_id)
-#
-#     #selects all group members
-#     rows = db(q).select(db.group_member.ALL)
-#
-#     for i, r in enumerate(rows):
-#         mem = dict(
-#             group_id=r.group_id,
-#             user_email = r.user_email,
-#             is_active = r.is_active
-#         )
-#         members.append(mem)
-#
     return response.json(dict(
         members=members
     ))

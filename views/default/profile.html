@@ -26,7 +26,10 @@
       var insert_user_image_url_url = "{{=URL('api', 'insert_user_image_url', user_signature=True)}}";
       var get_user_image_url_url = "{{=URL('api', 'get_user_image_url', user_signature=True)}}";
       var get_my_liked_properties_url ="{{=URL('default', 'get_my_liked_properties')}}";
-    var like_property_url = "{{=URL('default', 'like_property')}}";
+      var like_property_url = "{{=URL('default', 'like_property')}}";
+      var get_my_info_url = "{{=URL('default', 'get_my_info')}}";
+      var get_all_users_url = "{{=URL('api', 'get_all_users')}}";
+
 
 </script>
 
@@ -42,6 +45,8 @@
     var delete_group_url = "{{=URL('groups', 'delete_group', user_signature=True)}}";
     var get_insertion_url = "{{=URL('groups', 'get_insertion_id', user_signature=True)}}";
     var clean_members_url = "{{=URL('groups', 'clean_members', user_signature=True)}}";
+    var get_groups2_url = "{{=URL('groups', 'get_groups2', user_signature=True)}}";
+
 </script>
 
 
@@ -270,7 +275,12 @@
                     <h4>Groups<i class="fa fa-users"></i></h4>
                 </div>
                 <!--<div class="my_groups"> -->
-                <div class="one_group container padded" v-for="group in groups">
+
+                <div class="one_group container padded" v-for="group in groups2">
+                    <group :group="group" :logged_in_user="this_user" :all_users="all_users"></group>
+<!--
+
+
                     <div class="button-bar container padded">
                         <a class="icon"><i v-if="!group.is_editing"  v-on:click="edit_group_button(group.group_id)"class="fa fa-edit"></i></a>
                         <a class="icon"><i v-if="group.is_editing" v-on:click="delete_group(group.group_id)" class="fa fa-trash"></i></a>
@@ -287,7 +297,7 @@
                     </div>
 
 
-
+-->
 
 <!--
                         <div class="container padded">

@@ -69,29 +69,6 @@ def add_property():
 
 def get_owned_properties():
     owned_properties = []
-    # for row in db(db.property.property_owner == auth.user.id).select():
-    #     p = row.id
-    #     pics = []
-    #     notes = []
-    #     list = db(db.listings.property_id == p).select().first()
-    #     if list is not None:
-    #         row.update(
-    #             user_email=list.user_email,
-    #             listed_on=list.listed_on,
-    #             rent=list.rent,
-    #             start_date=list.start_date,
-    #             end_date=list.end_date,
-    #             max_occ=list.max_occ,
-    #             posted=True
-    #         )
-    #     for r in db(db.property_images.property_id == p).select():
-    #         pics.append(r.image_url)
-    #         row['images'] = pics
-    #     for r in db(db.property_notes.property_id == p).select():
-    #         notes.append(r)
-    #         row['notes'] = notes
-    #     row['is_owned'] = True
-    #     owned_properties.append(row)
 
     for row in db(db.property.property_owner == auth.user.id).select():
 
@@ -257,10 +234,6 @@ def send_group_invitation():
     group_id = request.post_vars.group_id
     receiver_id = request.post_vars.receiver_id
 
-
-
-
-
     invitation_id = db.group_invitation.insert(
         group_id=group_id,
         sender_id=sender_id,
@@ -353,6 +326,37 @@ def edit_lfg_post():
     post.update_record(post_text=post_text)
 
     return 'ok'
+
+
+def find_users():
+    query = request.get_vars.query
+    print(query)
+    results = []
+
+    for rows in db(db.auth_user.first_name.like(query+'%')).select():
+        user = dict(
+            name=rows.first_name,
+            #last_name=rows.last_name,
+        )
+        results.append(user)
+        print(user)
+
+    return response.json(dict(results=results))
+
+def get_all_users():
+    users = []
+
+    for row in db(db.auth_user.id != auth.user.id).select():
+        user = dict(
+            user_id=row.id,
+            first_name=row.first_name,
+            last_name=row.last_name,
+        )
+        users.append(user)
+
+
+    return response.json(dict(users=users))
+
 
 
     

@@ -156,7 +156,7 @@ def get_listings():
 
 #Helper function to get user info and check if logged in or not
 def get_my_info():
-    this_user = auth.user
+    this_user = auth.user.id
     logged_in = True if auth.user is not None else False
     return response.json(dict(this_user=this_user, logged_in=logged_in))
 

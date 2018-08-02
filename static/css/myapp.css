@@ -3,7 +3,36 @@
   color: #bb8833;
 }
 
-/* line 5, ../sass/_main.scss */
+
+
+
+.autocomplete {
+  position: relative;
+  /*width: 130px;*/
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 120px;
+  overflow: auto;
+  width: 100%;
+}
+
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result.is-active,
+.autocomplete-result:hover {
+  background-color: #4aae9b;
+  color: white;
+}
+
 
 
 
@@ -311,37 +340,19 @@ div.main_content div.right_side div.property_info .right_side_banner {
 
 
 }
-div.main_content div.right_side div.property_info div.slideshow-container{
-  /*max-width: 1000px;*/
-  position: relative;
-  /*margin: auto;*/
+/*div.main_content div.right_side div.property_info div.slideshow-container{*/
+  /*!*max-width: 1000px;*!*/
+  /*position: relative;*/
+  /*!*margin: auto;*!*/
 
-}
+/*}*/
 
 div.main_content div.right_side div.group_info div.one_group div.button-bar{
     display:flex;
     flex-direction:row;
     justify-content: flex-end;
 }
-div.main_content div.right_side div.group_info div.one_group div.member-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    border: 2px solid grey;
-    margin-bottom: 5px;
-    margin-right: 2px;
-}
-div.main_content div.right_side div.group_info div.one_group div.member-list >img{
 
-    max-height: 150px;
-    border-radius: 50%;
-
-}
-div.main_content div.right_side div.group_info div.one_group div.member-list div.member-info{
-    margin-top: auto;
-    margin-bottom: auto;
-
-}
 
 p.solid{
     border-style: solid;
@@ -489,8 +500,7 @@ div.main_content div.lfg-page div.group{
     margin-left:auto;
     margin-right:auto;
 }
-
-div.main_content div.lfg-page div.group div.members{
+.members{
     border: 2px solid grey;
     margin-bottom:10px;
 
@@ -660,14 +670,14 @@ div.main_content div.right_side div.group_search {
     box-shadow: 10px 5px 5px;
     
 }
-div.main_content div.right_side div.group_info div.my_groups {
-    background-color: whitesmoke;
-    margin: 10px;
-    border: 1px;
-    border-radius: 5px;
-    box-shadow: 10px 5px 5px ;
+/*div.main_content div.right_side div.group_info div.my_groups {*/
+    /*background-color: whitesmoke;*/
+    /*margin: 10px;*/
+    /*border: 1px;*/
+    /*border-radius: 5px;*/
+    /*box-shadow: 10px 5px 5px ;*/
 
-}
+/*}*/
 /* line 177, ../sass/_main.scss */
 div.main_content div.right_side div.group_search .title {
   margin-left: 15px;

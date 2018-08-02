@@ -3,7 +3,189 @@
 
 
 
+
 var app = function() {
+Vue.component('autocomplete', {
+	template: `
+  	<div class="autocomplete">
+   		 <input type="text" v-model="input" v-on:focus="focus" v-on:input="filterResults()" v-on:keydown.tab.prevent="complete(0)"
+   		 v-on:keydown.down="onArrowDown"
+   		 v-on:keydown.up="onArrowUp"
+   		 v-on:keydown.enter="onEnter">
+   		 <table v-if="focused" class="autocomplete-results">
+    	    <tbody>
+            	<tr v-for="(user,index) in this.results.slice(0,5)" v-on:click="complete(index)" >
+          	        <td class="autocomplete-result" :class="{ 'is-active': index === arrow_counter }" > 
+          	            {{index}} {{ user.first_name }} {{user.last_name}} 
+                    </td>
+        	    </tr>
+      	  </tbody>
+    	 </table>
+		</div>
+  `,
+
+	props: ['users', 'desired_attribute'],
+
+    methods: {
+        focus: function(){
+            this.focused=!this.focused;
+        },
+        filterResults: function(){
+            this.results.length = 0;
+            for(var i = 0; i<this.users.length;i++){
+
+                if( this.users[i].first_name.toLowerCase().indexOf(this.input) != -1 ||
+                        this.users[i].last_name.toLowerCase().indexOf(this.input) != -1){
+                    this.results.push(this.users[i])
+                }
+            }
+            if(this.input.length == 0){
+                this.results.length = 0;
+            }
+
+        },
+        complete: function(index){
+            var selected = this.results[index][this.desired_attribute];
+            this.$emit('send_selected', selected);
+            this.focus();
+            this.arrow_counter = -1;
+        },
+        onArrowDown: function(){
+            if (this.arrow_counter < this.results.length-1) {
+            this.arrow_counter = this.arrow_counter + 1;
+            }
+        },
+        onArrowUp: function(){
+            if (this.arrow_counter > 0) {
+                this.arrow_counter = this.arrow_counter - 1;
+            }
+        },
+        onEnter: function(){
+            if(this.arrow_counter > -1){
+                this.complete(this.arrow_counter);
+            }
+        },
+
+
+
+
+  },
+
+  data() {
+       return {
+           focused:false,
+           input:'',
+           results:[],
+           arrow_counter:-1,
+       }
+  },
+
+});
+
+
+
+Vue.component('group_member', {
+        template: `
+        <div class="group-member padded" >
+            <img v-bind:src="member.user_image" class="thumbnail" />
+            <div class="member-details padded">
+                <p>{{member.first_name}} {{member.last_name}} </p>
+                <p>{{member.user_email}}</p>
+            </div>
+            <div v-if="member.is_member == false && member.user_id == logged_in_user"  >
+                <button  v-on:click="this.accept_invitation">
+                    Accept
+                </button>
+                <button>
+                    Decline
+                </button>
+            </div>
+            <i v-if=" member.is_member == false && member.user_id != logged_in_user" class="far fa-clock"></i>
+     
+        </div>
+
+        
+        `
+         ,
+        props:['member', 'group_id', 'logged_in_user',],
+
+        data: function () {
+             return {
+            }
+        },
+        methods:{
+            accept_invitation: function(){
+                this.member.is_member = true;
+
+                axios.post(accept_invitation_url,{
+                    group_id: this.group_id,
+                    user_id: this.member.user_id,
+                })
+            }
+        },
+        computed: {
+
+        }
+});
+
+
+Vue.component('group', {
+        template: `
+        <div class="group padded">
+            <div class="button-bar">
+                <a class="icon"><i v-if="!this.is_editing"  v-on:click="edit_button"class="fa fa-edit"></i></a>
+                <a class="icon"><i v-if="this.is_editing" v-on:click="delete_group" class="fa fa-trash"></i></a>
+                <a class="icon"><i v-if="this.is_editing" v-on:click="edit_button" class="fa fa-times"></i></a>
+            </div>
+            <p>{{group.group_name}}</p>
+            <autocomplete :users="all_users" :desired_attribute="'user_id'"  v-on:send_selected="set_selected($event)"></autocomplete>
+            <div>
+            
+            </div>
+            <div class="members " v-for="member in group.members">
+                <group_member :member="member" :group_id="group.group_id" :logged_in_user="logged_in_user"></group_member>
+            </div>
+        </div>
+
+        
+        `
+         ,
+        props:['group', 'logged_in_user','all_users'],
+
+        data: function () {
+             return {
+                 is_editing:false,
+                 search_results:[],
+                 select:-1,
+
+            }
+        },
+        methods:{
+            delete_group: function() {
+                $.post(delete_group_url, {
+                    group_id: this.group.group_id
+                },
+                function (data) {
+                    self.get_groups2();
+                    enumerate(self.vue.groups2);
+                });
+
+            },
+            edit_button:function(){
+                this.is_editing = !this.is_editing;
+            },
+            set_selected:function(s){
+                this.select = s;
+            }
+
+
+        },
+
+
+});
+
+
+
     Vue.component('slideshow', {
         //https://jsfiddle.net/czbLyn8h/
         template: `
@@ -353,24 +535,34 @@ var app = function() {
         });
     };
 
-    self.get_groups = function () {
-        $.getJSON(groups_url,
-            function (data) {
-            self.vue.groups = data.groups;
-            enumerate(self.vue.groups);
-        });
+    // self.get_groups = function () {
+    //     $.getJSON(groups_url,
+    //         function (data) {
+    //         self.vue.groups = data.groups;
+    //         enumerate(self.vue.groups);
+    //     });
+    // };
+
+
+    self.get_groups2 = function(){
+        axios.get(get_groups2_url)
+
+            .then(function(response){
+                self.vue.groups2 = response.data.groups;
+                enumerate(self.vue.groups2);
+            })
     };
 
-    self.get_members= function(group_id) {
-        $.getJSON(members_url,
-            {
-                group_id: group_id
-            },
-            function (data){
-            self.vue.members = data.members;
-            enumerate(self.vue.members);
-        });
-    };
+    // self.get_members= function(group_id) {
+    //     $.getJSON(members_url,
+    //         {
+    //             group_id: group_id
+    //         },
+    //         function (data){
+    //         self.vue.members = data.members;
+    //         enumerate(self.vue.members);
+    //     });
+    // };
 
     self.add_group_button = function() {
         self.vue.is_adding_group = true;
@@ -393,20 +585,20 @@ var app = function() {
                 self.vue.members = [];
                 self.vue.form_name = "";
                 self.get_users();
-                self.get_groups();
+                self.get_groups2();
             });
     };
 
-    self.delete_group = function(group_id) {
-        $.post(delete_group_url,
-           {
-               group_id: group_id
-           },
-           function (data) {
-               self.get_groups();
-               enumerate(self.vue.groups);
-       });
-    };
+    // self.delete_group = function(group_id) {
+    //     $.post(delete_group_url,
+    //        {
+    //            group_id: group_id
+    //        },
+    //        function (data) {
+    //            self.get_groups();
+    //            enumerate(self.vue.groups);
+    //    });
+    // };
 
     self.add_to_group = function(user, id) {
         (self.vue.members).push(user);
@@ -507,7 +699,7 @@ var app = function() {
 
     // listings
     self.add_listing_button = function(id){
-        self.vue.add_listing_page = 0; 
+        self.vue.add_listing_page = 0;
         if(!self.vue.is_adding_listing) {
             $("div#add_listing_div").show();
             self.vue.p_idx = id;
@@ -688,10 +880,30 @@ var app = function() {
     };
     self.toggle_expand_properties = function(){
       self.vue.expand_properties = !self.vue.expand_properties;
+    };    //HELPER FUNCTION FOR GETTING USER INFO
+    self.get_my_info = function() {
+        $.getJSON(
+            get_my_info_url,
+            function(data){
+                self.vue.logged_in = data.logged_in;
+                self.vue.this_user = data.this_user;
+                console.log(self.vue.this_user);
+
+            }
+        )
+    };
+
+    self.get_all_users = function(){
+        axios.get(get_all_users_url)
+        .then(function(response){
+            self.vue.all_users=response.data.users;
+        })
     };
 
 
     self.vue = new Vue({
+
+
         el: "#vue-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
@@ -725,7 +937,6 @@ var app = function() {
             placeSearch:null,
             autocomplete:null,
 
-
             user_image:'',
             is_editing_profile:false,
 
@@ -733,19 +944,22 @@ var app = function() {
             is_adding_group: false,
             is_adding_member: false,
             groups: [],
+            groups2: [],
             users: [],
             members: [],
             form_user_search: null,
             form_name: null,
             logged_in: false,
+            this_user:null,
             has_more: false,
             liked_properties:[],
             expand_properties:true,
+            all_users:[],
         },
         methods: {
             //properties
             add_property_button: self.add_property_button,
-            add_address: self.add_address,
+            //add_address: self.add_address,
             get_property_types:self.get_property_types,
             add_property: self.add_property,
             next_page:self.next_page,
@@ -766,8 +980,7 @@ var app = function() {
             geolocate:self.geolocate,
             fillInAddress:self.fillInAddress,
             initAutocomplete:self.initAutocomplete,
-
-
+            get_my_info: self.get_my_info,
 
             //listings
             add_listing_button: self.add_listing_button,
@@ -787,11 +1000,12 @@ var app = function() {
             cancel_add_group: self.cancel_add_group,
             add_to_group: self.add_to_group,
             remove_from_group: self.remove_from_group,
-            delete_group: self.delete_group,
+            //delete_group: self.delete_group,
             search_user: self.search_user,
             clear_user_button: self.clear_user_button,
             get_liked_properties: self.get_liked_properties,
             add_member_button: self.add_member_button,
+            get_all_users:self.get_all_users,
         },
         computed:{
             user_image_url: function(){
@@ -801,12 +1015,13 @@ var app = function() {
         }
 
     });
-
+    self.get_my_info();
     self.get_users();
-    self.get_groups();
+    self.get_groups2();
     self.get_owned_properties();
     self.get_liked_properties();
     self.get_user_image_url();
+    self.get_all_users();
 
     $("#vue-div").show();
 

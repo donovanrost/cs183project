@@ -158,49 +158,7 @@ Vue.component('slideshow', {
             }
         )
     };
-    // self.like_property = function(id){
-    //     enumerate(self.vue.liked_properties);
-    //     self.vue.liked_property_id = id;
-    //     console.log(self.vue.liked_property_id);
-    //     console.log("liked property with id:" + id);
-    //
-    //     if(self.vue.liked_properties.includes(self.vue.liked_property_id) ){
-    //         self.vue.liked_properties.splice(self.vue.get_index_of_property(id), 1);
-    //     }
-    //     else{
-    //         self.vue.liked_properties.push(id);
-    //
-    //     }
-    //     axios.post(like_property_url,{
-    //         property_id:self.vue.liked_property_id,
-    //     })
-    //         .then(function(response){
-    //             if(response == "ok"){
-    //                 self.liked_property_id = null;
-    //             }
-    //
-    //         })
-    //
-    // };
-    // self.get_liked_properties = function(){
-    //     axios.get(get_liked_properties_url)
-    //
-    //         .then(function(response){
-    //             self.vue.liked_properties = response.data.liked_properties;
-    //             enumerate(self.vue.liked_properties);
-    //
-    //         })
-    // };
-    // self.is_property_liked = function(property){
-    //     if(self.vue.liked_properties.includes(property)){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    //
-    //
-    // };
+
 
     self.search_button = function(){
         if(self.vue.form_street_search == null && self.vue.form_city_search == null &&
